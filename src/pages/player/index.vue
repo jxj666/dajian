@@ -6,9 +6,12 @@
 
     </div>
     <text-card></text-card>
-    <div class="listBox" :key=item v-for="(x,item) in list">
+    <div class="listBox">
+  <div  :key=item v-for="(x,item) in list">
       <video-card></video-card>
     </div>
+    </div>
+  
   </div>
 
 </template>

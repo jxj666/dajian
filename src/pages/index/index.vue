@@ -2,9 +2,12 @@
 <div>
 <main-title></main-title>
 
-<div class="listBox" :key=item  v-for="(x,item) in list">
+<div class="listBox">
+<div  :key=item  v-for="(x,item) in list">
 <index-card></index-card>
 </div>
+</div>
+
 </div>
 
 </template>
