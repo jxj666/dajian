@@ -12,23 +12,25 @@ export default {
 
 <style scoped lang='scss'>
 div {
-	height: 7vh;
+    width: 100vw;
+	height: 103rpx;
 	display: flex;
 	justify-content: space-between;
     align-items: center;
     h3{
-        width: 5vh;
-        height: 5vh;
-        background: red;
-        padding: 5vh;
+        padding:0 42rpx;
     }
     .icon{
-        background: url(../img/title2.png) no-repeat center;
-        background-size: 5vh;
+        width: 80rpx;
+        height: 47rpx;
+        background: url(../../static/img/dajian4.png) no-repeat center;
+        background-size: contain;
     }
     .search{
-        background: url(../img/title3.png) no-repeat center;
-        background-size: 5vh;
+        width: 32rpx;
+        height: 32rpx;
+        background: url(../../static/img/dajian5.png) no-repeat center;
+        background-size: contain;
     }
 }
 

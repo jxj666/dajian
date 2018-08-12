@@ -9,7 +9,7 @@
 	},
 	"miniprogramRoot": "./dist/",
 	"compileType": "miniprogram",
-	"appid": "dajian",
+	"appid": "wx1e15d2a13b519cb5",
 	"projectname": "dajian",
 	"condition": {
 		"search": {

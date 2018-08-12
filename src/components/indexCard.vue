@@ -1,7 +1,14 @@
 <template>
   <div class="card">
-    <h3><span class="title1">御</span><span class="title2">MAVIC</span><span class="title3">2</span><span class="title4">系列</span></h3>
-    <image src="/static/img/goods.png"></image>
+    <h3>
+      <span class="title1">御</span>
+      <span class="title2">MAVIC</span>
+      <span class="title3">2</span>
+      <span class="title4">系列</span>
+    </h3>
+
+    <!-- <image src="/static/img/dajian3.png" mode='heightFix'></image> -->
+
   </div>
 </template>
 
@@ -11,32 +18,67 @@ export default {
 </script>
 
 <style scoped lang='scss'>
-.card{
-  width: 90vw;
-  height: 15vh;
-  background:#f4fafb;
-  border-radius: 1vh;
-  margin-bottom: 1vh;
-  display:flex;
-  justify-content: space-around;
-  align-items: center;
-  h3{
-    width:50vw;
-    span{
-      margin-left: 1vw;
-      font-size: 14px;
-    }
-    .title1{}
-        .title2{color: gray;}
+.card {
+	width: 666rpx;
+	height: 262rpx;
+	background: #f5f9fc url('//jxj322991.github.io/img/assets/dajan/dajian1.png') no-repeat center right;
+	background-size: contain;
 
-    .title3{}
+	border-radius: 10rpx;
+	margin-bottom: 30rpx;
+	position: relative;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
 
-    .title4{color: gray;font-size: 12px;}
-
-  }
-  image{
-    width: 30vw;
-    height: 20vw;
-  }
+	h3 {
+		width: 350rpx;
+		box-sizing: border-box;
+		margin-left: 30rpx;
+    vertical-align: middle;
+		span {
+			margin-right: 14rpx;
+			font-size: 20rpx;
+      vertical-align: middle;
+		}
+		.title1 {
+			font-size: 26rpx;
+			font-family: FZLTHJW--GB1-0;
+			color: rgba(35, 35, 35, 1);
+			// line-height: 70rpx;
+		}
+		.title2 {
+			font-size: 32rpx;
+			font-family: Dji-Demi;
+			color: rgba(35, 35, 35, 1);
+			// line-height: 56rpx;
+		}
+		.title21 {
+			font-size: 26rpx;
+			font-family: FZLTHJW--GB1-0;
+			// line-height: 70rpx;
+			color: rgba(35, 35, 35, 1);
+		}
+		.title3 {
+			font-size: 32rpx;
+			font-family: Dji-Demi;
+			color: rgba(35, 35, 35, 1);
+			// line-height: 56rpx;
+			font-weight: 100;
+		}
+		.title4 {
+			font-size: 26rpx;
+			font-family: FZLTHJW--GB1-0;
+			color: rgba(102, 102, 102, 1);
+			// line-height: 45rpx;
+		}
+	}
+	// image{
+	//   height: 262rpx;
+	//   position: absolute;
+	//   top: 0;
+	//   right: 0;
+	//   z-index: 10;
+	// }
 }
 </style>
