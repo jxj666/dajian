@@ -7,11 +7,11 @@
     </div>
     <text-card></text-card>
     <div class="listBox">
-  <div  :key=item v-for="(x,item) in list">
-      <video-card></video-card>
+      <div :key=item v-for="(x,item) in list">
+        <video-card></video-card>
+      </div>
     </div>
-    </div>
-  
+
   </div>
 
 </template>
@@ -79,10 +79,10 @@ export default {
 .videoBox {
 	width: 737rpx;
 	height: 423rpx;
-  margin:0 auto;
+	margin: 0 auto;
 	video {
-    width: 100%;
-    height: 100%;
+		width: 100%;
+		height: 100%;
 	}
 }
 </style>

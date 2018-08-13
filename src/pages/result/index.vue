@@ -5,9 +5,9 @@
       “Phantom”搜索到23条结果
     </div>
     <div class="listBox">
-    <div  :key=item v-for="(x,item) in list">
-      <video-card></video-card>
-    </div>
+      <div :key=item v-for="(x,item) in list">
+        <video-card></video-card>
+      </div>
     </div>
 
   </div>

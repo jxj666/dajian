@@ -1,14 +1,14 @@
 <template>
-<div>
-<main-title></main-title>
+  <div>
+    <main-title></main-title>
 
-<div class="listBox">
-<div  :key=item  v-for="(x,item) in list">
-<index-card></index-card>
-</div>
-</div>
+    <div class="listBox">
+      <div :key=item v-for="(x,item) in list">
+        <index-card></index-card>
+      </div>
+    </div>
 
-</div>
+  </div>
 
 </template>
 
@@ -18,10 +18,10 @@ import indexCard from '@/components/indexCard'
 
 
 export default {
-  data () {
+  data() {
     return {
       motto: 'Hello World',
-      list:[{},{},{}],
+      list: [{}, {}, {}],
       userInfo: {}
     }
   },
@@ -32,11 +32,11 @@ export default {
   },
 
   methods: {
-    bindViewTap () {
+    bindViewTap() {
       const url = '../logs/main'
       wx.navigateTo({ url })
     },
-    getUserInfo () {
+    getUserInfo() {
       // 调用登录接口
       wx.login({
         success: () => {
@@ -48,13 +48,13 @@ export default {
         }
       })
     },
-    clickHandle (msg, ev) {
+    clickHandle(msg, ev) {
       console.log('clickHandle:', msg, ev)
     }
   },
 
-  created () {
-       wx.setNavigationBarTitle({
+  created() {
+    wx.setNavigationBarTitle({
       title: '大疆飞手百科'//页面标题为路由参数
     })
     // 调用应用实例的方法获取全局数据
@@ -64,8 +64,8 @@ export default {
 </script>
 
 <style scoped lang='scss'>
-.listBox{
-display: flex;
-justify-content: space-around;
+.listBox {
+	display: flex;
+	justify-content: space-around;
 }
 </style>

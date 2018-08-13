@@ -4,9 +4,9 @@
 
     <search-input></search-input>
     <div class="listBox">
-    <div class="searchText" :key="index"  v-for="(x,index) in list">
-      搜索项目
-    </div>
+      <div class="searchText" :key="index" v-for="(x,index) in list">
+        搜索项目
+      </div>
     </div>
 
   </div>
@@ -67,24 +67,24 @@ export default {
 <style scoped lang='scss'>
 .listBox {
 	margin: 0 16rpx 0 42rpx;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: flex-start;
-  align-content: flex-start;
-  .searchText{
-    line-height: 45rpx;
-    height:45rpx;
-    font-size: 20rpx;
-background:rgba(241,241,241,1);
-color:rgba(0,0,0,1);
-border:1px solid rgba(07,07,07,0.32);
-border-radius:8rpx;
-padding: 0 15rpx;
-display:inline-block;
-margin-bottom: 26rpx;
-margin-right: 26rpx;
-font-weight: 100;
-// flex-basis: auto;
-  }
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: flex-start;
+	align-content: flex-start;
+	.searchText {
+		line-height: 45rpx;
+		height: 45rpx;
+		font-size: 20rpx;
+		background: rgba(241, 241, 241, 1);
+		color: rgba(0, 0, 0, 1);
+		border: 1px solid rgba(07, 07, 07, 0.32);
+		border-radius: 8rpx;
+		padding: 0 15rpx;
+		display: inline-block;
+		margin-bottom: 26rpx;
+		margin-right: 26rpx;
+		font-weight: 100;
+		// flex-basis: auto;
+	}
 }
 </style>
