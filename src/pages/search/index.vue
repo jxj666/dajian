@@ -1,12 +1,13 @@
 <template>
   <div>
-    <main-title></main-title>
+    <main-title :thisPage='thisPage' :hideNavSearch='hideNavSearch'></main-title>
     <search-input @searchText='searchText'></search-input>
     <div class="listBox">
       <div class="searchText" :key="index" v-for="(x,index) in dataList" @click="detailSearch(x)">
         {{x.text}}
       </div>
     </div>
+    <!-- <search-no></search-no> -->
     <!-- <loading></loading> -->
     <!-- <station></station> -->
   </div>
@@ -25,9 +26,10 @@ import searchNo from '@/components/searchNo'
 export default {
   data() {
     return {
-      motto: 'Hello World',
+      hideNavSearch: true,
+      thisPage: 'search',
+      prePage: undefined,
       dataList: [{ text: '依否' }, { text: '234' }, { text: '1234' }, { text: '42134234' }, { text: '依否' }, { text: '24423' }, { text: '依否' }, { text: '依否' }, { text: '234342' }, { text: '依否' }, { text: '43' }],
-      userInfo: {}
     }
   },
 
@@ -36,16 +38,27 @@ export default {
     searchInput,
     loading,
     station,
+    searchNo
   },
 
   methods: {
     detailSearch(x) {
       console.log(x)
+                    var arr=wx.getStorageSync('data_box')   
+                        arr.push({'pre_page': this.thisPage,pre_data:undefined}) 
+                              wx.setStorageSync('data_box', arr)     
+                                wx.setStorageSync('pre_page', this.thisPage)
+
       const url = '../explain/main'
       wx.navigateTo({ url })
     },
     searchText(x) {
       console.log(x)
+                    var arr=wx.getStorageSync('data_box')     
+                      arr.push({'pre_page': this.thisPage,pre_data:undefined})    
+                         wx.setStorageSync('data_box', arr)      
+                          wx.setStorageSync('pre_page', this.thisPage)
+
       const url = '../explain/main'
       wx.navigateTo({ url })
 
@@ -56,6 +69,19 @@ export default {
 
   },
   onShow() {
+
+    this.prePage= wx.getStorageSync('pre_page');
+    if(this.prePage=='none'){
+      var arr = wx.getStorageSync('data_box')
+      arr.pop()
+      var obj=arr[arr.length-1]
+      this.prePage = obj.pre_page
+      console.log(obj)
+      wx.setStorageSync('data_box', arr)  
+    }else{
+      wx.setStorageSync('pre_page', 'none');
+    }
+
     wx.setNavigationBarTitle({
       title: '大疆飞手百科'//页面标题为路由参数
     })
@@ -72,8 +98,8 @@ export default {
 	justify-content: flex-start;
 	align-content: flex-start;
 	.searchText {
-    vertical-align: middle;
-    box-sizing: border-box;
+		vertical-align: middle;
+		box-sizing: border-box;
 		line-height: 45rpx;
 		height: 45rpx;
 		font-size: 20rpx;

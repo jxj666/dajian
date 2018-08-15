@@ -1,6 +1,8 @@
 <template>
   <div class="box">
-    <image src='../../static/img/dajian9.png'></image>
+    <!-- <image src='../../static/img/dajian9.png'></image> -->
+        <div class="no">404</div>
+
     <h3>页面飞丢了</h3>
   </div>
 </template>
@@ -20,6 +22,14 @@ export default {
     display: block;
     margin:0 auto 39rpx;
 	}
+    .no{
+    height: 85rpx;
+    color:#CCCCCC;
+    font-size: 85rpx;
+        margin:0 auto 39rpx;
+
+    text-align: center;
+  }
 	h3 {
 		font-size: 30rpx;
     line-height: 30rpx;

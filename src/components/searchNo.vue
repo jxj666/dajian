@@ -1,7 +1,7 @@
 <template>
   <div class="box">
-    <image src='../../static/img/dajian4.png'></image>
-    <h3>加载中</h3>
+    <image src='../../static/img/dajian8.png'></image>
+    <h3>搜索无结果</h3>
   </div>
 </template>
 
@@ -13,13 +13,14 @@ export default {
 
 <style lang='scss' scoped>
 .box {
-  margin-top: 235rpx;
+  margin-top: 121rpx;
 	image {
-		width: 140rpx;
-		height: 70rpx;
+		width: 146rpx;
+		height: 146rpx;
     display: block;
-    margin:40rpx auto 20rpx;
+    margin:0rpx auto 40rpx;
 	}
+
 	h3 {
 		font-size: 30rpx;
     line-height: 30rpx;

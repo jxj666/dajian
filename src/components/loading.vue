@@ -1,6 +1,6 @@
 <template>
   <div class="box">
-    <image src='../../static/img/dajian4.png'></image>
+    <image src='../../static/img/gif.gif'></image>
     <h3>加载中</h3>
     <!-- <h3>搜索中</h3> -->
   </div>
@@ -19,12 +19,15 @@ export default {
   margin-top:127rpx;
   }
 	image {
-		width: 140rpx;
-		height: 70rpx;
+		width: 200rpx;
+		height: 200rpx;
     display: block;
-    margin:40rpx auto 20rpx;
+    margin: 0 auto;
 	}
 	h3 {
+    position: relative;
+    top:-15rpx;
+    z-index: 10;
 		font-size: 30rpx;
     line-height: 30rpx;
 		font-family: PingFang-SC-Regular;

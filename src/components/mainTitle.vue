@@ -2,19 +2,38 @@
     <div class="nav">
         <div class="line"></div>
         <h3 class="icon" @click="toIndex"></h3>
-        <h3 class="search" @click="toSearch"></h3>
+        <h3 class="search" @click="toSearch" v-if="hideSearch"></h3>
     </div>
 </template>
-
 <script>
 export default {
-
+    props: ['hideNavSearch', 'thisPage'],
+    computed: {
+        hideSearch() {
+            if (this.hideNavSearch == true) {
+                return false
+            } else {
+                return true
+            }
+        }
+    },
     methods: {
         toIndex() {
+            console.log(this.thisPage)
+
+                      var arr=wx.getStorageSync('data_box')     
+                        arr.push({'pre_page': this.thisPage,pre_data:undefined}) 
+                              wx.setStorageSync('data_box', arr)  
+                                   wx.setStorageSync('pre_page', this.thisPage);
+
             const url = '../index/main'
             wx.navigateTo({ url })
         },
         toSearch() {
+                      var arr=wx.getStorageSync('data_box') 
+                            arr.push({'pre_page': this.thisPage,pre_data:undefined})  
+                                 wx.setStorageSync('data_box', arr)   
+                                     wx.setStorageSync('pre_page', this.thisPage);
             const url = '../search/main'
             wx.navigateTo({ url })
         },
@@ -29,15 +48,14 @@ export default {
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
-    .line{
-        width: 100%;
-        height: 1rpx;
-        background:     rgba(229, 229, 229, 0.67);
-        position:fixed;
-        top: 0;
-        z-index: 100;
-
-    }
+	.line {
+		width: 100%;
+		height: 1rpx;
+		background: rgba(229, 229, 229, 0.67);
+		position: fixed;
+		top: 0;
+		z-index: 100;
+	}
 	h3 {
 		padding: 0 42rpx;
 	}

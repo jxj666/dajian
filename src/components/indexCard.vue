@@ -32,7 +32,7 @@ export default {
 	width: 666rpx;
 	height: 262rpx;
 	background: #f5f9fc;
-	// background: #f5f9fc url('//jxj322991.github.io/img/assets/dajan/dajian1.png') no-repeat center right;
+	// background: #f5f9fc url('http://jxjweb.gz01.bdysite.com/img/assets/dajan/dajian1.png') no-repeat center right;
 	// background-size: contain;
 
 	border-radius: 10rpx;
