@@ -1,19 +1,29 @@
 <template>
-  <div class="card">
-    <h3>
-      <span class="title1">御</span>
-      <span class="title2">MAVIC</span>
-      <span class="title3">2</span>
-      <span class="title4">系列</span>
-    </h3>
-
-    <!-- <image src="/static/img/dajian3.png" mode='heightFix'></image> -->
-
-  </div>
+	<div class="card" :style="{	background: imgBackground,
+	backgroundSize: 'contain'}" @click='toDetail'>
+		<h3 v-if="goods.text">
+			<span class="title1">御</span>
+			<span class="title2">MAVIC</span>
+			<span class="title3">2</span>
+			<span class="title4">系列</span>
+		</h3>
+		<!-- <image src="/static/img/dajian3.png" mode='heightFix'></image> -->
+	</div>
 </template>
 
 <script>
 export default {
+	props: ['goods'],
+	computed: {
+		imgBackground(){
+			return `#f5f9fc url(${this.goods.url}) no-repeat center right`
+		}
+	},
+	methods:{
+		toDetail(){
+			this.$emit('toDetail',this.goods)
+		}
+	}
 }
 </script>
 
@@ -21,8 +31,9 @@ export default {
 .card {
 	width: 666rpx;
 	height: 262rpx;
-	background: #f5f9fc url('//jxj322991.github.io/img/assets/dajan/dajian1.png') no-repeat center right;
-	background-size: contain;
+	background: #f5f9fc;
+	// background: #f5f9fc url('//jxj322991.github.io/img/assets/dajan/dajian1.png') no-repeat center right;
+	// background-size: contain;
 
 	border-radius: 10rpx;
 	margin-bottom: 30rpx;
@@ -35,11 +46,11 @@ export default {
 		width: 350rpx;
 		box-sizing: border-box;
 		margin-left: 30rpx;
-    vertical-align: middle;
+		vertical-align: middle;
 		span {
 			margin-right: 14rpx;
 			font-size: 20rpx;
-      vertical-align: middle;
+			vertical-align: middle;
 		}
 		.title1 {
 			font-size: 26rpx;

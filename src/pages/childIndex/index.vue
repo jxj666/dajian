@@ -2,8 +2,8 @@
   <div>
     <main-title></main-title>
     <div class="listBox">
-      <div :key=item v-for="(x,item) in list">
-        <index-card></index-card>
+      <div :key=item v-for="(x,item) in dataList">
+        <index-card :goods=x @toDetail='toDetail'></index-card>
       </div>
     </div>
   </div>
@@ -17,9 +17,12 @@ import indexCard from '@/components/indexCard'
 export default {
   data() {
     return {
-      motto: 'Hello World',
-      list: [{}, {}, {}],
-      userInfo: {}
+      dataPre: {},
+      dataList: [
+        { text: false, id: 1, url: '//jxj322991.github.io/img/assets/dajan/index/index1/01.png' },
+        { text: false, id: 2, url: '//jxj322991.github.io/img/assets/dajan/index/index1/02.png' },
+        { text: false, id: 3, url: '//jxj322991.github.io/img/assets/dajan/index/index1/03.png' },
+      ],
     }
   },
 
@@ -29,33 +32,29 @@ export default {
   },
 
   methods: {
-    bindViewTap() {
-      const url = '../logs/main'
-      wx.navigateTo({ url })
-    },
-    getUserInfo() {
-      // 调用登录接口
-      wx.login({
-        success: () => {
-          wx.getUserInfo({
-            success: (res) => {
-              this.userInfo = res.userInfo
-            }
-          })
+    getList() {
+      wx.getStorage({
+        key: 'goods',
+        success: (res) => {
+          console.log(res.data)
+          this.dataPre = JSON.parse(res.data)
         }
       })
     },
-    clickHandle(msg, ev) {
-      console.log('clickHandle:', msg, ev)
+    toDetail() {
+      const url = '../explain/main'
+      wx.navigateTo({ url })
     }
   },
 
   created() {
+
+  },
+  onShow() {
     wx.setNavigationBarTitle({
       title: '系列产品说明'//页面标题为路由参数
     })
-    // 调用应用实例的方法获取全局数据
-    this.getUserInfo()
+    this.getList();
   }
 }
 </script>
@@ -64,5 +63,6 @@ export default {
 .listBox {
 	display: flex;
 	justify-content: space-around;
+	flex-wrap: wrap;
 }
 </style>

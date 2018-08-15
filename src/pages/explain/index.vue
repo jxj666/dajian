@@ -1,10 +1,12 @@
 <template>
   <div>
     <main-title></main-title>
-
+    <div class="search">
+      “Phantom”搜索到23条结果
+    </div>
     <div class="listBox">
-      <div :key=item v-for="(x,item) in list">
-        <video-card></video-card>
+      <div :key=item v-for="(x,item) in dataList">
+        <video-card :videos=x @toVideo='toVideo'></video-card>
       </div>
     </div>
 
@@ -20,9 +22,14 @@ import videoCard from '@/components/videoCard'
 export default {
   data() {
     return {
-      motto: 'Hello World',
-      list: [{}, {}, {}],
-      userInfo: {}
+      dataList: [
+        { title: '固件升级', text1: '优化线路,修复导航缺陷', text2: '版本1232', url: '//jxj322991.github.io/img/assets/dajan/explain/08143.png' },
+        { title: '固件升级1', text1: '优化线路,修复导航缺陷', text2: '版本1232', url: '//jxj322991.github.io/img/assets/dajan/explain/08144.png' },
+        { title: '固件升级1', text1: '优化线路,修复导航缺陷', text2: '版本1232', url: '//jxj322991.github.io/img/assets/dajan/explain/08143.png' },
+        { title: '固件升级', text1: '优化线路,修复导航缺陷,增加避障功能', text2: '', url: '//jxj322991.github.io/img/assets/dajan/explain/08143.png' },
+
+
+      ],
     }
   },
 
@@ -32,33 +39,23 @@ export default {
   },
 
   methods: {
-    bindViewTap() {
-      const url = '../logs/main'
-      wx.navigateTo({ url })
-    },
-    getUserInfo() {
-      // 调用登录接口
-      wx.login({
-        success: () => {
-          wx.getUserInfo({
-            success: (res) => {
-              this.userInfo = res.userInfo
-            }
-          })
-        }
+    toVideo(x) {
+      wx.setStorage({
+        key: 'video',
+        data: JSON.stringify(x),
       })
-    },
-    clickHandle(msg, ev) {
-      console.log('clickHandle:', msg, ev)
+      const url = '../player/main'
+      wx.navigateTo({ url })
     }
   },
 
   created() {
+
+  },
+  onShow() {
     wx.setNavigationBarTitle({
-      title: '系统产品说明'//页面标题为路由参数
+      title: '系列产品说明'//页面标题为路由参数
     })
-    // 调用应用实例的方法获取全局数据
-    this.getUserInfo()
   }
 }
 </script>
@@ -67,5 +64,15 @@ export default {
 .listBox {
 	display: flex;
 	justify-content: space-around;
+	flex-wrap: wrap;
+}
+.search {
+	height: 20rpx;
+	width: 666rpx;
+	line-height: 20rpx;
+	font-size: 20rpx;
+	font-family: PingFang-SC-Regular;
+	color: rgba(94, 98, 98, 1);
+	margin: 0 auto 29rpx;
 }
 </style>
