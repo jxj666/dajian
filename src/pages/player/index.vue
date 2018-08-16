@@ -7,8 +7,8 @@
     </div>
     <text-card></text-card>
     <div class="listBox">
-      <div :key=item v-for="(x,item) in dataList">
-        <video-card :videos=x @toVideo=toVideo></video-card>
+      <div :key=key v-for="(x,key) in dataList">   
+        <video-card :videos=x @toVideo='toVideo' :index='key' :leftNone=leftNone></video-card>
       </div>
     </div>
 
@@ -28,6 +28,7 @@ export default {
     return {
       thisPage: 'player',
       prePage: undefined,
+      leftNone:false,
 
       dataList: [
         { title: '固件升级', text1: '优化线路,修复导航缺陷', text2: '版本1232', url: 'http://jxjweb.gz01.bdysite.com/img/assets/dajan/explain/08143.png' },
@@ -48,6 +49,11 @@ export default {
   },
 
   methods: {
+    getList(){
+           setTimeout(()=>{
+        this.leftNone=true;
+      },100) 
+    },
     toVideo(x) {
       wx.setStorage({
         key: 'video',
@@ -78,11 +84,10 @@ export default {
     }else{
       wx.setStorageSync('pre_page', 'none');
     }
-
-
     wx.setNavigationBarTitle({
       title: '系列产品说明'//页面标题为路由参数
     })
+    this.getList()
   }
 }
 </script>
