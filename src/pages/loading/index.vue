@@ -22,7 +22,6 @@ export default {
     if (this.prePage == "none") {
       wx.setStorageSync("pre_page", "start");
       this.text = "返回退出";
-      wx.reLaunch({});
     } else {
       setTimeout(() => {
         var arr = wx.getStorageSync("data_box");
