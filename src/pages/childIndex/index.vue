@@ -3,7 +3,7 @@
     <main-title :thisPage=thisPage></main-title>
     <div class="listBox">
       <div :key=key v-for="(x,key) in dataList">
-        <index-card :goods=x @toDetail='toDetail' :index="key" :leftNone=leftNone></index-card>
+        <index-card :goods=x @toDetail='toDetail' :index="key" :leftNone=leftNone :listLength='dataList.length'></index-card>
       </div>
     </div>
   </div>
@@ -19,6 +19,8 @@ export default {
       thisPage: "childIndex",
       dataPre: {},
       leftNone:false,
+            prePage: undefined,
+
       dataList: [
         {
           text: false,
@@ -37,6 +39,12 @@ export default {
           id: 3,
           url:
             "http://jxjweb.gz01.bdysite.com/img/assets/dajan/index/index1/03.png"
+        },
+        {
+          text: false,
+          id: 3,
+          url:
+            "http://jxjweb.gz01.bdysite.com/img/assets/dajan/index/index1/04.png"
         }
       ]
     };
@@ -49,7 +57,8 @@ export default {
 
   methods: {
     getList() {
-      prePage: undefined,
+              this.leftNone=false;
+
       setTimeout(()=>{
         this.leftNone=true;
       },100)

@@ -20,9 +20,9 @@ export default {
     },
     leftClass() {
       if (this.leftNone) {
-        return `translateX(0)`;
+        return `translateX(0)`
       } else {
-        return `translateX(${this.index * 50}%)`;
+        return `translateX(${-(this.index) * 25}%)`
       }
     },
     transition1() {
@@ -51,6 +51,8 @@ export default {
   justify-content: space-between;
   position: relative;
   transition-timing-function: linear;
+  -webkit-transform: translate3d(0,0,0); /*开启硬件加速*/
+
   .card_l {
     width: 303rpx;
     height: 100%;

@@ -4,7 +4,7 @@
 
     <div class="listBox">
       <div :key=key v-for="(x,key) in dataList">
-        <index-card :goods=x @toDetail='toDetail' :index='key' :leftNone='leftNone'></index-card>
+        <index-card :goods=x @toDetail='toDetail' :index='key' :leftNone='leftNone' ></index-card>
       </div>
     </div>
   </div>
@@ -41,6 +41,7 @@ export default {
       wx.navigateTo({ url })
     },
     getList(){
+      this.leftNone=false;
       this.dataList= [
         { text: false, id: 1, url: 'http://jxjweb.gz01.bdysite.com/img/assets/dajan/index/02.png' },
         { text: false, id: 2, url: 'http://jxjweb.gz01.bdysite.com/img/assets/dajan/index/03.png' },
@@ -55,7 +56,6 @@ export default {
       },100)
     }
   },
-
   onShow() {
     this.prePage = wx.getStorageSync('pre_page');
     if(this.prePage=='none'){

@@ -11,13 +11,11 @@ export default {
   data() {
     return {
       text: "加载中",
-
       thisPage: "loading"
     };
   },
   onShow() {
-        this.text = "加载中";
-
+    this.text = "加载中";
     this.prePage = wx.getStorageSync("pre_page");
     if (this.prePage == "none") {
       wx.setStorageSync("pre_page", "start");
@@ -36,8 +34,7 @@ export default {
   created() {
     wx.setStorageSync("data_box", [{ pre_page: "start" }]);
     wx.setStorageSync("pre_page", "start");
-  },
-
+  }
 };
 </script>
 

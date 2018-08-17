@@ -58,6 +58,8 @@ export default {
       wx.navigateTo({ url })
     },
         getList(){
+                  this.leftNone=false;
+
       setTimeout(()=>{
         this.leftNone=true;
       },100)

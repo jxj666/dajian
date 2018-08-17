@@ -1,15 +1,19 @@
 <template>
-  <div>
+  <div class="grid-box">
     <main-title :thisPage=thisPage ></main-title>
-    <div class="videoBox">
-      <video :src="src" controls></video>
-
+    <div class="videoBox" >
+      <video :src="src" controls :class="{fixedVideo:fixed}" fixed="true"></video>
     </div>
+        <div class="listBox grid-var" :style={height:scrollHeight}>
+    <scroll-view class="content" scroll-y="true">
     <text-card></text-card>
-    <div class="listBox">
+
+
       <div :key=key v-for="(x,key) in dataList">   
         <video-card :videos=x @toVideo='toVideo' :index='0' :leftNone=leftNone></video-card>
       </div>
+    </scroll-view>
+
     </div>
 
   </div>
@@ -26,8 +30,9 @@ export default {
     return {
       thisPage: "player",
       prePage: undefined,
-      leftNone: false,
-
+      leftNone: true,
+      fixed: false,
+      scrollHeight:'500px',
       dataList: [
         {
           title: "固件升级",
@@ -56,6 +61,34 @@ export default {
           text2: "",
           url:
             "http://jxjweb.gz01.bdysite.com/img/assets/dajan/explain/08143.png"
+        },
+        {
+          title: "固件升级",
+          text1: "优化线路,修复导航缺陷,增加避障功能",
+          text2: "",
+          url:
+            "http://jxjweb.gz01.bdysite.com/img/assets/dajan/explain/08143.png"
+        },
+        {
+          title: "固件升级",
+          text1: "优化线路,修复导航缺陷,增加避障功能",
+          text2: "",
+          url:
+            "http://jxjweb.gz01.bdysite.com/img/assets/dajan/explain/08143.png"
+        },
+        {
+          title: "固件升级",
+          text1: "优化线路,修复导航缺陷,增加避障功能",
+          text2: "",
+          url:
+            "http://jxjweb.gz01.bdysite.com/img/assets/dajan/explain/08143.png"
+        },
+        {
+          title: "固件升级",
+          text1: "优化线路,修复导航缺陷,增加避障功能",
+          text2: "",
+          url:
+            "http://jxjweb.gz01.bdysite.com/img/assets/dajan/explain/08143.png"
         }
       ],
       src: "http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4"
@@ -70,6 +103,13 @@ export default {
 
   methods: {
     getList() {
+       var rule = 750/wx.getSystemInfoSync().windowWidth;
+       var height = wx.getSystemInfoSync().windowHeight;
+       console.log(height, rule);
+       this.scrollHeight=`${height*rule-(103+423)}rpx`
+       console.log(this.scrollHeight)
+       
+
 
     },
     toVideo(x) {
@@ -81,7 +121,6 @@ export default {
       arr.push({ pre_page: this.thisPage, pre_data: undefined });
       wx.setStorageSync("data_box", arr);
       wx.setStorageSync("pre_page", this.thisPage);
-
       const url = "../player/main";
       wx.navigateTo({ url });
     }
@@ -95,7 +134,6 @@ export default {
       arr.pop();
       var obj = arr[arr.length - 1];
       this.prePage = obj.pre_page;
-      console.log(obj);
       wx.setStorageSync("data_box", arr);
     } else {
       wx.setStorageSync("pre_page", "none");
@@ -104,15 +142,41 @@ export default {
       title: "系列产品说明" //页面标题为路由参数
     });
     this.getList();
+  },
+  //监听屏幕滚动 判断上下滚动
+  onPageScroll: function(ev) {
+    var _this = this;
+    var width = wx.getSystemInfoSync().windowWidth;
+    console.log(ev.scrollTop, width / 750 * 103);
+    if (ev.scrollTop > width / 750 * 103) {
+      this.fixed = true;
+    } else {
+      this.fixed = false;
+    }
+    console.log(this.fixed);
   }
 };
 </script>
 
 <style scoped lang='scss'>
+.grid-box {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+.grid-var {
+  flex: 1;
+}
+.content {
+  height: 100%;
+}
+
 .listBox {
   display: flex;
   justify-content: space-around;
   flex-wrap: wrap;
+  height: 500rpx;
 }
 .videoBox {
   width: 737rpx;
@@ -121,6 +185,15 @@ export default {
   video {
     width: 100%;
     height: 100%;
+  }
+  .fixedVideo {
+    position: fixed;
+    top: 0;
+    z-index: 100;
+    width: 750rpx;
+    height: 423rpx;
+    left: 0;
+    right: 0;
   }
 }
 </style>
