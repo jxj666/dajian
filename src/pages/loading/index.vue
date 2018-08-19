@@ -11,7 +11,7 @@ export default {
   data() {
     return {
       text: "加载中",
-      thisPage: "loading"
+      thisPage: "start"
     };
   },
   onShow() {

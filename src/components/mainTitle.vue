@@ -2,25 +2,18 @@
     <div class="nav">
         <div class="line"></div>
         <h3 class="icon" @click="toIndex"></h3>
-        <h3 class="search" @click="toSearch" v-if="hideSearch"></h3>
+        <h3 class="search" @click="toSearch" v-if="!hideSearch"></h3>
     </div>
 </template>
 <script>
 export default {
-  props: ["hideNavSearch", "thisPage"],
+  props: ["hideSearch", "thisPage"],
   computed: {
-    hideSearch() {
-      if (this.hideNavSearch == true) {
-        return false;
-      } else {
-        return true;
-      }
-    }
+
   },
   methods: {
     toIndex() {
       console.log(this.thisPage);
-
       var arr = wx.getStorageSync("data_box");
       arr.push({ pre_page: this.thisPage, pre_data: undefined });
       wx.setStorageSync("data_box", arr);
@@ -30,12 +23,13 @@ export default {
       wx.navigateTo({ url });
     },
     toSearch() {
-      var arr = wx.getStorageSync("data_box");
-      arr.push({ pre_page: this.thisPage, pre_data: undefined });
-      wx.setStorageSync("data_box", arr);
-      wx.setStorageSync("pre_page", this.thisPage);
-      const url = "../search/main";
-      wx.navigateTo({ url });
+      // var arr = wx.getStorageSync("data_box");
+      // arr.push({ pre_page: this.thisPage, pre_data: undefined });
+      // wx.setStorageSync("data_box", arr);
+      // wx.setStorageSync("pre_page", this.thisPage);
+      // const url = "../search/main";
+      // wx.navigateTo({ url });
+      this.$emit('toSearch')
     }
   }
 };
