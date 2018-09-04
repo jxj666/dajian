@@ -24,9 +24,13 @@ export default {
 }
 /* this rule will be remove */
 * {
-  transition: width 2s;
-  -moz-transition: width 2s;
-  -webkit-transition: width 2s;
-  -o-transition: width 2s;
+-webkit-backface-visibility:hidden;
+-moz-backface-visibility:hidden;
+-ms-backface-visibility:hidden;
+backface-visibility:hidden;
+-webkit-perspective:1000;
+-moz-perspective:1000;
+-ms-perspective:1000;
+perspective:1000;
 }
 </style>

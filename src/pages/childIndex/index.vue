@@ -4,7 +4,7 @@
     <div class="contentBox">
     <div class="listBox" v-if="listShow" :class="{listHide:listHide}">
       <div :key=key v-for="(x,key) in dataList">
-        <index-card :goods=x @toDetail='toDetail' :index='key' :leftNone='leftNone' ></index-card>
+        <index-card :animation='animation' :goods=x @toDetail='toDetail' :index='key' :leftNone='leftNone' ></index-card>
       </div>
     </div>
     <div class="searchBox" v-if="listHide">
@@ -31,7 +31,8 @@ export default {
       listHide: false,
       dataList: [],
       hideSearch: false,
-      searchNew:0,
+      searchNew: 0,
+      animation: true
     };
   },
 
@@ -47,50 +48,37 @@ export default {
       this.listHide = true;
       setTimeout(() => {
         this.listShow = false;
-                this.searchNew=+ new Date()
-
+        this.searchNew = +new Date();
       }, 500);
     },
     getList() {
-      this.dataList = [
-        {
-          text: false,
-          id: 1,
-          url:
-            "http://jxjweb.gz01.bdysite.com/img/assets/dajan/index/index1/01.png"
-        },
-        {
-          text: false,
-          id: 2,
-          url:
-            "http://jxjweb.gz01.bdysite.com/img/assets/dajan/index/index1/02.png"
-        },
-        {
-          text: false,
-          id: 3,
-          url:
-            "http://jxjweb.gz01.bdysite.com/img/assets/dajan/index/index1/03.png"
-        },
-        {
-          text: false,
-          id: 3,
-          url:
-            "http://jxjweb.gz01.bdysite.com/img/assets/dajan/index/index1/04.png"
-        }
-      ];
       this.leftNone = false;
       setTimeout(() => {
         this.leftNone = true;
-      }, 100);
+      }, 200);
     },
-    toDetail() {
-      var arr = wx.getStorageSync("data_box");
-      arr.push({ pre_page: this.thisPage, pre_data: undefined });
-      wx.setStorageSync("data_box", arr);
-      wx.setStorageSync("pre_page", this.thisPage);
-
-      const url = "../explain/main";
-      wx.navigateTo({ url });
+    toDetail(x) {
+      var Fly = require("flyio/dist/npm/wx");
+      var fly = new Fly();
+      fly
+        .get(`http://dj.majiangyun.com/type-product/${x.id}`, {})
+        .then(d => {
+          //输出请求数据
+          console.log("req", d.data);
+          wx.setStorage({
+            key: "goods",
+            data: JSON.stringify(x)
+          });
+          var arr = wx.getStorageSync("data_box");
+          arr.push({ pre_page: this.thisPage, pre_data: d.data });
+          wx.setStorageSync("data_box", arr);
+          wx.setStorageSync("pre_page", this.thisPage);
+          const url = "../explain/main";
+          wx.navigateTo({ url });
+        })
+        .catch(err => {
+          console.log(err.status, err.message);
+        });
     },
     exit() {
       this.leftNone = false;
@@ -98,21 +86,26 @@ export default {
       this.listHide = false;
       this.dataList = [];
       this.hideSearch = false;
+      this.animation = true;
     }
   },
   created() {},
   onShow() {
     this.prePage = wx.getStorageSync("pre_page");
+    var arr = wx.getStorageSync("data_box");
     if (this.prePage == "none") {
-      var arr = wx.getStorageSync("data_box");
+      this.animation = false;
       arr.pop();
+      wx.setStorageSync("data_box", arr);
       var obj = arr[arr.length - 1];
       this.prePage = obj.pre_page;
-      console.log(obj);
-      wx.setStorageSync("data_box", arr);
+      this.dataList = obj.pre_data.data;
     } else {
-      wx.setStorageSync("pre_page", "none");
+      var obj = arr[arr.length - 1];
+      this.prePage = obj.pre_page;
+      this.dataList = obj.pre_data.data;
     }
+    wx.setStorageSync("pre_page", "none");
 
     wx.setNavigationBarTitle({
       title: "系列产品说明" //页面标题为路由参数
@@ -137,9 +130,10 @@ export default {
   -webkit-transform: translate3d(0, 0, 0); /*开启硬件加速*/
   transform: translateY(0);
   transition: transform 500ms;
-    position: absolute;
+  position: absolute;
   top: 0;
   z-index: 200;
+  width: 100%;
 }
 .searchBox {
   position: absolute;

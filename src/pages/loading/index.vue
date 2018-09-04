@@ -21,19 +21,30 @@ export default {
       wx.setStorageSync("pre_page", "start");
       this.text = "返回退出";
     } else {
-      setTimeout(() => {
-        var arr = wx.getStorageSync("data_box");
-        arr.push({ pre_page: this.thisPage, pre_data: undefined });
-        wx.setStorageSync("data_box", arr);
-        wx.setStorageSync("pre_page", this.thisPage);
-        const url = "../index/main";
-        wx.navigateTo({ url });
-      }, 1000);
+      var Fly = require("flyio/dist/npm/wx");
+      var fly = new Fly();
+      fly
+        .get("http://dj.majiangyun.com/", {})
+        .then(d => {
+          //输出请求数据
+          console.log("req", d.data);
+          wx.setStorageSync("index_box", d.data);
+
+          var arr = wx.getStorageSync("data_box");
+          arr.push({ pre_page: this.thisPage, pre_data: d.data });
+          wx.setStorageSync("data_box", arr);
+          wx.setStorageSync("pre_page", this.thisPage);
+          const url = "../index/main";
+          wx.navigateTo({ url });
+        })
+        .catch(err => {
+          console.log(err.status, err.message);
+        });
     }
   },
   created() {
-    wx.setStorageSync("data_box", [{ pre_page: "start" }]);
-    wx.setStorageSync("pre_page", "start");
+    wx.setStorageSync("data_box", [{ pre_page: "begin" }]);
+    wx.setStorageSync("pre_page", "begin");
   }
 };
 </script>

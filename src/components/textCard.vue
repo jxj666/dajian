@@ -1,12 +1,13 @@
 <template>
     <div class="card">
-        <h3>Mavic Air 产品展示</h3>
-        <p>御’Mavic Pro彻底改变了我的记录方式。它让我能以前所未有的t独特视角捕捉生动画面，并将这些便捷地分享给全世界的观众。对</p>
+        <h3>{{video.title}}</h3>
+        <p>{{video.description}}</p>
     </div>
 </template>
 
 <script>
 export default {
+	props:['video']
 }
 </script>
 

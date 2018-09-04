@@ -7,29 +7,32 @@
 			<span class="title3">2</span>
 			<span class="title4">系列</span>
 		</h3>
-		<!-- <image src="/static/img/dajian3.png" mode='heightFix'></image> -->
+		<image :src="goods.url" mode='heightFix'></image>
 	</div>
 </template>
 
 <script>
 export default {
-  props: ["goods", "index", "leftNone"],
+  props: ["goods", "index", "leftNone", "animation"],
   computed: {
     imgBackground() {
-      return `#f5f9fc url(${this.goods.url}) no-repeat center right`
+      // return `#f5f9fc`;
+      return `#f5f9fc url('http://dj.majiangyun.com/image/${this.goods.image_url}') no-repeat center right`;
     },
     leftClass() {
-      if (this.leftNone) {
-        return `translateX(0)`
+      if (this.leftNone || this.index == -1 || !this.animation) {
+        return `translateX(0)`;
       } else {
-        return `translateX(${-(this.index) * 25}%)`
+        return `translateX(${(this.index > 5 ? 9 : this.index + 3) * 50}%)`;
+        // return `translateX(-150%)`
       }
     },
-    transition1(){
-      if(this.leftNone){
-        return `  transform 500ms;`
-      }else{
-        return ` `
+    transition1() {
+      if (this.animation && this.leftNone) {
+        return `  transform 300ms linear ${this.index * 50}ms;`;
+        // return `  transform 190ms ${this.index*200}ms;`
+      } else {
+        return ` `;
       }
     }
   },
@@ -55,9 +58,7 @@ export default {
   justify-content: space-between;
   align-items: center;
   transition-timing-function: linear;
-  -webkit-transform: translate3d(0,0,0); /*开启硬件加速*/
-
-
+  -webkit-transform: translate3d(0, 0, 0); /*开启硬件加速*/
 
   h3 {
     width: 350rpx;
@@ -101,12 +102,11 @@ export default {
       // line-height: 45rpx;
     }
   }
-  // image{
-  //   height: 262rpx;
-  //   position: absolute;
-  //   top: 0;
-  //   right: 0;
-  //   z-index: 10;
-  // }
+  image{
+    height: 100%;
+    width: 100%;
+
+    z-index: 10;
+  }
 }
 </style>

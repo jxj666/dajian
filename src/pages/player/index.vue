@@ -3,16 +3,22 @@
     <main-title :thisPage=thisPage @toSearch='toSearch' :hideSearch=hideSearch></main-title>
     <div class="contentBox">
       <div class="listBoxTotal" v-if="listShow" :class="{listHide:listHide}">
-        <div class="videoBox">
-          <video :src="src" controls :class="{fixedVideo:fixed}" fixed="true"></video>
-        </div>
+        <view class="videoBox">
+          <video v-if="playerObj.class==2" id="showVideoBox" objectFit='fill' :src="src_fix" controls :class="{fixedVideo:fixed}" fixed="true"></video>
+                 <txv-video v-if="playerObj.class ==1 " :vid="playerObj.video_id" playerid="showVideoBox" objectFit='fill' >
+
+                 </txv-video>
+
+        </view>
         <div class="listBox grid-var" :style={height:scrollHeight}>
           <scroll-view class="content" scroll-y="true">
-            <text-card></text-card>
+           
+            <text-card :video='playerObj'></text-card>
 
 
             <div :key=key v-for="(x,key) in dataList">
-              <video-card :videos=x @toVideo='toVideo' :index='0' :leftNone=leftNone></video-card>
+              <video-card :videos=x v-if='playerObj.id != x.id' @toVideo='toVideo' :index='-1' :leftNone=leftNone></video-card>
+
             </div>
           </scroll-view>
 
@@ -44,11 +50,15 @@ export default {
       fixed: false,
       scrollHeight: "500px",
       dataList: [],
-      src: "http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4",
+      // src: "http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4",
+      src: "http://static.video.qq.com/TPout.swf?vid=w0766f4ngw3&auto=1",
       listShow: true,
       listHide: false,
       hideSearch: false,
-      searchNew:0,
+      searchNew: 0,
+      videoContext: {},
+      vid: "w0766f4ngw3",
+      playerObj: {}
     };
   },
 
@@ -58,81 +68,38 @@ export default {
     textCard,
     searchBox
   },
+  computed: {
+    src_fix() {
+      return `http://dj.majiangyun.com/video/${this.playerObj.video_url}`;
+    }
+  },
 
   methods: {
     toSearch() {
       this.hideSearch = true;
       this.listHide = true;
       setTimeout(() => {
-                        this.searchNew=+ new Date()
+        this.searchNew = +new Date();
 
         this.listShow = false;
       }, 500);
     },
     getList() {
-      this.dataList = [
-        {
-          title: "固件升级",
-          text1: "优化线路,修复导航缺陷",
-          text2: "版本1232",
-          url:
-            "http://jxjweb.gz01.bdysite.com/img/assets/dajan/explain/08143.png"
-        },
-        {
-          title: "固件升级1",
-          text1: "优化线路,修复导航缺陷",
-          text2: "版本1232",
-          url:
-            "http://jxjweb.gz01.bdysite.com/img/assets/dajan/explain/08144.png"
-        },
-        {
-          title: "固件升级1",
-          text1: "优化线路,修复导航缺陷",
-          text2: "版本1232",
-          url:
-            "http://jxjweb.gz01.bdysite.com/img/assets/dajan/explain/08143.png"
-        },
-        {
-          title: "固件升级",
-          text1: "优化线路,修复导航缺陷,增加避障功能",
-          text2: "",
-          url:
-            "http://jxjweb.gz01.bdysite.com/img/assets/dajan/explain/08143.png"
-        },
-        {
-          title: "固件升级",
-          text1: "优化线路,修复导航缺陷,增加避障功能",
-          text2: "",
-          url:
-            "http://jxjweb.gz01.bdysite.com/img/assets/dajan/explain/08143.png"
-        },
-        {
-          title: "固件升级",
-          text1: "优化线路,修复导航缺陷,增加避障功能",
-          text2: "",
-          url:
-            "http://jxjweb.gz01.bdysite.com/img/assets/dajan/explain/08143.png"
-        },
-        {
-          title: "固件升级",
-          text1: "优化线路,修复导航缺陷,增加避障功能",
-          text2: "",
-          url:
-            "http://jxjweb.gz01.bdysite.com/img/assets/dajan/explain/08143.png"
-        },
-        {
-          title: "固件升级",
-          text1: "优化线路,修复导航缺陷,增加避障功能",
-          text2: "",
-          url:
-            "http://jxjweb.gz01.bdysite.com/img/assets/dajan/explain/08143.png"
-        }
-      ];
       var rule = 750 / wx.getSystemInfoSync().windowWidth;
       var height = wx.getSystemInfoSync().windowHeight;
       // console.log(height, rule);
       this.scrollHeight = `${height * rule - (103 + 423)}rpx`;
       // console.log(this.scrollHeight);
+
+      var that = this;
+      wx.getNetworkType({
+        success: function(res) {
+          if (res.networkType == "wifi") {
+            that.videoContext = wx.createVideoContext("showVideoBox");
+            that.videoContext.play();
+          }
+        }
+      });
     },
     toVideo(x) {
       wx.setStorage({
@@ -142,7 +109,8 @@ export default {
       var arr = wx.getStorageSync("data_box");
       arr.push({
         pre_page: this.thisPage,
-        pre_data: undefined
+        pre_data: this.dataList,
+        video:x,
       });
       wx.setStorageSync("data_box", arr);
       wx.setStorageSync("pre_page", this.thisPage);
@@ -163,15 +131,24 @@ export default {
   created() {},
   onShow() {
     this.prePage = wx.getStorageSync("pre_page");
+    var arr = wx.getStorageSync("data_box");
     if (this.prePage == "none") {
-      var arr = wx.getStorageSync("data_box");
+      this.animation = false;
       arr.pop();
+      wx.setStorageSync("data_box", arr);
       var obj = arr[arr.length - 1];
       this.prePage = obj.pre_page;
-      wx.setStorageSync("data_box", arr);
+      this.dataList = obj.pre_data;
+      this.playerObj = obj.video;
     } else {
-      wx.setStorageSync("pre_page", "none");
+      var obj = arr[arr.length - 1];
+      this.prePage = obj.pre_page;
+      this.dataList = obj.pre_data;
+      this.playerObj = obj.video;
     }
+
+    wx.setStorageSync("pre_page", "none");
+
     wx.setNavigationBarTitle({
       title: "系列产品说明" //页面标题为路由参数
     });
@@ -259,7 +236,7 @@ export default {
   position: absolute;
   top: 0;
   z-index: 100;
-  width:100%;
+  width: 100%;
 }
 
 .listHide {

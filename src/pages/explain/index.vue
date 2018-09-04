@@ -7,11 +7,11 @@
       </div>
       <div class="listBox" v-if="listShow" :class="{listHide:listHide}">
         <div class="search" v-if="prePage=='search'">
-          “Phantom”搜索到23条结果
+          “Phantom”搜索到 {{dataList.length}} 条结果
         </div>
         <div>
           <div :key=key v-for="(x,key) in dataList">
-            <video-card :videos=x @toVideo='toVideo' :index='key' :leftNone=leftNone></video-card>
+            <video-card :animation='animation' :videos=x @toVideo='toVideo' :index='key' :leftNone=leftNone></video-card>
           </div>
         </div>
       </div>
@@ -37,7 +37,8 @@ export default {
       listShow: true,
       listHide: false,
       hideSearch: false,
-      searchNew: 0
+      searchNew: 0,
+      animation:true,
     };
   },
 
@@ -53,7 +54,6 @@ export default {
       this.listHide = true;
       setTimeout(() => {
         this.searchNew = +new Date();
-
         this.listShow = false;
       }, 500);
     },
@@ -65,7 +65,8 @@ export default {
       var arr = wx.getStorageSync("data_box");
       arr.push({
         pre_page: this.thisPage,
-        pre_data: undefined
+        pre_data: this.dataList,
+        video:x,
       });
       wx.setStorageSync("data_box", arr);
       wx.setStorageSync("pre_page", this.thisPage);
@@ -77,39 +78,9 @@ export default {
     },
     getList() {
       this.leftNone = false;
-      this.dataList = [
-        {
-          title: "固件升级",
-          text1: "优化线路,修复导航缺陷",
-          text2: "版本1232",
-          url:
-            "http://jxjweb.gz01.bdysite.com/img/assets/dajan/explain/08143.png"
-        },
-        {
-          title: "固件升级1",
-          text1: "优化线路,修复导航缺陷",
-          text2: "版本1232",
-          url:
-            "http://jxjweb.gz01.bdysite.com/img/assets/dajan/explain/08144.png"
-        },
-        {
-          title: "固件升级1",
-          text1: "优化线路,修复导航缺陷",
-          text2: "版本1232",
-          url:
-            "http://jxjweb.gz01.bdysite.com/img/assets/dajan/explain/08143.png"
-        },
-        {
-          title: "固件升级",
-          text1: "优化线路,修复导航缺陷,增加避障功能",
-          text2: "",
-          url:
-            "http://jxjweb.gz01.bdysite.com/img/assets/dajan/explain/08143.png"
-        }
-      ];
       setTimeout(() => {
         this.leftNone = true;
-      }, 100);
+      }, 200);
     },
     exit() {
       this.leftNone = false;
@@ -117,22 +88,29 @@ export default {
       this.listHide = false;
       this.dataList = [];
       this.hideSearch = false;
+            this.animation=true;
+
     }
   },
   created() {},
   onShow() {
+
     this.prePage = wx.getStorageSync("pre_page");
+    var arr = wx.getStorageSync("data_box");
     if (this.prePage == "none") {
-      var arr = wx.getStorageSync("data_box");
+      this.animation = false;
       arr.pop();
+      wx.setStorageSync("data_box", arr);
       var obj = arr[arr.length - 1];
       this.prePage = obj.pre_page;
-      console.log(obj);
-      wx.setStorageSync("data_box", arr);
+      this.dataList = obj.pre_data.data;
     } else {
-      wx.setStorageSync("pre_page", "none");
+      var obj = arr[arr.length - 1];
+      this.prePage = obj.pre_page;
+      this.dataList = obj.pre_data.data;
     }
 
+    wx.setStorageSync("pre_page", "none");
     wx.setNavigationBarTitle({
       title: "系列产品说明" //页面标题为路由参数
     });
@@ -155,7 +133,8 @@ export default {
   font-size: 20rpx;
   font-family: PingFang-SC-Regular;
   color: rgba(94, 98, 98, 1);
-  margin: 0 auto 29rpx;
+  margin: 1rpx auto 29rpx;
+
 }
 
 .listBox {

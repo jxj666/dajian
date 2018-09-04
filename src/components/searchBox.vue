@@ -1,11 +1,14 @@
 <template>
   <div>
-    <search-input @searchText='searchText'></search-input>
-    <div class="listBox">
-      <div class="searchText" :key="index" v-for="(x,index) in dataList" @click="detailSearch(x)">
-        {{x.text}}
+    <div  class="search" :style='{transform:transform2}'>
+      <search-input @searchText='searchText' ></search-input>
+    </div>
+    <div v-if="searchRes" class="listBox">
+      <div class="searchText" :style={transform:transform1}  style='transition:transform 600ms;' v-if='index<12' :key="index" v-for="(x,index) in dataList" @click="detailSearch(x)">
+        {{x}}
       </div>
     </div>
+    <search-no v-else></search-no>
   </div>
 </template>
 
@@ -14,83 +17,112 @@
 import searchInput from "@/components/searchInput";
 // import loading from '@/components/loading'
 // import station from '@/components/station'
-// import searchNo from '@/components/searchNo'
+import searchNo from "@/components/searchNo";
 
 export default {
   props: ["searchNew"],
   data() {
     return {
+      searchRes: true,
+      text: "",
       hideNavSearch: true,
       thisPage: "search",
       prePage: undefined,
       dataList: [],
-      act:false,
+      act: false
     };
   },
   watch: {
     searchNew: function(val, oldVal) {
+      this.searchRes = true;
       this.getList();
     }
   },
   components: {
-    searchInput
+    searchInput,
+    searchNo
   },
   computed: {
-    // transform1() {
-    //   if (this.act) {
-    //     return `translateY(0)`;
-    //   } else {
-    //     return `translateY(3000%)`;
-    //   }
-    // }
+    transform1() {
+      if (this.act) {
+        return `translateY(0)`;
+      } else {
+        return `translateY(3000%)`;
+      }
+    },
+    transform2() {
+      if (this.act) {
+        return `translateY(0)`;
+        // return `rotateX(0deg)`;
+      } else {
+        return `translateY(-300%)`;
+        // return `rotateX(90deg)`;
+      }
+    }
   },
   methods: {
     getList() {
-      this.act=false
-      var arr = [
-        { text: "遥控" },
-        { text: "234" },
-        { text: "1234" },
-        { text: "42134234" },
-        { text: "距离" },
-        { text: "24423" },
-        { text: "bug" },
-        { text: "无人机" },
-        { text: "234342" },
-        { text: "大疆" },
-        { text: "43" },
-        { text: "大疆飞行器" },
-        { text: "遥控器" },
-        { text: "7588" },
-        { text: "234342" },
-        { text: "飞行" },
-        { text: "43" }
-      ];
-      // for (var i = 0; i < arr.length; i++) {
-      //   arr[i].transition = `transform ${100}ms ${50 * (i+1)}ms`;
-      // }
-      this.dataList = arr;
-      // setTimeout(()=>{
-      //   this.act=true
-      // },200)
+      this.act = false;
+      var arr = wx.getStorageSync("search_box") || [];
+      if (arr.length > 0) {
+        this.dataList = arr;
+        setTimeout(() => {
+          this.act = true;
+        }, 200);
+      } else {
+        var Fly = require("flyio/dist/npm/wx");
+        var fly = new Fly();
+        fly
+          .get(`http://dj.majiangyun.com/getKeyWord`, {})
+          .then(d => {
+            //输出请求数据
+            console.log("req", d.data);
+            arr = d.data.data;
+            wx.setStorageSync("search_box", arr);
+            this.dataList = arr;
+            setTimeout(() => {
+              this.act = true;
+            }, 200);
+          })
+          .catch(err => {
+            console.log(err.status, err.message);
+          });
+      }
     },
     detailSearch(x) {
       console.log(x);
-      var arr = wx.getStorageSync("data_box");
-      arr.push({ pre_page: this.thisPage, pre_data: undefined });
-      wx.setStorageSync("data_box", arr);
-      wx.setStorageSync("pre_page", this.thisPage);
-      const url = "../explain/main";
-      wx.navigateTo({ url });
+      if (!x) {
+        return;
+      }
+      var Fly = require("flyio/dist/npm/wx");
+      var fly = new Fly();
+      fly
+        .get(`http://dj.majiangyun.com/search/${x}`, {})
+        .then(d => {
+          //输出请求数据
+          console.log("req", d.data);
+          if (d.data.data.length > 0) {
+            wx.setStorage({
+              key: "goods",
+              data: JSON.stringify(x)
+            });
+            var arr = wx.getStorageSync("data_box");
+            arr.push({ pre_page: this.thisPage, pre_data: d.data });
+            wx.setStorageSync("data_box", arr);
+            wx.setStorageSync("pre_page", this.thisPage);
+            const url = "../explain/main";
+            wx.navigateTo({ url });
+          } else {
+            this.searchRes = false;
+            retrun;
+          }
+        })
+        .catch(err => {
+          console.log(err.status, err.message);
+        });
     },
     searchText(x) {
-      console.log(x);
-      var arr = wx.getStorageSync("data_box");
-      arr.push({ pre_page: this.thisPage, pre_data: undefined });
-      wx.setStorageSync("data_box", arr);
-      wx.setStorageSync("pre_page", this.thisPage);
-      const url = "../explain/main";
-      wx.navigateTo({ url });
+      this.detailSearch(x);
     }
   }
 };
@@ -118,9 +150,16 @@ export default {
     margin-bottom: 26rpx;
     margin-right: 26rpx;
     font-weight: 100;
-    // transition-timing-function: ease-out;
-    // -webkit-transform: translate3d(0, 0, 0);
-    // transform: translateY(3000%);
+    transition-timing-function: ease-out;
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translateY(3000%);
   }
+}
+.search {
+  transition-timing-function: ease-out;
+  -webkit-transform: translate3d(0, 0, 0);
+  transform: translateY(-300%);
+  // transform: rotateX(90deg);
+  transition: transform 300ms;
 }
 </style>

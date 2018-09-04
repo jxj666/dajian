@@ -6,28 +6,28 @@
 		</div>
 		<div class="card_r">
 			<h3>{{videos.title}}</h3>
-			<h5>{{videos.text1}}<br>{{videos.text2}}</h5>
+			<h5>{{videos.sub_title}}</h5>
 		</div>
 	</div>
 </template>
 
 <script>
 export default {
-  props: ["videos", "index", "leftNone"],
+  props: ["videos", "index", "leftNone",'animation'],
   computed: {
     imgBackground() {
-      return `url(${this.videos.url}) no-repeat center`;
+      return `#eee url('http://dj.majiangyun.com/image/${this.videos.image_url}') no-repeat center`;
     },
     leftClass() {
-      if (this.leftNone) {
-        return `translateX(0)`
+      if (this.leftNone || this.index == -1 || !this.animation) {
+        return `translateX(0)`;
       } else {
-        return `translateX(${-(this.index) * 25}%)`
+        return `translateX(${(this.index>7?11:this.index + 3) * 50}%)`;
       }
     },
     transition1() {
-      if (this.leftNone) {
-        return `  transform 500ms;`;
+      if (this.animation && this.leftNone) {
+        return `  transform 300ms linear ${this.index * 10}ms;`;
       } else {
         return ` `;
       }
@@ -51,7 +51,7 @@ export default {
   justify-content: space-between;
   position: relative;
   transition-timing-function: linear;
-  -webkit-transform: translate3d(0,0,0); /*开启硬件加速*/
+  -webkit-transform: translate3d(0, 0, 0); /*开启硬件加速*/
 
   .card_l {
     width: 303rpx;
