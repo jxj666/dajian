@@ -16,11 +16,16 @@ export default {
   },
   onShow() {
     this.text = "加载中";
+    return;
     this.prePage = wx.getStorageSync("pre_page");
     if (this.prePage == "none") {
       wx.setStorageSync("pre_page", "start");
       this.text = "返回退出";
     } else {
+    }
+  },
+  methods: {
+    start_index() {
       var Fly = require("flyio/dist/npm/wx");
       var fly = new Fly();
       fly
@@ -45,6 +50,28 @@ export default {
   created() {
     wx.setStorageSync("data_box", [{ pre_page: "begin" }]);
     wx.setStorageSync("pre_page", "begin");
+    wx.login({
+      success: function(res) {
+        if (res.code) {
+          console.log(res);
+          var Fly = require("flyio/dist/npm/wx");
+          var fly = new Fly();
+          fly
+            .post("http://dj.majiangyun.com/wechatLogin", {
+              code: res.code
+            })
+            .then(d => {
+              //输出请求数据
+              console.log("req", d.data);
+            })
+            .catch(err => {
+              console.log(err.status, err.message);
+            });
+        } else {
+          console.log("登录失败！" + res.errMsg);
+        }
+      }
+    });
   }
 };
 </script>
