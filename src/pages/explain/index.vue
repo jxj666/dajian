@@ -38,7 +38,7 @@ export default {
       listHide: false,
       hideSearch: false,
       searchNew: 0,
-      animation:true,
+      animation: true
     };
   },
 
@@ -66,7 +66,8 @@ export default {
       arr.push({
         pre_page: this.thisPage,
         pre_data: this.dataList,
-        video:x,
+        video: x,
+        page: "player"
       });
       wx.setStorageSync("data_box", arr);
       wx.setStorageSync("pre_page", this.thisPage);
@@ -88,20 +89,31 @@ export default {
       this.listHide = false;
       this.dataList = [];
       this.hideSearch = false;
-            this.animation=true;
-
+      this.animation = true;
     }
   },
   created() {},
   onShow() {
-
     this.prePage = wx.getStorageSync("pre_page");
     var arr = wx.getStorageSync("data_box");
+
     if (this.prePage == "none") {
       this.animation = false;
-      arr.pop();
+     var kelement= arr.pop();
       wx.setStorageSync("data_box", arr);
       var obj = arr[arr.length - 1];
+
+      var page = obj.page;
+          if (page != "explain") {
+        arr.push(kelement)
+        wx.setStorageSync("data_box", arr);
+        // this.exit();
+        // wx.setStorageSync("pre_page", "begin");
+        // const url = "../loading/main";
+        // wx.redirectTo({ url });
+      }
+      obj = arr[arr.length - 1];
+      page = obj.page;
       this.prePage = obj.pre_page;
       this.dataList = obj.pre_data.data;
     } else {
@@ -134,7 +146,6 @@ export default {
   font-family: PingFang-SC-Regular;
   color: rgba(94, 98, 98, 1);
   margin: 1rpx auto 29rpx;
-
 }
 
 .listBox {

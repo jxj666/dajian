@@ -1,0 +1,25 @@
+@import "/static/css/vendor.wxss";
+
+.box.data-v-90d4dc9e {
+  margin-top: 235rpx;
+}
+.box.searchLoading.data-v-90d4dc9e {
+  margin-top: 127rpx;
+}
+.box image.data-v-90d4dc9e {
+  width: 200rpx;
+  height: 200rpx;
+  display: block;
+  margin: 0 auto;
+}
+.box ._h3.data-v-90d4dc9e {
+  position: relative;
+  top: -15rpx;
+  z-index: 10;
+  font-size: 30rpx;
+  line-height: 30rpx;
+  font-family: PingFang-SC-Regular;
+  color: #666666;
+  text-align: center;
+  font-weight: 200;
+}

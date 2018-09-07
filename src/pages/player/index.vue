@@ -110,7 +110,8 @@ export default {
       arr.push({
         pre_page: this.thisPage,
         pre_data: this.dataList,
-        video:x,
+        video: x,
+        page: "player"
       });
       wx.setStorageSync("data_box", arr);
       wx.setStorageSync("pre_page", this.thisPage);
@@ -132,11 +133,24 @@ export default {
   onShow() {
     this.prePage = wx.getStorageSync("pre_page");
     var arr = wx.getStorageSync("data_box");
+
     if (this.prePage == "none") {
       this.animation = false;
-      arr.pop();
+      var kelement=arr.pop();
       wx.setStorageSync("data_box", arr);
       var obj = arr[arr.length - 1];
+      var page = obj.page;
+      console.log(page);
+      if (page != "player") {
+        arr.push(kelement)
+        wx.setStorageSync("data_box", arr);
+        // this.exit();
+        // wx.setStorageSync("pre_page", "begin");
+        // const url = "../loading/main";
+        // wx.redirectTo({ url });
+      }
+      obj = arr[arr.length - 1];
+      page = obj.page;
       this.prePage = obj.pre_page;
       this.dataList = obj.pre_data;
       this.playerObj = obj.video;
@@ -152,20 +166,28 @@ export default {
     wx.setNavigationBarTitle({
       title: "系列产品说明" //页面标题为路由参数
     });
+
+    var Fly = require("flyio/dist/npm/wx");
+    var fly = new Fly();
+    var header = wx.getStorageSync("YX-SESSIONID");
+    fly.interceptors.request.use(request => {
+      request.headers["YX-SESSIONID"] = header;
+      return request;
+    });
+    fly
+      .post(`http://dj.majiangyun.com/uploadProductStatic`, {
+        productId: this.playerObj.id
+      })
+      .then(d => {
+        //输出请求数据
+        console.log("req", d.data);
+      })
+      .catch(err => {
+        console.log(err.status, err.message);
+      });
     this.getList();
   },
-  // //监听屏幕滚动 判断上下滚动
-  // onPageScroll: function(ev) {
-  //   var _this = this;
-  //   var width = wx.getSystemInfoSync().windowWidth;
-  //   console.log(ev.scrollTop, width / 750 * 103);
-  //   if (ev.scrollTop > width / 750 * 103) {
-  //     this.fixed = true;
-  //   } else {
-  //     this.fixed = false;
-  //   }
-  //   console.log(this.fixed);
-  // },
+
   onHide() {
     this.exit();
   },

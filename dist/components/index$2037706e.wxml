@@ -1,0 +1,13 @@
+<import src="mainTitle$21a36f56" />
+<import src="videoCard$652dd861" />
+<template name="index$2037706e">
+  <view class="_div data-v-3b8b47ac">
+    <template data="{{...$root[$kk+'0'], $root}}" is="mainTitle$21a36f56"></template>
+    <view class="_div data-v-3b8b47ac search" wx:if="{{prePage=='search'}}"> “Phantom”搜索到23条结果 </view>
+    <view class="_div data-v-3b8b47ac listBox">
+      <view wx:key="item" key="{{item}}" wx:for="{{dataList}}" wx:for-index="item" wx:for-item="x" class="_div data-v-3b8b47ac">
+        <template bindtoVideo="handleProxy" data-eventid="{{'0-'+item}}" data-comkey="{{$k}}" data="{{...$root[$kk+'1-'+item], $root}}" is="videoCard$652dd861"></template>
+      </view>
+    </view>
+  </view>
+</template>

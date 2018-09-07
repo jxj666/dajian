@@ -6,7 +6,7 @@
 		</div>
 		<div class="card_r">
 			<h3>{{videos.title}}</h3>
-			<h5>{{videos.sub_title}}</h5>
+			<h5>{{videos.description}}</h5>
 		</div>
 	</div>
 </template>

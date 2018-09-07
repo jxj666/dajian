@@ -1,0 +1,13 @@
+<import src="mainTitle$5108c89c" />
+<import src="searchInput$29176682" />
+<import src="station$1f2b171e" />
+<template name="search$1e628c68">
+  <view class="_div data-v-9ad779ae">
+    <template data="{{...$root[$kk+'0'], $root}}" is="mainTitle$5108c89c"></template>
+    <template data="{{...$root[$kk+'1'], $root}}" is="searchInput$29176682"></template>
+    <view class="_div data-v-9ad779ae listBox">
+      <view class="_div data-v-9ad779ae searchText" wx:key="index" key="{{index}}" wx:for="{{list}}" wx:for-index="index" wx:for-item="x"> 搜索项目 </view>
+    </view>
+    <template data="{{...$root[$kk+'2'], $root}}" is="station$1f2b171e"></template>
+  </view>
+</template>

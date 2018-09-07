@@ -1,0 +1,12 @@
+<template name="videoCard$71ef4eb0">
+  <view class="_div data-v-2d90fec5 card">
+    <view class="_div data-v-2d90fec5 card_l">
+      <view class="_div data-v-2d90fec5 display"></view>
+    </view>
+    <view class="_div data-v-2d90fec5 card_r">
+      <view class="_h3 data-v-2d90fec5">固件升级</view>
+      <view class="_h5 data-v-2d90fec5">优化线路,修复导航问题
+        <view class="_br data-v-2d90fec5"></view>版本342134</view>
+    </view>
+  </view>
+</template>

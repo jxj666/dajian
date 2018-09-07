@@ -1,0 +1,15 @@
+@import "/static/css/vendor.wxss";
+
+.listBox.data-v-83ca5144 {
+  display: flex;
+  justify-content: space-around;
+}
+.search.data-v-83ca5144 {
+  height: 20rpx;
+  width: 666rpx;
+  line-height: 20rpx;
+  font-size: 20rpx;
+  font-family: PingFang-SC-Regular;
+  color: #5e6262;
+  margin: 0 auto 29rpx;
+}

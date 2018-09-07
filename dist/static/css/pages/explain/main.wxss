@@ -1,0 +1,37 @@
+@import "/static/css/vendor.wxss";
+
+@charset "UTF-8";
+.search.data-v-3b8b47ac {
+  height: 20rpx;
+  width: 666rpx;
+  line-height: 20rpx;
+  font-size: 20rpx;
+  font-family: PingFang-SC-Regular;
+  color: #5e6262;
+  margin: 1rpx auto 29rpx;
+}
+.listBox.data-v-3b8b47ac {
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  transition-timing-function: ease-in;
+  -webkit-transform: translate3d(0, 0, 0);
+  transform: translateY(0);
+  transition: transform 500ms;
+  position: absolute;
+  top: 0;
+  z-index: 200;
+}
+.searchBox.data-v-3b8b47ac {
+  position: absolute;
+  top: 0;
+  z-index: 100;
+  width: 100%;
+}
+.listHide.data-v-3b8b47ac {
+  transform: translateY(100%);
+}
+.contentBox.data-v-3b8b47ac {
+  position: relative;
+}

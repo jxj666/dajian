@@ -1,0 +1,6 @@
+<template name="loading$5157ab1c">
+  <view class="_div data-v-5a5599d6 box">
+    <image src="../../static/img/gif.gif" class="_image data-v-5a5599d6"></image>
+    <view class="_h3 data-v-5a5599d6">加载中</view>
+  </view>
+</template>

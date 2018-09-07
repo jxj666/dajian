@@ -1,0 +1,12 @@
+<import src="mainTitle$5108c89c" />
+<import src="indexCard$074125ff" />
+<template name="index$71ffcd44">
+  <view class="_div data-v-0ce52447">
+    <template data="{{...$root[$kk+'0'], $root}}" is="mainTitle$5108c89c"></template>
+    <view class="_div data-v-0ce52447 listBox">
+      <view wx:key="item" key="{{item}}" wx:for="{{list}}" wx:for-index="item" wx:for-item="x" class="_div data-v-0ce52447">
+        <template data="{{...$root[$kk+'1-'+item], $root}}" is="indexCard$074125ff"></template>
+      </view>
+    </view>
+  </view>
+</template>

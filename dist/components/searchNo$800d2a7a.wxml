@@ -1,0 +1,6 @@
+<template name="searchNo$800d2a7a">
+  <view class="_div data-v-c5b43042 box">
+    <image src="../../static/img/dajian8.png" class="_image data-v-c5b43042"></image>
+    <view class="_h3 data-v-c5b43042">搜索无结果</view>
+  </view>
+</template>

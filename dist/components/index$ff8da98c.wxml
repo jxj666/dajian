@@ -1,0 +1,28 @@
+<import src="mainTitle$71a29f24" />
+<import src="textCard$187d6468" />
+<import src="videoCard$30bba1a0" />
+<import src="searchBox$4acf9408" />
+<template name="index$ff8da98c">
+  <view class="_div data-v-2e73f5bc grid-box">
+    <template bindtoSearch="handleProxy" data-eventid="{{'0'}}" data-comkey="{{$k}}" data="{{...$root[$kk+'0'], $root}}" is="mainTitle$71a29f24"></template>
+    <view class="_div data-v-2e73f5bc contentBox">
+      <view class="_div data-v-2e73f5bc listBoxTotal {{[listHide ? 'listHide' : '']}}" wx:if="{{listShow}}">
+        <view class="_view data-v-2e73f5bc videoBox">
+          <video wx:if="{{playerObj.class==2}}" id="showVideoBox" objectFit="fill" src="{{src_fix}}" controls fixed="true" class="_video data-v-2e73f5bc {{[fixed ? 'fixedVideo' : '']}}"></video>
+          <txv-video wx:if="{{playerObj.class ==1 }}" vid="{{playerObj.video_id}}" playerid="showVideoBox" objectFit="fill" class="_txv-video data-v-2e73f5bc"></txv-video>
+        </view>
+        <view class="_div data-v-2e73f5bc listBox grid-var" style=" {{('height:' + scrollHeight + ';')}}">
+          <scroll-view class="_scroll-view data-v-2e73f5bc content" scroll-y="true">
+            <template data="{{...$root[$kk+'2'], $root}}" is="textCard$187d6468"></template>
+            <view wx:key="key" key="{{key}}" wx:for="{{dataList}}" wx:for-index="key" wx:for-item="x" class="_div data-v-2e73f5bc">
+              <template wx:if="{{playerObj.id != x.id}}" bindtoVideo="handleProxy" data-eventid="{{'1-'+key}}" data-comkey="{{$k}}" data="{{...$root[$kk+'3-'+key], $root}}" is="videoCard$30bba1a0"></template>
+            </view>
+          </scroll-view>
+        </view>
+      </view>
+      <view class="_div data-v-2e73f5bc searchBox" wx:if="{{listHide}}">
+        <template data="{{...$root[$kk+'4'], $root}}" is="searchBox$4acf9408"></template>
+      </view>
+    </view>
+  </view>
+</template>

@@ -1,0 +1,12 @@
+<import src="mainTitle$5108c89c" />
+<import src="videoCard$71ef4eb0" />
+<template name="explain$76c0b52e">
+  <view class="_div data-v-3b8b47ac">
+    <template data="{{...$root[$kk+'0'], $root}}" is="mainTitle$5108c89c"></template>
+    <view class="_div data-v-3b8b47ac listBox">
+      <view wx:key="item" key="{{item}}" wx:for="{{list}}" wx:for-index="item" wx:for-item="x" class="_div data-v-3b8b47ac">
+        <template data="{{...$root[$kk+'1-'+item], $root}}" is="videoCard$71ef4eb0"></template>
+      </view>
+    </view>
+  </view>
+</template>

@@ -1,0 +1,17 @@
+<import src="mainTitle$21a36f56" />
+<import src="textCard$9da15dd2" />
+<import src="videoCard$652dd861" />
+<template name="index$2a4f6cab">
+  <view class="_div data-v-2e73f5bc">
+    <template data="{{...$root[$kk+'0'], $root}}" is="mainTitle$21a36f56"></template>
+    <view class="_div data-v-2e73f5bc videoBox">
+      <video src="{{src}}" controls class="_video data-v-2e73f5bc"></video>
+    </view>
+    <template data="{{...$root[$kk+'1'], $root}}" is="textCard$9da15dd2"></template>
+    <view class="_div data-v-2e73f5bc listBox">
+      <view wx:key="item" key="{{item}}" wx:for="{{dataList}}" wx:for-index="item" wx:for-item="x" class="_div data-v-2e73f5bc">
+        <template bindtoVideo="handleProxy" data-eventid="{{'0-'+item}}" data-comkey="{{$k}}" data="{{...$root[$kk+'2-'+item], $root}}" is="videoCard$652dd861"></template>
+      </view>
+    </view>
+  </view>
+</template>

@@ -16,27 +16,67 @@ export default {
   },
   onShow() {
     this.text = "加载中";
-    return;
     this.prePage = wx.getStorageSync("pre_page");
     if (this.prePage == "none") {
       wx.setStorageSync("pre_page", "start");
       this.text = "返回退出";
     } else {
+      this.get_user();
     }
   },
   methods: {
+    get_user() {
+      wx.setStorageSync("data_box", [{ pre_page: "begin" }]);
+      wx.setStorageSync("pre_page", "begin");
+      var _this = this;
+      wx.login({
+        success: function(res) {
+          if (res.code) {
+            console.log(res);
+            var Fly = require("flyio/dist/npm/wx");
+            var fly = new Fly();
+            fly
+              .post("http://dj.majiangyun.com/wechatLogin", {
+                code: res.code
+              })
+              .then(d => {
+                //输出请求数据
+                console.log("req", d.data);
+                wx.setStorageSync("YX-SESSIONID", d.data.data.sessionId);
+
+                _this.start_index();
+              })
+              .catch(err => {
+                console.log(err.status, err.message);
+              });
+          } else {
+            console.log("登录失败！" + res.errMsg);
+          }
+        }
+      });
+    },
     start_index() {
       var Fly = require("flyio/dist/npm/wx");
       var fly = new Fly();
+
+      var header = wx.getStorageSync("YX-SESSIONID");
+      fly.interceptors.request.use(request => {
+        request.headers["YX-SESSIONID"] = header;
+        return request;
+      });
+
       fly
         .get("http://dj.majiangyun.com/", {})
         .then(d => {
           //输出请求数据
           console.log("req", d.data);
           wx.setStorageSync("index_box", d.data);
-
           var arr = wx.getStorageSync("data_box");
-          arr.push({ pre_page: this.thisPage, pre_data: d.data });
+          arr.push({
+            pre_page: this.thisPage,
+            pre_data: d.data,
+            page: "index"
+          });
           wx.setStorageSync("data_box", arr);
           wx.setStorageSync("pre_page", this.thisPage);
           const url = "../index/main";
@@ -46,32 +86,6 @@ export default {
           console.log(err.status, err.message);
         });
     }
-  },
-  created() {
-    wx.setStorageSync("data_box", [{ pre_page: "begin" }]);
-    wx.setStorageSync("pre_page", "begin");
-    wx.login({
-      success: function(res) {
-        if (res.code) {
-          console.log(res);
-          var Fly = require("flyio/dist/npm/wx");
-          var fly = new Fly();
-          fly
-            .post("http://dj.majiangyun.com/wechatLogin", {
-              code: res.code
-            })
-            .then(d => {
-              //输出请求数据
-              console.log("req", d.data);
-            })
-            .catch(err => {
-              console.log(err.status, err.message);
-            });
-        } else {
-          console.log("登录失败！" + res.errMsg);
-        }
-      }
-    });
   }
 };
 </script>

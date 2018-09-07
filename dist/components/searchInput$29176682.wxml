@@ -1,0 +1,6 @@
+<template name="searchInput$29176682">
+  <view class="_div data-v-5b2840c8 search">
+    <input type="text" placeholder="搜索DJI.." class="_input data-v-5b2840c8" />
+    <view class="_div data-v-5b2840c8 btn"></view>
+  </view>
+</template>

@@ -1,0 +1,28 @@
+@import "/static/css/vendor.wxss";
+
+@charset "UTF-8";
+.listBox.data-v-62865e17 {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  transition-timing-function: ease-in;
+  -webkit-transform: translate3d(0, 0, 0);
+  transform: translateY(0);
+  transition: transform 500ms;
+  position: absolute;
+  top: 0;
+  z-index: 200;
+  width: 100%;
+}
+.searchBox.data-v-62865e17 {
+  position: absolute;
+  top: 0;
+  z-index: 100;
+  width: 100%;
+}
+.listHide.data-v-62865e17 {
+  transform: translateY(100%);
+}
+.contentBox.data-v-62865e17 {
+  position: relative;
+}

@@ -1,0 +1,6 @@
+<template name="textCard$187d6468">
+  <view class="_div data-v-e348639a card">
+    <view class="_h3 data-v-e348639a">{{video.title}}</view>
+    <view class="_p data-v-e348639a">{{video.description}}</view>
+  </view>
+</template>

@@ -1,0 +1,10 @@
+<template name="indexCard$074125ff">
+  <view class="_div data-v-6dc9cc1c card">
+    <view class="_h3 data-v-6dc9cc1c">
+      <label class="_span data-v-6dc9cc1c title1">御</label>
+      <label class="_span data-v-6dc9cc1c title2">MAVIC</label>
+      <label class="_span data-v-6dc9cc1c title3">2</label>
+      <label class="_span data-v-6dc9cc1c title4">系列</label>
+    </view>
+  </view>
+</template>

@@ -1,0 +1,12 @@
+<import src="mainTitle$21a36f56" />
+<import src="indexCard$b532b490" />
+<template name="index$51c4f238">
+  <view class="_div data-v-0ce52447">
+    <template data="{{...$root[$kk+'0'], $root}}" is="mainTitle$21a36f56"></template>
+    <view class="_div data-v-0ce52447 listBox">
+      <view wx:key="item" key="{{item}}" wx:for="{{dataList}}" wx:for-index="item" wx:for-item="x" class="_div data-v-0ce52447">
+        <template bindtoDetail="handleProxy" data-eventid="{{'0-'+item}}" data-comkey="{{$k}}" data="{{...$root[$kk+'1-'+item], $root}}" is="indexCard$b532b490"></template>
+      </view>
+    </view>
+  </view>
+</template>

@@ -1,0 +1,12 @@
+<template name="videoCard$2c5a85fb">
+  <view class="_div data-v-2d90fec5 card" bindtap="handleProxy" data-eventid="{{'0'}}" data-comkey="{{$k}}" style=" {{('transform:' + leftClass + ';' + 'transition:' + transition1 + ';')}}">
+    <view class="_div data-v-2d90fec5 card_l" style=" {{('background:' + imgBackground + ';' + 'background-size:' + '100%' + ';')}}">
+      <view class="_div data-v-2d90fec5 display"></view>
+    </view>
+    <view class="_div data-v-2d90fec5 card_r">
+      <view class="_h3 data-v-2d90fec5">{{videos.title}}</view>
+      <view class="_h5 data-v-2d90fec5">{{videos.text1}}
+        <view class="_br data-v-2d90fec5"></view>{{videos.text2}}</view>
+    </view>
+  </view>
+</template>

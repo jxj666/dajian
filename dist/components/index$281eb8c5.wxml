@@ -1,0 +1,19 @@
+<import src="mainTitle$934a1422" />
+<import src="textCard$6d49883d" />
+<import src="videoCard$2c5a85fb" />
+<template name="index$281eb8c5">
+  <view class="_div data-v-2e73f5bc grid-box">
+    <template data="{{...$root[$kk+'0'], $root}}" is="mainTitle$934a1422"></template>
+    <view class="_div data-v-2e73f5bc videoBox">
+      <video src="{{src}}" controls fixed="true" class="_video data-v-2e73f5bc {{[fixed ? 'fixedVideo' : '']}}"></video>
+    </view>
+    <view class="_div data-v-2e73f5bc listBox grid-var" style=" {{('height:' + scrollHeight + ';')}}">
+      <scroll-view class="_scroll-view data-v-2e73f5bc content" scroll-y="true">
+        <template data="{{...$root[$kk+'1'], $root}}" is="textCard$6d49883d"></template>
+        <view wx:key="key" key="{{key}}" wx:for="{{dataList}}" wx:for-index="key" wx:for-item="x" class="_div data-v-2e73f5bc">
+          <template bindtoVideo="handleProxy" data-eventid="{{'0-'+key}}" data-comkey="{{$k}}" data="{{...$root[$kk+'2-'+key], $root}}" is="videoCard$2c5a85fb"></template>
+        </view>
+      </scroll-view>
+    </view>
+  </view>
+</template>

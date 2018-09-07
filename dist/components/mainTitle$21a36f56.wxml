@@ -1,0 +1,7 @@
+<template name="mainTitle$21a36f56">
+  <view class="_div data-v-90dd228e nav">
+    <view class="_div data-v-90dd228e line"></view>
+    <view class="_h3 data-v-90dd228e icon" bindtap="handleProxy" data-eventid="{{'0'}}" data-comkey="{{$k}}"></view>
+    <view class="_h3 data-v-90dd228e search" bindtap="handleProxy" wx:if="{{hideSearch}}" data-eventid="{{'1'}}" data-comkey="{{$k}}"></view>
+  </view>
+</template>

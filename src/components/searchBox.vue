@@ -5,7 +5,7 @@
     </div>
     <div v-if="searchRes" class="listBox">
       <div class="searchText" :style={transform:transform1}  style='transition:transform 600ms;' v-if='index<12' :key="index" v-for="(x,index) in dataList" @click="detailSearch(x)">
-        {{x}}
+        {{x.length<10?x:x.substr(0,8)+'...'}}
       </div>
     </div>
     <search-no v-else></search-no>
@@ -47,7 +47,7 @@ export default {
       if (this.act) {
         return `translateY(0)`;
       } else {
-        return `translateY(3000%)`;
+        return `translateY(-500%)`;
       }
     },
     transform2() {
@@ -69,9 +69,15 @@ export default {
         setTimeout(() => {
           this.act = true;
         }, 200);
+        wx.setStorageSync("search_box", []);
       } else {
         var Fly = require("flyio/dist/npm/wx");
         var fly = new Fly();
+        var header = wx.getStorageSync("YX-SESSIONID");
+        fly.interceptors.request.use(request => {
+          request.headers["YX-SESSIONID"] = header;
+          return request;
+        });
         fly
           .get(`http://dj.majiangyun.com/getKeyWord`, {})
           .then(d => {
@@ -96,6 +102,11 @@ export default {
       }
       var Fly = require("flyio/dist/npm/wx");
       var fly = new Fly();
+      var header = wx.getStorageSync("YX-SESSIONID");
+      fly.interceptors.request.use(request => {
+        request.headers["YX-SESSIONID"] = header;
+        return request;
+      });
       fly
         .get(`http://dj.majiangyun.com/search/${x}`, {})
         .then(d => {
@@ -107,7 +118,11 @@ export default {
               data: JSON.stringify(x)
             });
             var arr = wx.getStorageSync("data_box");
-            arr.push({ pre_page: this.thisPage, pre_data: d.data });
+            arr.push({
+              pre_page: this.thisPage,
+              pre_data: d.data,
+              page: "explain"
+            });
             wx.setStorageSync("data_box", arr);
             wx.setStorageSync("pre_page", this.thisPage);
             const url = "../explain/main";

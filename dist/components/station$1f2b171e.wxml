@@ -1,0 +1,6 @@
+<template name="station$1f2b171e">
+  <view class="_div data-v-9ba00464 box">
+    <image src="../../static/img/dajian9.png" class="_image data-v-9ba00464"></image>
+    <view class="_h3 data-v-9ba00464">页面飞丢了</view>
+  </view>
+</template>

@@ -60,6 +60,11 @@ export default {
     toDetail(x) {
       var Fly = require("flyio/dist/npm/wx");
       var fly = new Fly();
+      var header = wx.getStorageSync("YX-SESSIONID");
+      fly.interceptors.request.use(request => {
+        request.headers["YX-SESSIONID"] = header;
+        return request;
+      });
       fly
         .get(`http://dj.majiangyun.com/type-product/${x.id}`, {})
         .then(d => {
@@ -70,7 +75,11 @@ export default {
             data: JSON.stringify(x)
           });
           var arr = wx.getStorageSync("data_box");
-          arr.push({ pre_page: this.thisPage, pre_data: d.data });
+          arr.push({
+            pre_page: this.thisPage,
+            pre_data: d.data,
+            page: "explain"
+          });
           wx.setStorageSync("data_box", arr);
           wx.setStorageSync("pre_page", this.thisPage);
           const url = "../explain/main";
@@ -93,11 +102,23 @@ export default {
   onShow() {
     this.prePage = wx.getStorageSync("pre_page");
     var arr = wx.getStorageSync("data_box");
+
     if (this.prePage == "none") {
       this.animation = false;
-      arr.pop();
+      var kelement = arr.pop();
       wx.setStorageSync("data_box", arr);
       var obj = arr[arr.length - 1];
+      var page = obj.page;
+      if (page != "childIndex") {
+        arr.push(kelement);
+        wx.setStorageSync("data_box", arr);
+        // this.exit();
+        // wx.setStorageSync("pre_page", "begin");
+        // const url = "../loading/main";
+        // wx.redirectTo({ url });
+      }
+      obj = arr[arr.length - 1];
+      page = obj.page;
       this.prePage = obj.pre_page;
       this.dataList = obj.pre_data.data;
     } else {
@@ -105,6 +126,7 @@ export default {
       this.prePage = obj.pre_page;
       this.dataList = obj.pre_data.data;
     }
+
     wx.setStorageSync("pre_page", "none");
 
     wx.setNavigationBarTitle({

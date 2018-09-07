@@ -1,0 +1,6 @@
+<template name="index$5986b5c2">
+  <view class="_div data-v-90d4dc9e box">
+    <image src="../../static/img/gif.gif" class="_image data-v-90d4dc9e"></image>
+    <view class="_h3 data-v-90d4dc9e">{{text}}</view>
+  </view>
+</template>

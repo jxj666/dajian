@@ -1,0 +1,6 @@
+<template name="mainTitle$5108c89c">
+  <view class="_div data-v-90dd228e">
+    <view class="_h3 data-v-90dd228e icon"></view>
+    <view class="_h3 data-v-90dd228e search"></view>
+  </view>
+</template>

@@ -1,0 +1,15 @@
+<import src="searchInput$4cf2a147" />
+<import src="searchNo$27477e14" />
+<template name="searchBox$4acf9408">
+  <view class="_div data-v-de8338c6">
+    <view class="_div data-v-de8338c6 search" style=" {{('transform:' + transform2 + ';')}}">
+      <template bindsearchText="handleProxy" data-eventid="{{'0'}}" data-comkey="{{$k}}" data="{{...$root[$kk+'0'], $root}}" is="searchInput$4cf2a147"></template>
+    </view>
+    <view wx:if="{{searchRes}}" class="_div data-v-de8338c6 listBox">
+      <view class="_div data-v-de8338c6 searchText" style="transition:transform 600ms; {{('transform:' + transform1 + ';')}}" wx:if="{{index<12}}" wx:key="index" key="{{index}}" bindtap="handleProxy" data-eventid="{{'1-'+index}}" data-comkey="{{$k}}" wx:for="{{dataList}}"
+        wx:for-index="index" wx:for-item="x"> {{x.length
+        <10?x:x.substr(0,8)+ '...'}} </view>
+      </view>
+      <template wx:else data="{{...$root[$kk+'1'], $root}}" is="searchNo$27477e14"></template>
+    </view>
+</template>

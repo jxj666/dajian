@@ -1,0 +1,6 @@
+<template name="searchLoading$22f369f1">
+  <view class="_div data-v-2a51b98e box">
+    <image src="../../static/img/dajian4.png" class="_image data-v-2a51b98e"></image>
+    <view class="_h3 data-v-2a51b98e">加载中</view>
+  </view>
+</template>

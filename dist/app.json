@@ -1,0 +1,22 @@
+{
+  "pages": [
+    "pages/loading/main",
+    "pages/childIndex/main",
+    "pages/explain/main",
+    "pages/index/main",
+    "pages/player/main",
+    "pages/search/main"
+  ],
+  "plugins": {
+    "myPlugin": {
+      "version": "1.1.8",
+      "provider": "wxa75efa648b60994b"
+    }
+  },
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#fff",
+    "navigationBarTitleText": "大疆飞手百科",
+    "navigationBarTextStyle": "black"
+  }
+}

@@ -1,0 +1,6 @@
+<template name="searchInput$44f07152">
+  <view class="_div data-v-5b2840c8 search">
+    <input type="text" placeholder="搜索DJI.." value="{{dataInput}}" bindinput="handleProxy" data-eventid="{{'0'}}" data-comkey="{{$k}}" class="_input data-v-5b2840c8" />
+    <view class="_div data-v-5b2840c8 btn" bindtap="handleProxy" data-eventid="{{'1'}}" data-comkey="{{$k}}"></view>
+  </view>
+</template>
