@@ -16,7 +16,7 @@ export default {
   props: ["videos", "index", "leftNone",'animation'],
   computed: {
     imgBackground() {
-      return `#eee url('http://dj.majiangyun.com/image/${this.videos.image_url}') no-repeat center`;
+      return `#eee url('https://dj.majiangyun.com/image/${this.videos.image_url}') no-repeat center`;
     },
     leftClass() {
       if (this.leftNone || this.index == -1 || !this.animation) {

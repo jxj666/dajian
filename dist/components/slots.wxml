@@ -1,4 +1,8 @@
 <import src="mainTitle$71a29f24" />
+<import src="textCard$187d6468" />
+<import src="videoCard$30bba1a0" />
+<import src="searchBox$4acf9408" />
+<import src="mainTitle$71a29f24" />
 <import src="searchBox$4acf9408" />
 <import src="videoCard$30bba1a0" />
 <import src="mainTitle$71a29f24" />
@@ -6,9 +10,3 @@
 <import src="searchBox$4acf9408" />
 <import src="mainTitle$71a29f24" />
 <import src="searchInput$4cf2a147" />
-<import src="mainTitle$71a29f24" />
-<import src="textCard$187d6468" />
-<import src="videoCard$30bba1a0" />
-<import src="searchBox$4acf9408" />
-<import src="searchInput$4cf2a147" />
-<import src="searchNo$27477e14" />

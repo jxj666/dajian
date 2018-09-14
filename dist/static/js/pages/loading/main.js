@@ -119,7 +119,7 @@ if (false) {(function () {
             console.log(res);
             var Fly = __webpack_require__(2);
             var fly = new Fly();
-            fly.post("http://dj.majiangyun.com/wechatLogin", {
+            fly.post("https://dj.majiangyun.com/wechatLogin", {
               code: res.code
             }).then(function (d) {
               //输出请求数据
@@ -148,7 +148,7 @@ if (false) {(function () {
         return request;
       });
 
-      fly.get("http://dj.majiangyun.com/", {}).then(function (d) {
+      fly.get("https://dj.majiangyun.com/", {}).then(function (d) {
         //输出请求数据
         console.log("req", d.data);
         wx.setStorageSync("index_box", d.data);

@@ -7,9 +7,8 @@
     </view>
     <view wx:if="{{searchRes}}" class="_div data-v-de8338c6 listBox">
       <view class="_div data-v-de8338c6 searchText" style="transition:transform 600ms; {{('transform:' + transform1 + ';')}}" wx:if="{{index<12}}" wx:key="index" key="{{index}}" bindtap="handleProxy" data-eventid="{{'1-'+index}}" data-comkey="{{$k}}" wx:for="{{dataList}}"
-        wx:for-index="index" wx:for-item="x"> {{x.length
-        <10?x:x.substr(0,8)+ '...'}} </view>
-      </view>
-      <template wx:else data="{{...$root[$kk+'1'], $root}}" is="searchNo$27477e14"></template>
+        wx:for-index="index" wx:for-item="x"> {{x}} </view>
     </view>
+    <template wx:else data="{{...$root[$kk+'1'], $root}}" is="searchNo$27477e14"></template>
+  </view>
 </template>

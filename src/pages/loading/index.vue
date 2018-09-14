@@ -36,9 +36,10 @@ export default {
             var Fly = require("flyio/dist/npm/wx");
             var fly = new Fly();
             fly
-              .post("http://dj.majiangyun.com/wechatLogin", {
+              .post("https://dj.majiangyun.com/wechatLogin", {
                 code: res.code
               })
+              
               .then(d => {
                 //输出请求数据
                 console.log("req", d.data);
@@ -66,7 +67,7 @@ export default {
       });
 
       fly
-        .get("http://dj.majiangyun.com/", {})
+        .get("https://dj.majiangyun.com/", {})
         .then(d => {
           //输出请求数据
           console.log("req", d.data);

@@ -169,7 +169,7 @@ if (false) {(function () {
   },
   computed: {
     src_fix: function src_fix() {
-      return "http://dj.majiangyun.com/video/" + this.playerObj.video_url;
+      return "https://dj.majiangyun.com/video/" + this.playerObj.video_url;
     }
   },
 
@@ -275,7 +275,7 @@ if (false) {(function () {
       request.headers["YX-SESSIONID"] = header;
       return request;
     });
-    fly.post("http://dj.majiangyun.com/uploadProductStatic", {
+    fly.post("https://dj.majiangyun.com/uploadProductStatic", {
       productId: this.playerObj.id
     }).then(function (d) {
       //输出请求数据

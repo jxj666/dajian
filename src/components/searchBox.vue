@@ -5,7 +5,7 @@
     </div>
     <div v-if="searchRes" class="listBox">
       <div class="searchText" :style={transform:transform1}  style='transition:transform 600ms;' v-if='index<12' :key="index" v-for="(x,index) in dataList" @click="detailSearch(x)">
-        {{x.length<10?x:x.substr(0,8)+'...'}}
+        {{x}}
       </div>
     </div>
     <search-no v-else></search-no>
@@ -79,11 +79,18 @@ export default {
           return request;
         });
         fly
-          .get(`http://dj.majiangyun.com/getKeyWord`, {})
+          .get(`https://dj.majiangyun.com/getKeyWord`, {})
           .then(d => {
             //输出请求数据
             console.log("req", d.data);
+
             arr = d.data.data;
+            for (var i = 0; i < arr.length; i++) {
+              var ele = arr[i];
+              if (ele.length > 20 || ele.replace(/\w/g, "").length > 10) {
+                arr[i] = arr[i].substr(0, 10) + "...";
+              }
+            }
             wx.setStorageSync("search_box", arr);
             this.dataList = arr;
             setTimeout(() => {
@@ -108,7 +115,7 @@ export default {
         return request;
       });
       fly
-        .get(`http://dj.majiangyun.com/search/${x}`, {})
+        .get(`https://dj.majiangyun.com/search/${x}`, {})
         .then(d => {
           //输出请求数据
           console.log("req", d.data);
@@ -150,6 +157,9 @@ export default {
   flex-wrap: wrap;
   justify-content: flex-start;
   align-content: flex-start;
+  height: 120rpx;
+  overflow: hidden;
+
   .searchText {
     vertical-align: middle;
     box-sizing: border-box;

@@ -70,7 +70,7 @@ export default {
   },
   computed: {
     src_fix() {
-      return `http://dj.majiangyun.com/video/${this.playerObj.video_url}`;
+      return `https://dj.majiangyun.com/video/${this.playerObj.video_url}`;
     }
   },
 
@@ -175,7 +175,7 @@ export default {
       return request;
     });
     fly
-      .post(`http://dj.majiangyun.com/uploadProductStatic`, {
+      .post(`https://dj.majiangyun.com/uploadProductStatic`, {
         productId: this.playerObj.id
       })
       .then(d => {

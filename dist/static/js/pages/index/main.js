@@ -149,7 +149,7 @@ if (false) {(function () {
         request.headers["YX-SESSIONID"] = header;
         return request;
       });
-      fly.get("http://dj.majiangyun.com/type/" + x.id, {}).then(function (d) {
+      fly.get("https://dj.majiangyun.com/type/" + x.id, {}).then(function (d) {
         //输出请求数据
         console.log("req", d.data);
         wx.setStorage({

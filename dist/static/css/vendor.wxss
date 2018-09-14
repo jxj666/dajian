@@ -94,6 +94,8 @@
   flex-wrap: wrap;
   justify-content: flex-start;
   align-content: flex-start;
+  height: 120rpx;
+  overflow: hidden;
 }
 .listBox .searchText.data-v-de8338c6 {
   vertical-align: middle;
