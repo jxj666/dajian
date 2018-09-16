@@ -1,13 +1,13 @@
 global.webpackJsonp([2],{
 
-/***/ 74:
+/***/ 79:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__index__ = __webpack_require__(75);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__index__ = __webpack_require__(80);
 
 
 
@@ -24,16 +24,16 @@ app.$mount();
 
 /***/ }),
 
-/***/ 75:
+/***/ 80:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_mpvue_loader_1_0_13_mpvue_loader_lib_selector_type_script_index_0_index_vue__ = __webpack_require__(77);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_mpvue_loader_1_0_13_mpvue_loader_lib_template_compiler_index_id_data_v_2e73f5bc_hasScoped_true_transformToRequire_video_src_source_src_img_src_image_xlink_href_node_modules_mpvue_loader_1_0_13_mpvue_loader_lib_selector_type_template_index_0_index_vue__ = __webpack_require__(82);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_mpvue_loader_1_0_13_mpvue_loader_lib_selector_type_script_index_0_index_vue__ = __webpack_require__(82);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_mpvue_loader_1_0_13_mpvue_loader_lib_template_compiler_index_id_data_v_2e73f5bc_hasScoped_true_transformToRequire_video_src_source_src_img_src_image_xlink_href_node_modules_mpvue_loader_1_0_13_mpvue_loader_lib_selector_type_template_index_0_index_vue__ = __webpack_require__(87);
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(76)
+  __webpack_require__(81)
 }
 var normalizeComponent = __webpack_require__(0)
 /* script */
@@ -78,14 +78,14 @@ if (false) {(function () {
 
 /***/ }),
 
-/***/ 76:
+/***/ 81:
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
 
 /***/ }),
 
-/***/ 77:
+/***/ 82:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -93,11 +93,9 @@ if (false) {(function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_json_stringify___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_json_stringify__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_mainTitle__ = __webpack_require__(4);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_videoCard__ = __webpack_require__(15);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_textCard__ = __webpack_require__(78);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_textCard__ = __webpack_require__(83);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__components_searchBox__ = __webpack_require__(5);
 
-//
-//
 //
 //
 //
@@ -169,7 +167,11 @@ if (false) {(function () {
   },
   computed: {
     src_fix: function src_fix() {
-      return "https://dj.majiangyun.com/video/" + this.playerObj.video_url;
+      if (this.playerObj.class == 2) {
+        return "https://dj.majiangyun.com/video/" + this.playerObj.video_url;
+      } else {
+        return "";
+      }
     }
   },
 
@@ -196,7 +198,13 @@ if (false) {(function () {
       wx.getNetworkType({
         success: function success(res) {
           if (res.networkType == "wifi") {
-            that.videoContext = wx.createVideoContext("showVideoBox");
+            if (that.playerObj.class == 1) {
+              that.videoContext = wx.createVideoContext("showVideoBox1");
+            } else if (that.playerObj.class == 2) {
+              that.videoContext = wx.createVideoContext("showVideoBox2");
+            } else {
+              that.videoContext = wx.createVideoContext("showVideoBox3");
+            }
             that.videoContext.play();
           }
         }
@@ -261,7 +269,7 @@ if (false) {(function () {
       this.dataList = obj.pre_data;
       this.playerObj = obj.video;
     }
-
+    console.log(this.playerObj);
     wx.setStorageSync("pre_page", "none");
 
     wx.setNavigationBarTitle({
@@ -295,16 +303,16 @@ if (false) {(function () {
 
 /***/ }),
 
-/***/ 78:
+/***/ 83:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_mpvue_loader_1_0_13_mpvue_loader_lib_selector_type_script_index_0_textCard_vue__ = __webpack_require__(80);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_mpvue_loader_1_0_13_mpvue_loader_lib_template_compiler_index_id_data_v_e348639a_hasScoped_true_transformToRequire_video_src_source_src_img_src_image_xlink_href_node_modules_mpvue_loader_1_0_13_mpvue_loader_lib_selector_type_template_index_0_textCard_vue__ = __webpack_require__(81);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_mpvue_loader_1_0_13_mpvue_loader_lib_selector_type_script_index_0_textCard_vue__ = __webpack_require__(85);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_mpvue_loader_1_0_13_mpvue_loader_lib_template_compiler_index_id_data_v_e348639a_hasScoped_true_transformToRequire_video_src_source_src_img_src_image_xlink_href_node_modules_mpvue_loader_1_0_13_mpvue_loader_lib_selector_type_template_index_0_textCard_vue__ = __webpack_require__(86);
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(79)
+  __webpack_require__(84)
 }
 var normalizeComponent = __webpack_require__(0)
 /* script */
@@ -349,14 +357,14 @@ if (false) {(function () {
 
 /***/ }),
 
-/***/ 79:
+/***/ 84:
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
 
 /***/ }),
 
-/***/ 80:
+/***/ 85:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -374,7 +382,7 @@ if (false) {(function () {
 
 /***/ }),
 
-/***/ 81:
+/***/ 86:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -396,7 +404,7 @@ if (false) {
 
 /***/ }),
 
-/***/ 82:
+/***/ 87:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -427,16 +435,27 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
       fixedVideo: _vm.fixed
     },
     attrs: {
-      "id": "showVideoBox",
+      "id": "showVideoBox2",
       "objectFit": "fill",
       "src": _vm.src_fix,
+      "controls": "",
+      "fixed": "true"
+    }
+  }) : _vm._e(), _vm._v(" "), (_vm.playerObj.class == 3) ? _c('video', {
+    class: {
+      fixedVideo: _vm.fixed
+    },
+    attrs: {
+      "id": "showVideoBox3",
+      "objectFit": "fill",
+      "src": _vm.playerObj.video_url,
       "controls": "",
       "fixed": "true"
     }
   }) : _vm._e(), _vm._v(" "), (_vm.playerObj.class == 1) ? _c('txv-video', {
     attrs: {
       "vid": _vm.playerObj.video_id,
-      "playerid": "showVideoBox",
+      "playerid": "showVideoBox1",
       "objectFit": "fill",
       "mpcomid": '1'
     }
@@ -492,5 +511,5 @@ if (false) {
 
 /***/ })
 
-},[74]);
+},[79]);
 //# sourceMappingURL=main.js.map

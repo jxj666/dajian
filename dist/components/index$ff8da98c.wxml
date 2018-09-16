@@ -8,8 +8,9 @@
     <view class="_div data-v-2e73f5bc contentBox">
       <view class="_div data-v-2e73f5bc listBoxTotal {{[listHide ? 'listHide' : '']}}" wx:if="{{listShow}}">
         <view class="_view data-v-2e73f5bc videoBox">
-          <video wx:if="{{playerObj.class==2}}" id="showVideoBox" objectFit="fill" src="{{src_fix}}" controls fixed="true" class="_video data-v-2e73f5bc {{[fixed ? 'fixedVideo' : '']}}"></video>
-          <txv-video wx:if="{{playerObj.class ==1 }}" vid="{{playerObj.video_id}}" playerid="showVideoBox" objectFit="fill" class="_txv-video data-v-2e73f5bc"></txv-video>
+          <video wx:if="{{playerObj.class==2}}" id="showVideoBox2" objectFit="fill" src="{{src_fix}}" controls fixed="true" class="_video data-v-2e73f5bc {{[fixed ? 'fixedVideo' : '']}}"></video>
+          <video wx:if="{{playerObj.class==3}}" id="showVideoBox3" objectFit="fill" src="{{playerObj.video_url}}" controls fixed="true" class="_video data-v-2e73f5bc {{[fixed ? 'fixedVideo' : '']}}"></video>
+          <txv-video wx:if="{{playerObj.class ==1 }}" vid="{{playerObj.video_id}}" playerid="showVideoBox1" objectFit="fill" class="_txv-video data-v-2e73f5bc"></txv-video>
         </view>
         <view class="_div data-v-2e73f5bc listBox grid-var" style=" {{('height:' + scrollHeight + ';')}}">
           <scroll-view class="_scroll-view data-v-2e73f5bc content" scroll-y="true">

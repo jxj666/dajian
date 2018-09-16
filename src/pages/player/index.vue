@@ -4,17 +4,17 @@
     <div class="contentBox">
       <div class="listBoxTotal" v-if="listShow" :class="{listHide:listHide}">
         <view class="videoBox">
-          <video v-if="playerObj.class==2" id="showVideoBox" objectFit='fill' :src="src_fix" controls :class="{fixedVideo:fixed}" fixed="true"></video>
-                 <txv-video v-if="playerObj.class ==1 " :vid="playerObj.video_id" playerid="showVideoBox" objectFit='fill' >
+          <video v-if="playerObj.class==2" id="showVideoBox2" objectFit='fill' :src="src_fix" controls :class="{fixedVideo:fixed}" fixed="true"></video>
+          <video v-if="playerObj.class==3" id="showVideoBox3" objectFit='fill' :src="playerObj.video_url" controls :class="{fixedVideo:fixed}" fixed="true"></video>
+          <txv-video v-if="playerObj.class ==1 " :vid="playerObj.video_id" playerid="showVideoBox1" objectFit='fill'>
 
-                 </txv-video>
+          </txv-video>
 
         </view>
         <div class="listBox grid-var" :style={height:scrollHeight}>
           <scroll-view class="content" scroll-y="true">
-           
-            <text-card :video='playerObj'></text-card>
 
+            <text-card :video='playerObj'></text-card>
 
             <div :key=key v-for="(x,key) in dataList">
               <video-card :videos=x v-if='playerObj.id != x.id' @toVideo='toVideo' :index='-1' :leftNone=leftNone></video-card>
@@ -28,8 +28,6 @@
         <search-box :searchNew=searchNew></search-box>
       </div>
     </div>
-
-
 
   </div>
 
@@ -70,7 +68,11 @@ export default {
   },
   computed: {
     src_fix() {
-      return `https://dj.majiangyun.com/video/${this.playerObj.video_url}`;
+      if (this.playerObj.class == 2) {
+        return `https://dj.majiangyun.com/video/${this.playerObj.video_url}`;
+      } else {
+        return ``;
+      }
     }
   },
 
@@ -95,7 +97,13 @@ export default {
       wx.getNetworkType({
         success: function(res) {
           if (res.networkType == "wifi") {
-            that.videoContext = wx.createVideoContext("showVideoBox");
+            if (that.playerObj.class == 1) {
+              that.videoContext = wx.createVideoContext("showVideoBox1");
+            } else if (that.playerObj.class == 2) {
+              that.videoContext = wx.createVideoContext("showVideoBox2");
+            } else {
+              that.videoContext = wx.createVideoContext("showVideoBox3");
+            }
             that.videoContext.play();
           }
         }
@@ -136,13 +144,13 @@ export default {
 
     if (this.prePage == "none") {
       this.animation = false;
-      var kelement=arr.pop();
+      var kelement = arr.pop();
       wx.setStorageSync("data_box", arr);
       var obj = arr[arr.length - 1];
       var page = obj.page;
       console.log(page);
       if (page != "player") {
-        arr.push(kelement)
+        arr.push(kelement);
         wx.setStorageSync("data_box", arr);
         // this.exit();
         // wx.setStorageSync("pre_page", "begin");
@@ -160,7 +168,7 @@ export default {
       this.dataList = obj.pre_data;
       this.playerObj = obj.video;
     }
-
+    console.log(this.playerObj)
     wx.setStorageSync("pre_page", "none");
 
     wx.setNavigationBarTitle({

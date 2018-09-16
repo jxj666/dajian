@@ -1,15 +1,15 @@
 <template>
   <div>
-    <main-title :thisPage=thisPage  @toSearch='toSearch' :hideSearch=hideSearch></main-title>
+    <main-title :thisPage=thisPage @toSearch='toSearch' :hideSearch=hideSearch></main-title>
     <div class="contentBox">
-    <div class="listBox" v-if="listShow" :class="{listHide:listHide}">
-      <div :key=key v-for="(x,key) in dataList">
-        <index-card :animation='animation' :goods=x @toDetail='toDetail' :index='key' :leftNone='leftNone' ></index-card>
+      <div class="listBox" v-if="listShow" :class="{listHide:listHide}">
+        <div :key=key v-for="(x,key) in dataList">
+          <index-card :animation='animation' :goods=x @toDetail='toDetail' :index='key' :leftNone='leftNone'></index-card>
+        </div>
       </div>
-    </div>
-    <div class="searchBox" v-if="listHide" >
-    <search-box :searchNew=searchNew ></search-box>
-    </div>
+      <div class="searchBox" v-if="listHide">
+        <search-box :searchNew=searchNew></search-box>
+      </div>
     </div>
   </div>
 </template>
@@ -72,7 +72,12 @@ export default {
           });
           wx.setStorageSync("data_box", arr);
           wx.setStorageSync("pre_page", this.thisPage);
-          const url = "../childIndex/main";
+          var url
+          if ((d.data.data.type == "series")) {
+             url = "../childIndex/main";
+          } else {
+             url = "../explain/main";
+          }
           wx.navigateTo({ url });
         })
         .catch(err => {
@@ -100,12 +105,12 @@ export default {
 
     if (this.prePage == "none") {
       this.animation = false;
-      var kelement=arr.pop();
+      var kelement = arr.pop();
       wx.setStorageSync("data_box", arr);
       var obj = arr[arr.length - 1];
       var page = obj.page;
       if (page != "index") {
-        arr.push(kelement)
+        arr.push(kelement);
         wx.setStorageSync("data_box", arr);
         // this.exit();
         // wx.setStorageSync("pre_page", "begin");

@@ -1,4 +1,4 @@
-global.webpackJsonp([7],{
+global.webpackJsonp([8],{
 
 /***/ 16:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
@@ -21,7 +21,7 @@ app.$mount();
   // 这个字段走 app.json
   config: {
     // 页面前带有 ^ 符号的，会被编译成首页，其他页面可以选填，我们会自动把 webpack entry 里面的入口页面加进去
-    pages: ['^pages/loading/main', 'pages/index/main', 'pages/childIndex/main', 'pages/explain/main', 'pages/player/main', 'pages/search/main'],
+    pages: ['^pages/loading/main', 'pages/index/main', 'pages/childIndex/main', 'pages/childIndex2/main', 'pages/explain/main', 'pages/player/main', 'pages/search/main'],
     plugins: {
       "myPlugin": {
         "version": "1.1.8",

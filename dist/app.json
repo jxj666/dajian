@@ -2,6 +2,7 @@
   "pages": [
     "pages/loading/main",
     "pages/childIndex/main",
+    "pages/childIndex2/main",
     "pages/explain/main",
     "pages/index/main",
     "pages/player/main",

@@ -115,11 +115,11 @@ export default {
       obj = arr[arr.length - 1];
       page = obj.page;
       this.prePage = obj.pre_page;
-      this.dataList = obj.pre_data.data;
+      this.dataList = obj.pre_data.data.list;
     } else {
       var obj = arr[arr.length - 1];
       this.prePage = obj.pre_page;
-      this.dataList = obj.pre_data.data;
+      this.dataList = obj.pre_data.data.list;
     }
 
     wx.setStorageSync("pre_page", "none");
