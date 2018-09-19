@@ -9,7 +9,7 @@
         <template data="{{...$root[$kk+'1'], $root}}" is="searchBox$4acf9408"></template>
       </view>
       <view class="_div data-v-3b8b47ac listBox {{[listHide ? 'listHide' : '']}}" wx:if="{{listShow}}">
-        <view class="_div data-v-3b8b47ac search" wx:if="{{prePage=='search'}}"> “Phantom”搜索到 {{dataList.length}} 条结果 </view>
+        <view class="_div data-v-3b8b47ac search" wx:if="{{prePage=='search'}}"> “{{searchText}}”搜索到 {{dataList.length}} 条结果 </view>
         <view class="_div data-v-3b8b47ac">
           <view wx:key="key" key="{{key}}" wx:for="{{dataList}}" wx:for-index="key" wx:for-item="x" class="_div data-v-3b8b47ac">
             <template bindtoVideo="handleProxy" data-eventid="{{'1-'+key}}" data-comkey="{{$k}}" data="{{...$root[$kk+'2-'+key], $root}}" is="videoCard$30bba1a0"></template>

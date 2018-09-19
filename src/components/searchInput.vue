@@ -1,7 +1,7 @@
 <template>
     <div class="search">
-        <input type="text" placeholder="搜索DJI.." v-model="dataInput">
-        <div class="btn" @click="searchText"></div>
+        <input type="text" confirm-type="search" placeholder="搜索DJI.." v-model="dataInput"  @confirm='searchText'>
+        <div class="btn" @click="searchText" ></div>
     </div>
 </template>
 

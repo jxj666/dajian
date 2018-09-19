@@ -3,11 +3,11 @@
     <main-title :thisPage=thisPage @toSearch='toSearch' :hideSearch=hideSearch></main-title>
     <div class="contentBox">
       <div class="searchBox" v-if="listHide">
-        <search-box :searchNew=searchNew ></search-box>
+        <search-box :searchNew=searchNew></search-box>
       </div>
       <div class="listBox" v-if="listShow" :class="{listHide:listHide}">
         <div class="search" v-if="prePage=='search'">
-          “Phantom”搜索到 {{dataList.length}} 条结果
+          “{{searchText}}”搜索到 {{dataList.length}} 条结果
         </div>
         <div>
           <div :key=key v-for="(x,key) in dataList">
@@ -38,7 +38,8 @@ export default {
       listHide: false,
       hideSearch: false,
       searchNew: 0,
-      animation: true
+      animation: true,
+      searchText: ""
     };
   },
 
@@ -94,18 +95,20 @@ export default {
   },
   created() {},
   onShow() {
+    this.searchText = wx.getStorageSync("searchText");
     this.prePage = wx.getStorageSync("pre_page");
+
     var arr = wx.getStorageSync("data_box");
 
     if (this.prePage == "none") {
       this.animation = false;
-     var kelement= arr.pop();
+      var kelement = arr.pop();
       wx.setStorageSync("data_box", arr);
       var obj = arr[arr.length - 1];
 
       var page = obj.page;
-          if (page != "explain") {
-        arr.push(kelement)
+      if (page != "explain") {
+        arr.push(kelement);
         wx.setStorageSync("data_box", arr);
         // this.exit();
         // wx.setStorageSync("pre_page", "begin");

@@ -127,7 +127,7 @@ if (false) {(function () {
       prePage: undefined,
       leftNone: false,
       dataList: []
-    }, __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_defineProperty___default()(_ref, "prePage", undefined), __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_defineProperty___default()(_ref, "listShow", true), __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_defineProperty___default()(_ref, "listHide", false), __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_defineProperty___default()(_ref, "hideSearch", false), __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_defineProperty___default()(_ref, "searchNew", 0), __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_defineProperty___default()(_ref, "animation", true), _ref;
+    }, __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_defineProperty___default()(_ref, "prePage", undefined), __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_defineProperty___default()(_ref, "listShow", true), __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_defineProperty___default()(_ref, "listHide", false), __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_defineProperty___default()(_ref, "hideSearch", false), __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_defineProperty___default()(_ref, "searchNew", 0), __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_defineProperty___default()(_ref, "animation", true), __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_defineProperty___default()(_ref, "searchText", ""), _ref;
   },
 
 
@@ -187,7 +187,9 @@ if (false) {(function () {
   },
   created: function created() {},
   onShow: function onShow() {
+    this.searchText = wx.getStorageSync("searchText");
     this.prePage = wx.getStorageSync("pre_page");
+
     var arr = wx.getStorageSync("data_box");
 
     if (this.prePage == "none") {
@@ -262,7 +264,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     }
   }, [(_vm.prePage == 'search') ? _c('div', {
     staticClass: "search"
-  }, [_vm._v("\n        “Phantom”搜索到 " + _vm._s(_vm.dataList.length) + " 条结果\n      ")]) : _vm._e(), _vm._v(" "), _c('div', _vm._l((_vm.dataList), function(x, key) {
+  }, [_vm._v("\n        “" + _vm._s(_vm.searchText) + "”搜索到 " + _vm._s(_vm.dataList.length) + " 条结果\n      ")]) : _vm._e(), _vm._v(" "), _c('div', _vm._l((_vm.dataList), function(x, key) {
     return _c('div', {
       key: key
     }, [_c('video-card', {

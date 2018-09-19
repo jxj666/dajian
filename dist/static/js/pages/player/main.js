@@ -147,14 +147,16 @@ if (false) {(function () {
       scrollHeight: "500px",
       dataList: [],
       // src: "http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4",
-      src: "http://static.video.qq.com/TPout.swf?vid=w0766f4ngw3&auto=1",
+      // src: "http://static.video.qq.com/TPout.swf?vid=w0766f4ngw3&auto=1",
+      src: '',
       listShow: true,
       listHide: false,
       hideSearch: false,
       searchNew: 0,
       videoContext: {},
       vid: "w0766f4ngw3",
-      playerObj: {}
+      playerObj: {},
+      autoplay: false
     };
   },
 
@@ -199,13 +201,17 @@ if (false) {(function () {
         success: function success(res) {
           if (res.networkType == "wifi") {
             if (that.playerObj.class == 1) {
-              that.videoContext = wx.createVideoContext("showVideoBox1");
+              var TxvContext = requirePlugin("myPlugin");
+              var txvContext = TxvContext.getTxvContext("showVideoBox1");
+              txvContext.play();
+              that.autoplay = true;
             } else if (that.playerObj.class == 2) {
               that.videoContext = wx.createVideoContext("showVideoBox2");
+              that.videoContext.play();
             } else {
               that.videoContext = wx.createVideoContext("showVideoBox3");
+              that.videoContext.play();
             }
-            that.videoContext.play();
           }
         }
       });
@@ -450,7 +456,8 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
       "objectFit": "fill",
       "src": _vm.playerObj.video_url,
       "controls": "",
-      "fixed": "true"
+      "fixed": "true",
+      "autoplay": _vm.autoplay
     }
   }) : _vm._e(), _vm._v(" "), (_vm.playerObj.class == 1) ? _c('txv-video', {
     attrs: {

@@ -1,10 +1,10 @@
 <template>
   <div>
-    <div  class="search" :style='{transform:transform2}'>
-      <search-input @searchText='searchText' ></search-input>
+    <div class="search" :style='{transform:transform2}'>
+      <search-input @searchText='searchText'></search-input>
     </div>
     <div v-if="searchRes" class="listBox">
-      <div class="searchText" :style={transform:transform1}  style='transition:transform 600ms;' v-if='index<12' :key="index" v-for="(x,index) in dataList" @click="detailSearch(x)">
+      <div class="searchText" :style={transform:transform1} style='transition:transform 600ms;' v-if='index<12' :key="index" v-for="(x,index) in dataList" @click="detailSearch(x)">
         {{x}}
       </div>
     </div>
@@ -114,12 +114,13 @@ export default {
         request.headers["YX-SESSIONID"] = header;
         return request;
       });
+      wx.setStorageSync("searchText", x);
       fly
         .get(`https://dj.majiangyun.com/search/${x}`, {})
         .then(d => {
           //输出请求数据
           console.log("req", d.data);
-          if (d.data.data.length > 0) {
+          if (d.data.data.list.length > 0) {
             wx.setStorage({
               key: "goods",
               data: JSON.stringify(x)

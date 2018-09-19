@@ -5,7 +5,7 @@
       <div class="listBoxTotal" v-if="listShow" :class="{listHide:listHide}">
         <view class="videoBox">
           <video v-if="playerObj.class==2" id="showVideoBox2" objectFit='fill' :src="src_fix" controls :class="{fixedVideo:fixed}" fixed="true"></video>
-          <video v-if="playerObj.class==3" id="showVideoBox3" objectFit='fill' :src="playerObj.video_url" controls :class="{fixedVideo:fixed}" fixed="true"></video>
+          <video v-if="playerObj.class==3" id="showVideoBox3" objectFit='fill' :src="playerObj.video_url" controls :class="{fixedVideo:fixed}" fixed="true" :autoplay='autoplay'></video>
           <txv-video v-if="playerObj.class ==1 " :vid="playerObj.video_id" playerid="showVideoBox1" objectFit='fill'>
 
           </txv-video>
@@ -49,14 +49,16 @@ export default {
       scrollHeight: "500px",
       dataList: [],
       // src: "http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4",
-      src: "http://static.video.qq.com/TPout.swf?vid=w0766f4ngw3&auto=1",
+      // src: "http://static.video.qq.com/TPout.swf?vid=w0766f4ngw3&auto=1",
+      src:'',
       listShow: true,
       listHide: false,
       hideSearch: false,
       searchNew: 0,
       videoContext: {},
       vid: "w0766f4ngw3",
-      playerObj: {}
+      playerObj: {},
+      autoplay:false,
     };
   },
 
@@ -98,13 +100,17 @@ export default {
         success: function(res) {
           if (res.networkType == "wifi") {
             if (that.playerObj.class == 1) {
-              that.videoContext = wx.createVideoContext("showVideoBox1");
+              const TxvContext = requirePlugin("myPlugin");
+              let txvContext = TxvContext.getTxvContext("showVideoBox1");
+              txvContext.play();
+              that.autoplay=true;
             } else if (that.playerObj.class == 2) {
               that.videoContext = wx.createVideoContext("showVideoBox2");
+              that.videoContext.play();
             } else {
               that.videoContext = wx.createVideoContext("showVideoBox3");
+              that.videoContext.play();
             }
-            that.videoContext.play();
           }
         }
       });
@@ -168,7 +174,7 @@ export default {
       this.dataList = obj.pre_data;
       this.playerObj = obj.video;
     }
-    console.log(this.playerObj)
+    console.log(this.playerObj);
     wx.setStorageSync("pre_page", "none");
 
     wx.setNavigationBarTitle({
