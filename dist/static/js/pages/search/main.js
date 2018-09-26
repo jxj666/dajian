@@ -231,10 +231,10 @@ if (false) {(function () {
     this.getList();
   },
   onHide: function onHide() {
-    this.exit();
+    // this.exit();
   },
   onUnload: function onUnload() {
-    this.exit();
+    // this.exit();
   }
 });
 

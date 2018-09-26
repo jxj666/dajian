@@ -203,6 +203,7 @@ if (false) {(function () {
 
           url = "../explain/main";
         }
+        _this3.exit();
         wx.navigateTo({ url: url });
       }).catch(function (err) {
         console.log(err.status, err.message);
@@ -220,38 +221,14 @@ if (false) {(function () {
   created: function created() {},
   onShow: function onShow() {
     this.prePage = wx.getStorageSync("pre_page");
-    // var arr = wx.getStorageSync("data_box");
+    if (this.prePage == "none") {
+      this.animation = false;
+    }
 
-    // if (this.prePage == "none") {
-    //   this.animation = false;
-    //   var kelement = arr.pop();
-    //   wx.setStorageSync("data_box", arr);
-    //   var obj = arr[arr.length - 1];
-    //   var page = obj.page;
-    //   if (page != "childIndex") {
-    //     arr.push(kelement);
-    //     wx.setStorageSync("data_box", arr);
-    //     // this.exit();
-    //     // wx.setStorageSync("pre_page", "begin");
-    //     // const url = "../loading/main";
-    //     // wx.redirectTo({ url });
-    //   }
-    //   obj = arr[arr.length - 1];
-    //   page = obj.page;
-    //   this.prePage = obj.pre_page;
-    //   this.dataList = obj.pre_data.data.list;
-    // } else {
-    //   var obj = arr[arr.length - 1];
-    //   this.prePage = obj.pre_page;
-    //   this.dataList = obj.pre_data.data.list;
-    // }
     var data = wx.getStorageSync("childIndex");
     console.log(data);
     this.dataList = data.data.data.list;
 
-    if (this.prePage == "none") {
-      this.animation = false;
-    }
     wx.setStorageSync("pre_page", "none");
 
     wx.setNavigationBarTitle({
@@ -260,10 +237,10 @@ if (false) {(function () {
     this.getList();
   },
   onHide: function onHide() {
-    this.exit();
+    // this.exit();
   },
   onUnload: function onUnload() {
-    this.exit();
+    // this.exit();
   }
 });
 
@@ -274,7 +251,7 @@ if (false) {(function () {
 
 "use strict";
 var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('div', {
+  return _c('scroll-view', {
     staticClass: "max_width"
   }, [_c('main-title', {
     attrs: {
@@ -318,6 +295,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
   }, [_c('search-box', {
     attrs: {
       "searchNew": _vm.searchNew,
+      "searchPage": _vm.thisPage,
       "mpcomid": '3'
     }
   })], 1) : _vm._e()])], 1)

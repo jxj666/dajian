@@ -235,6 +235,7 @@ if (false) {(function () {
         video: x
       });
       var url = "../player/main";
+      this.exit();
       wx.navigateTo({
         url: url
       });
@@ -251,43 +252,15 @@ if (false) {(function () {
   created: function created() {},
   onShow: function onShow() {
     this.prePage = wx.getStorageSync("pre_page");
-    // var arr = wx.getStorageSync("data_box");
-
-    // if (this.prePage == "none") {
-    //   this.animation = false;
-    //   var kelement = arr.pop();
-    //   wx.setStorageSync("data_box", arr);
-    //   var obj = arr[arr.length - 1];
-    //   var page = obj.page;
-    //   console.log(page);
-    //   if (page != "player") {
-    //     arr.push(kelement);
-    //     wx.setStorageSync("data_box", arr);
-    //     // this.exit();
-    //     // wx.setStorageSync("pre_page", "begin");
-    //     // const url = "../loading/main";
-    //     // wx.redirectTo({ url });
-    //   }
-    //   obj = arr[arr.length - 1];
-    //   page = obj.page;
-    //   this.prePage = obj.pre_page;
-    //   this.dataList = obj.pre_data;
-    //   this.playerObj = obj.video;
-    // } else {
-    //   var obj = arr[arr.length - 1];
-    //   this.prePage = obj.pre_page;
-    //   this.dataList = obj.pre_data;
-    //   this.playerObj = obj.video;
-    // }
-    // console.log(this.playerObj);
+    if (this.prePage == "none") {
+      this.animation = false;
+    }
 
     var data = wx.getStorageSync("player");
 
     this.dataList = data.data;
     this.playerObj = data.video;
-    if (this.prePage == "none") {
-      this.animation = false;
-    }
+
     wx.setStorageSync("pre_page", "none");
 
     wx.setNavigationBarTitle({
@@ -312,10 +285,10 @@ if (false) {(function () {
     this.getList();
   },
   onHide: function onHide() {
-    this.exit();
+    // this.exit();
   },
   onUnload: function onUnload() {
-    this.exit();
+    // this.exit();
   }
 });
 
@@ -512,6 +485,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     staticClass: "searchBox"
   }, [_c('search-box', {
     attrs: {
+      "searchPage": _vm.thisPage,
       "searchNew": _vm.searchNew,
       "mpcomid": '4'
     }

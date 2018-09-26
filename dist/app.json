@@ -1,10 +1,10 @@
 {
   "pages": [
-    "pages/loading/main",
+    "pages/index/main",
     "pages/childIndex/main",
     "pages/childIndex2/main",
     "pages/explain/main",
-    "pages/index/main",
+    "pages/loading/main",
     "pages/player/main",
     "pages/search_back/main",
     "pages/search/main"

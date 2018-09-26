@@ -1,9 +1,9 @@
 <template>
-  <div class="max_width">
+  <scroll-view class="max_width">
     <main-title :thisPage=thisPage @toSearch='toSearch' :hideSearch=hideSearch></main-title>
     <div class="contentBox">
       <div class="searchBox" v-if="listHide">
-        <search-box :searchNew=searchNew></search-box>
+        <search-box :searchPage=thisPage :searchNew=searchNew></search-box>
       </div>
       <div class="listBox" v-if="listShow" :class="{listHide:listHide}">
         <div class="search" v-if="prePage=='search'">
@@ -19,7 +19,7 @@
       </div>
 
     </div>
-  </div>
+  </scroll-view>
 
 </template>
 
@@ -73,19 +73,13 @@ export default {
         key: "video",
         data: JSON.stringify(x)
       });
-      // var arr = wx.getStorageSync("data_box");
-      // arr.push({
-      // pre_page: this.thisPage,
-      // pre_data: this.dataList,
-      // video: x,
-      // page: "player"
-      // });
-      // wx.setStorageSync("data_box", arr);
+
       wx.setStorageSync("pre_page", this.thisPage);
       wx.setStorageSync("player", {
         data: this.dataList,
         video: x
       });
+      this.exit();
       const url = "../player/main";
       wx.navigateTo({
         url
@@ -110,36 +104,18 @@ export default {
   onShow() {
     this.searchText = wx.getStorageSync("searchText");
     this.prePage = wx.getStorageSync("pre_page");
-    // var arr = wx.getStorageSync("data_box");
-    // console.log(this.prePage, arr);
-    // if (this.prePage == "none") {
-    //   this.animation = false;
-    //   var kelement = arr.pop();
-    //   wx.setStorageSync("data_box", arr);
-    //   var obj = arr[arr.length - 1];
-    //   var page = obj.page;
-    //   // if (page != "explain") {
-    //   //   arr.push(kelement);
-    //   //   wx.setStorageSync("data_box", arr);
-    //   // }
-    //   obj = arr[arr.length - 1];
-    //   page = obj.page;
-    // } else {
-    //   var obj = arr[arr.length - 1];
-    // }
-    // console.log(JSON.stringify(obj));
-    // this.prePage = obj.pre_page;
-    // this.dataList = obj.pre_data.data.list;
+    
+    if (this.prePage == "none") {
+      this.animation = false;
+
+    }
+
 
     var data = wx.getStorageSync("explain");
     console.log("explain", data);
     this.dataList = data.data.data.list;
-    if (this.prePage == "none") {
-      this.animation = false;
-    }
+
     wx.setStorageSync("pre_page", "none");
-    // var title = wx.getStorageSync("explain");
-    // wx.setStorageSync("explain", "");
     var title = this.escape2Html(data.title);
     wx.setNavigationBarTitle({
       title: title || "视频列表" //页面标题为路由参数
@@ -147,10 +123,10 @@ export default {
     this.getList();
   },
   onHide() {
-    this.exit();
+      // this.exit();
   },
   onUnload() {
-    this.exit();
+      // this.exit();
   }
 };
 </script>
@@ -176,13 +152,13 @@ export default {
   /*开启硬件加速*/
   transform: translateY(0);
   transition: transform 500ms;
-  position: absolute;
+  // position: absolute;
   top: 0;
   z-index: 200;
 }
 
 .searchBox {
-  position: absolute;
+  // position: absolute;
   top: 0;
   z-index: 100;
   width: 100%;

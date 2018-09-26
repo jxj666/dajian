@@ -1,7 +1,7 @@
 <import src="searchInput$4cf2a147" />
 <import src="searchNo$27477e14" />
 <template name="searchBox$4acf9408">
-  <view class="_div data-v-de8338c6">
+  <view class="_div data-v-de8338c6 box">
     <view class="_div data-v-de8338c6 search" style=" {{('transform:' + transform2 + ';')}}">
       <template bindsearchText="handleProxy" data-eventid="{{'0'}}" data-comkey="{{$k}}" data="{{...$root[$kk+'0'], $root}}" is="searchInput$4cf2a147"></template>
     </view>

@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="box">
     <div class="search" :style='{transform:transform2}'>
       <search-input @searchText='searchText'></search-input>
     </div>
@@ -20,7 +20,7 @@ import searchInput from "@/components/searchInput";
 import searchNo from "@/components/searchNo";
 
 export default {
-  props: ["searchNew"],
+  props: ["searchNew", "searchPage"],
   data() {
     return {
       searchRes: true,
@@ -116,7 +116,9 @@ export default {
       });
       wx.setStorageSync("searchText", x);
       fly
-        .get(`https://dj.majiangyun.com/search/${x}`, {})
+        .get(`https://dj.majiangyun.com/search`, {
+          keyword: x
+        })
         .then(d => {
           //输出请求数据
           console.log("req", d.data);
@@ -132,10 +134,11 @@ export default {
             //   page: "explain"
             // });
             // wx.setStorageSync("data_box", arr);
-            console.log(d)
-            wx.setStorageSync("pre_page", this.thisPage);
+            console.log(d);
+            wx.setStorageSync("pre_page", this.searchPage);
+            wx.setStorageSync("search_page", this.searchPage);
             wx.setStorageSync("explain", {
-              data:d.data,
+              data: d.data,
               title: x
             });
             const url = "../explain/main";
@@ -155,6 +158,11 @@ export default {
   }
 };
 </script>
+<style>
+view .searchBox {
+  position: relative;
+}
+</style>
 
 <style scoped lang='scss'>
 .listBox {
@@ -194,5 +202,8 @@ export default {
   // transform: rotateX(90deg);
   transition: transform 300ms;
   z-index: 1000;
+}
+.box{
+  // height: 90vh;
 }
 </style>

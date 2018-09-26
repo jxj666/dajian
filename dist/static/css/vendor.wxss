@@ -88,6 +88,9 @@
   width: 100%;
   z-index: 10;
 }
+view .searchBox {
+  position: relative;
+}
 .listBox.data-v-de8338c6 {
   margin: 0 16rpx 0 42rpx;
   display: flex;

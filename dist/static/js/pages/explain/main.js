@@ -164,19 +164,13 @@ if (false) {(function () {
         key: "video",
         data: __WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_json_stringify___default()(x)
       });
-      // var arr = wx.getStorageSync("data_box");
-      // arr.push({
-      // pre_page: this.thisPage,
-      // pre_data: this.dataList,
-      // video: x,
-      // page: "player"
-      // });
-      // wx.setStorageSync("data_box", arr);
+
       wx.setStorageSync("pre_page", this.thisPage);
       wx.setStorageSync("player", {
         data: this.dataList,
         video: x
       });
+      this.exit();
       var url = "../player/main";
       wx.navigateTo({
         url: url
@@ -203,36 +197,16 @@ if (false) {(function () {
   onShow: function onShow() {
     this.searchText = wx.getStorageSync("searchText");
     this.prePage = wx.getStorageSync("pre_page");
-    // var arr = wx.getStorageSync("data_box");
-    // console.log(this.prePage, arr);
-    // if (this.prePage == "none") {
-    //   this.animation = false;
-    //   var kelement = arr.pop();
-    //   wx.setStorageSync("data_box", arr);
-    //   var obj = arr[arr.length - 1];
-    //   var page = obj.page;
-    //   // if (page != "explain") {
-    //   //   arr.push(kelement);
-    //   //   wx.setStorageSync("data_box", arr);
-    //   // }
-    //   obj = arr[arr.length - 1];
-    //   page = obj.page;
-    // } else {
-    //   var obj = arr[arr.length - 1];
-    // }
-    // console.log(JSON.stringify(obj));
-    // this.prePage = obj.pre_page;
-    // this.dataList = obj.pre_data.data.list;
+
+    if (this.prePage == "none") {
+      this.animation = false;
+    }
 
     var data = wx.getStorageSync("explain");
     console.log("explain", data);
     this.dataList = data.data.data.list;
-    if (this.prePage == "none") {
-      this.animation = false;
-    }
+
     wx.setStorageSync("pre_page", "none");
-    // var title = wx.getStorageSync("explain");
-    // wx.setStorageSync("explain", "");
     var title = this.escape2Html(data.title);
     wx.setNavigationBarTitle({
       title: title || "视频列表" //页面标题为路由参数
@@ -240,10 +214,10 @@ if (false) {(function () {
     this.getList();
   },
   onHide: function onHide() {
-    this.exit();
+    // this.exit();
   },
   onUnload: function onUnload() {
-    this.exit();
+    // this.exit();
   }
 });
 
@@ -254,7 +228,7 @@ if (false) {(function () {
 
 "use strict";
 var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('div', {
+  return _c('scroll-view', {
     staticClass: "max_width"
   }, [_c('main-title', {
     attrs: {
@@ -272,6 +246,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     staticClass: "searchBox"
   }, [_c('search-box', {
     attrs: {
+      "searchPage": _vm.thisPage,
       "searchNew": _vm.searchNew,
       "mpcomid": '1'
     }

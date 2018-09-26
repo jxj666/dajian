@@ -11,9 +11,9 @@ export default {
   computed: {},
   methods: {
     toIndex() {
-      if (this.thisPage == "index") {
-        return;
-      }
+      // if (this.thisPage == "index") {
+      //   return;
+      // }
       var arr = wx.getStorageSync("data_box");
       var index_box = wx.getStorageSync("index_box");
       arr.push({ pre_page: this.thisPage, pre_data: index_box,page:'index' });

@@ -51,7 +51,6 @@
   z-index: 200;
 }
 .searchBox.data-v-2e73f5bc {
-  position: absolute;
   top: 0;
   z-index: 100;
   width: 100%;

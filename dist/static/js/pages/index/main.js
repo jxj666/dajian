@@ -129,18 +129,85 @@ if (false) {(function () {
     searchBox: __WEBPACK_IMPORTED_MODULE_3__components_searchBox__["a" /* default */]
   },
   methods: {
-    toSearch: function toSearch() {
+    showIndex: function showIndex() {
+      var data = wx.getStorageSync("index");
+      console.log(data);
+      if (!data) {
+        return;
+      }
+      this.dataList = data.data.data;
+      if (this.prePage == "none") {
+        this.animation = false;
+      }
+      wx.setStorageSync("pre_page", "none");
+      wx.setNavigationBarTitle({
+        title: "大疆飞手百科" //页面标题为路由参数
+      });
+      this.getList();
+    },
+    get_user: function get_user() {
+      wx.setStorageSync("data_box", [{ pre_page: "begin" }]);
+      wx.setStorageSync("pre_page", "begin");
       var _this = this;
+      wx.login({
+        success: function success(res) {
+          if (res.code) {
+            console.log(res);
+            var Fly = __webpack_require__(2);
+            var fly = new Fly();
+            fly.post("https://dj.majiangyun.com/wechatLogin", {
+              code: res.code
+            }).then(function (d) {
+              //输出请求数据
+              console.log("req", d.data);
+              wx.setStorageSync("YX-SESSIONID", d.data.data.sessionId);
+
+              _this.start_index();
+            }).catch(function (err) {
+              console.log(err.status, err.message);
+            });
+          } else {
+            console.log("登录失败！" + res.errMsg);
+          }
+        }
+      });
+    },
+    start_index: function start_index() {
+      var _this2 = this;
+
+      var Fly = __webpack_require__(2);
+      var fly = new Fly();
+      var header = wx.getStorageSync("YX-SESSIONID");
+      fly.interceptors.request.use(function (request) {
+        request.headers["YX-SESSIONID"] = header;
+        return request;
+      });
+      fly.get("https://dj.majiangyun.com/", {}).then(function (d) {
+        //输出请求数据
+        console.log("req", d.data);
+        wx.setStorageSync("index", {
+          pre_page: _this2.thisPage,
+          data: d.data,
+          page: "index"
+        });
+        // wx.setStorageSync("pre_page", this.thisPage);
+        _this2.showIndex();
+      }).catch(function (err) {
+        console.log(err.status, err.message);
+      });
+    },
+    toSearch: function toSearch() {
+      var _this3 = this;
 
       this.hideSearch = true;
       this.listHide = true;
       setTimeout(function () {
-        _this.listShow = false;
-        _this.searchNew = +new Date();
+        _this3.listShow = false;
+        _this3.searchNew = +new Date();
       }, 500);
     },
     toDetail: function toDetail(x) {
-      var _this2 = this;
+      var _this4 = this;
 
       var Fly = __webpack_require__(2);
       var fly = new Fly();
@@ -163,7 +230,7 @@ if (false) {(function () {
         //   page: "childIndex"
         // });
         // wx.setStorageSync("data_box", arr);
-        wx.setStorageSync("pre_page", _this2.thisPage);
+        wx.setStorageSync("pre_page", _this4.thisPage);
 
         var url;
         if (d.data.data.type == "series") {
@@ -181,17 +248,18 @@ if (false) {(function () {
 
           url = "../explain/main";
         }
+        _this4.exit();
         wx.navigateTo({ url: url });
       }).catch(function (err) {
         console.log(err.status, err.message);
       });
     },
     getList: function getList() {
-      var _this3 = this;
+      var _this5 = this;
 
       this.leftNone = false;
       setTimeout(function () {
-        _this3.leftNone = true;
+        _this5.leftNone = true;
       }, 200);
     },
     exit: function exit() {
@@ -204,46 +272,26 @@ if (false) {(function () {
     }
   },
   onShow: function onShow() {
+    wx.setStorageSync("search_page", "none");
     this.prePage = wx.getStorageSync("pre_page");
-    // var arr = wx.getStorageSync("data_box");
-
-    // if (this.prePage == "none") {
-    //   this.animation = false;
-    //   var kelement = arr.pop();
-    //   wx.setStorageSync("data_box", arr);
-    //   var obj = arr[arr.length - 1];
-    //   var page = obj.page;
-    //   if (page != "index") {
-    //     arr.push(kelement);
-    //     wx.setStorageSync("data_box", arr);
-    //   }
-    //   obj = arr[arr.length - 1];
-    //   page = obj.page;
-    //   this.prePage = obj.pre_page;
-    //   this.dataList = obj.pre_data.data;
-    // } else {
-    //   var obj = arr[arr.length - 1];
-    //   this.prePage = obj.pre_page;
-    //   this.dataList = obj.pre_data.data;
-    // }
-    var data = wx.getStorageSync("index");
-    console.log(data);
-    this.dataList = data.data.data;
-
     if (this.prePage == "none") {
       this.animation = false;
     }
-    wx.setStorageSync("pre_page", "none");
-    wx.setNavigationBarTitle({
-      title: "大疆飞手百科" //页面标题为路由参数
-    });
-    this.getList();
+
+    if (this.prePage == "none") {
+      console.log("back");
+      this.showIndex();
+    } else {
+      console.log("start");
+      this.get_user();
+    }
   },
+  onLoad: function onLoad() {},
   onHide: function onHide() {
-    this.exit();
+    // this.exit();
   },
   onUnload: function onUnload() {
-    this.exit();
+    // this.exit();
   }
 });
 
@@ -254,7 +302,7 @@ if (false) {(function () {
 
 "use strict";
 var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('div', {
+  return _c('scroll-view', {
     staticClass: "max_width"
   }, [_c('main-title', {
     attrs: {
@@ -293,6 +341,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     staticClass: "searchBox"
   }, [_c('search-box', {
     attrs: {
+      "searchPage": _vm.thisPage,
       "searchNew": _vm.searchNew,
       "mpcomid": '2'
     }

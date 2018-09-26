@@ -1,5 +1,5 @@
 <template>
-  <div class="max_width">
+  <scroll-view class="max_width">
     <main-title :thisPage=thisPage @toSearch='toSearch' :hideSearch=hideSearch></main-title>
     <div class="contentBox">
       <div class="listBox" v-if="listShow" :class="{listHide:listHide}">
@@ -10,10 +10,10 @@
 
       </div>
       <div class="searchBox" v-if="listHide">
-        <search-box :searchNew=searchNew></search-box>
+        <search-box :searchNew=searchNew :searchPage=thisPage></search-box>
       </div>
     </div>
-  </div>
+  </scroll-view>
 </template>
 
 
@@ -47,7 +47,7 @@ export default {
   },
 
   methods: {
-        escape2Html(str) {
+    escape2Html(str) {
       var arrEntities = { lt: "<", gt: ">", nbsp: " ", amp: "&", quot: '"' };
       return str.replace(/&(lt|gt|nbsp|amp|quot);/gi, function(all, t) {
         return arrEntities[t];
@@ -108,6 +108,7 @@ export default {
 
             url = "../explain/main";
           }
+          this.exit();
           wx.navigateTo({ url });
         })
         .catch(err => {
@@ -126,39 +127,14 @@ export default {
   created() {},
   onShow() {
     this.prePage = wx.getStorageSync("pre_page");
-    // var arr = wx.getStorageSync("data_box");
+    if (this.prePage == "none") {
+      this.animation = false;
+    }
 
-    // if (this.prePage == "none") {
-    //   this.animation = false;
-    //   var kelement = arr.pop();
-    //   wx.setStorageSync("data_box", arr);
-    //   var obj = arr[arr.length - 1];
-    //   var page = obj.page;
-    //   if (page != "childIndex") {
-    //     arr.push(kelement);
-    //     wx.setStorageSync("data_box", arr);
-    //     // this.exit();
-    //     // wx.setStorageSync("pre_page", "begin");
-    //     // const url = "../loading/main";
-    //     // wx.redirectTo({ url });
-    //   }
-    //   obj = arr[arr.length - 1];
-    //   page = obj.page;
-    //   this.prePage = obj.pre_page;
-    //   this.dataList = obj.pre_data.data.list;
-    // } else {
-    //   var obj = arr[arr.length - 1];
-    //   this.prePage = obj.pre_page;
-    //   this.dataList = obj.pre_data.data.list;
-    // }
     var data = wx.getStorageSync("childIndex");
     console.log(data);
     this.dataList = data.data.data.list;
 
-
-    if (this.prePage == "none") {
-      this.animation = false;
-    }
     wx.setStorageSync("pre_page", "none");
 
     wx.setNavigationBarTitle({
@@ -167,10 +143,10 @@ export default {
     this.getList();
   },
   onHide() {
-    this.exit();
+      // this.exit();
   },
   onUnload() {
-    this.exit();
+      // this.exit();
   }
 };
 </script>
@@ -184,13 +160,13 @@ export default {
   -webkit-transform: translate3d(0, 0, 0); /*开启硬件加速*/
   transform: translateY(0);
   transition: transform 500ms;
-  position: absolute;
+  // position: absolute;
   top: 0;
   z-index: 200;
   width: 100%;
 }
 .searchBox {
-  position: absolute;
+  // position: absolute;
   top: 0;
   z-index: 100;
   width: 100%;

@@ -2,7 +2,7 @@
 <import src="indexCard$27dafc87" />
 <import src="searchBox$4acf9408" />
 <template name="index$76ca3a75">
-  <view class="_div data-v-0ce52447 max_width">
+  <scroll-view class="_scroll-view data-v-0ce52447 max_width">
     <template bindtoSearch="handleProxy" data-eventid="{{'0'}}" data-comkey="{{$k}}" data="{{...$root[$kk+'0'], $root}}" is="mainTitle$71a29f24"></template>
     <view class="_div data-v-0ce52447 contentBox">
       <view class="_div data-v-0ce52447 listBox {{[listHide ? 'listHide' : '']}}" wx:if="{{listShow}}">
@@ -14,5 +14,5 @@
         <template data="{{...$root[$kk+'2'], $root}}" is="searchBox$4acf9408"></template>
       </view>
     </view>
-  </view>
+  </scroll-view>
 </template>

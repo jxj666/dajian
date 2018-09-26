@@ -3,7 +3,7 @@
 <import src="station$f5cf660e" />
 <import src="searchBox$4acf9408" />
 <template name="index$5e3529af">
-  <view class="_div data-v-62865e17 max_width">
+  <scroll-view class="_scroll-view data-v-62865e17 max_width">
     <template bindtoSearch="handleProxy" data-eventid="{{'0'}}" data-comkey="{{$k}}" data="{{...$root[$kk+'0'], $root}}" is="mainTitle$71a29f24"></template>
     <view class="_div data-v-62865e17 contentBox">
       <view class="_div data-v-62865e17 listBox {{[listHide ? 'listHide' : '']}}" wx:if="{{listShow}}">
@@ -16,5 +16,5 @@
         <template data="{{...$root[$kk+'3'], $root}}" is="searchBox$4acf9408"></template>
       </view>
     </view>
-  </view>
+  </scroll-view>
 </template>

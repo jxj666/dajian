@@ -9,13 +9,11 @@
   -webkit-transform: translate3d(0, 0, 0);
   transform: translateY(0);
   transition: transform 500ms;
-  position: absolute;
   top: 0;
   z-index: 200;
   width: 100%;
 }
 .searchBox.data-v-2c653951 {
-  position: absolute;
   top: 0;
   z-index: 100;
   width: 100%;
