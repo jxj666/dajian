@@ -3,7 +3,7 @@
 <import src="searchBox$4acf9408" />
 <template name="index$76ca3a75">
   <scroll-view class="_scroll-view data-v-0ce52447 max_width">
-    <template bindtoSearch="handleProxy" data-eventid="{{'0'}}" data-comkey="{{$k}}" data="{{...$root[$kk+'0'], $root}}" is="mainTitle$71a29f24"></template>
+    <template bindhideSearchBox="handleProxy" bindtoSearch="handleProxy" data-eventid="{{'0'}}" data-comkey="{{$k}}" data="{{...$root[$kk+'0'], $root}}" is="mainTitle$71a29f24"></template>
     <view class="_div data-v-0ce52447 contentBox">
       <view class="_div data-v-0ce52447 listBox {{[listHide ? 'listHide' : '']}}" wx:if="{{listShow}}">
         <view wx:key="key" key="{{key}}" wx:for="{{dataList}}" wx:for-index="key" wx:for-item="x" class="_div data-v-0ce52447">

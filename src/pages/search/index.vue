@@ -138,10 +138,10 @@ export default {
     this.getList();
   },
   onHide() {
-      // this.exit();
+       this.exit();
   },
   onUnload() {
-      // this.exit();
+       this.exit();
   }
 };
 </script>

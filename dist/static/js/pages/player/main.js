@@ -235,12 +235,17 @@ if (false) {(function () {
         video: x
       });
       var url = "../player/main";
-      this.exit();
       wx.navigateTo({
         url: url
       });
     },
     exit: function exit() {
+      var SP = wx.getStorageSync("search_page");
+      console.log(SP);
+      if (SP) {
+        wx.setStorageSync("search_page", false);
+        return;
+      }
       this.leftNone = false;
       this.listShow = true;
       this.listHide = false;
@@ -285,10 +290,10 @@ if (false) {(function () {
     this.getList();
   },
   onHide: function onHide() {
-    // this.exit();
+    this.exit();
   },
   onUnload: function onUnload() {
-    // this.exit();
+    this.exit();
   }
 });
 

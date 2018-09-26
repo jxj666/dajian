@@ -170,7 +170,6 @@ if (false) {(function () {
         data: this.dataList,
         video: x
       });
-      this.exit();
       var url = "../player/main";
       wx.navigateTo({
         url: url
@@ -185,6 +184,12 @@ if (false) {(function () {
       }, 200);
     },
     exit: function exit() {
+      var SP = wx.getStorageSync("search_page");
+      console.log(SP);
+      if (SP) {
+        wx.setStorageSync("search_page", false);
+        return;
+      }
       this.leftNone = false;
       this.listShow = true;
       this.listHide = false;
@@ -214,10 +219,10 @@ if (false) {(function () {
     this.getList();
   },
   onHide: function onHide() {
-    // this.exit();
+    this.exit();
   },
   onUnload: function onUnload() {
-    // this.exit();
+    this.exit();
   }
 });
 

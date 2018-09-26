@@ -1,9 +1,9 @@
 <template>
-    <div class="nav">
-        <div class="line"></div>
-        <h3 class="icon" @touchstart="toIndex"></h3>
-        <h3 class="search" @touchstart="toSearch" v-if="!hideSearch"></h3>
-    </div>
+  <div class="nav">
+    <div class="line"></div>
+    <h3 class="icon" @touchstart="toIndex"></h3>
+    <h3 class="search" @touchstart="toSearch" v-if="!hideSearch"></h3>
+  </div>
 </template>
 <script>
 export default {
@@ -11,24 +11,20 @@ export default {
   computed: {},
   methods: {
     toIndex() {
-      // if (this.thisPage == "index") {
-      //   return;
-      // }
+      if (this.thisPage == "index") {
+        this.$emit("hideSearchBox");
+        return;
+      }
       var arr = wx.getStorageSync("data_box");
       var index_box = wx.getStorageSync("index_box");
-      arr.push({ pre_page: this.thisPage, pre_data: index_box,page:'index' });
+      arr.push({ pre_page: this.thisPage, pre_data: index_box, page: "index" });
       wx.setStorageSync("data_box", arr);
       wx.setStorageSync("pre_page", this.thisPage);
       const url = "../index/main";
       wx.navigateTo({ url });
     },
     toSearch() {
-      // var arr = wx.getStorageSync("data_box");
-      // arr.push({ pre_page: this.thisPage, pre_data: undefined });
-      // wx.setStorageSync("data_box", arr);
-      // wx.setStorageSync("pre_page", this.thisPage);
-      // const url = "../search/main";
-      // wx.navigateTo({ url });
+     
       this.$emit("toSearch");
     }
   }

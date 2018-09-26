@@ -129,6 +129,14 @@ if (false) {(function () {
     searchBox: __WEBPACK_IMPORTED_MODULE_3__components_searchBox__["a" /* default */]
   },
   methods: {
+    hideSearchBox: function hideSearchBox() {
+      console.log(123);
+      wx.setStorageSync("search_page", false);
+
+      this.hideSearch = false;
+      this.listHide = false;
+      this.listShow = true;
+    },
     showIndex: function showIndex() {
       var data = wx.getStorageSync("index");
       console.log(data);
@@ -248,7 +256,6 @@ if (false) {(function () {
 
           url = "../explain/main";
         }
-        _this4.exit();
         wx.navigateTo({ url: url });
       }).catch(function (err) {
         console.log(err.status, err.message);
@@ -263,6 +270,12 @@ if (false) {(function () {
       }, 200);
     },
     exit: function exit() {
+      var SP = wx.getStorageSync("search_page");
+      console.log(SP);
+      if (SP) {
+        wx.setStorageSync("search_page", false);
+        return;
+      }
       this.leftNone = false;
       this.listShow = true;
       this.listHide = false;
@@ -288,10 +301,10 @@ if (false) {(function () {
   },
   onLoad: function onLoad() {},
   onHide: function onHide() {
-    // this.exit();
+    this.exit();
   },
   onUnload: function onUnload() {
-    // this.exit();
+    this.exit();
   }
 });
 
@@ -312,6 +325,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
       "mpcomid": '0'
     },
     on: {
+      "hideSearchBox": _vm.hideSearchBox,
       "toSearch": _vm.toSearch
     }
   }), _vm._v(" "), _c('div', {

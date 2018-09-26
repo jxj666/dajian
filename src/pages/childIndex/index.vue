@@ -108,7 +108,6 @@ export default {
 
             url = "../explain/main";
           }
-          this.exit();
           wx.navigateTo({ url });
         })
         .catch(err => {
@@ -116,6 +115,13 @@ export default {
         });
     },
     exit() {
+      var SP = wx.getStorageSync("search_page");
+      console.log(SP)
+      if (SP) {
+        wx.setStorageSync("search_page",false);
+        return;
+      }
+
       this.leftNone = false;
       this.listShow = true;
       this.listHide = false;
@@ -143,10 +149,10 @@ export default {
     this.getList();
   },
   onHide() {
-      // this.exit();
+    this.exit();
   },
   onUnload() {
-      // this.exit();
+    this.exit();
   }
 };
 </script>

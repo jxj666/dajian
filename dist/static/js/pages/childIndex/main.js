@@ -203,13 +203,19 @@ if (false) {(function () {
 
           url = "../explain/main";
         }
-        _this3.exit();
         wx.navigateTo({ url: url });
       }).catch(function (err) {
         console.log(err.status, err.message);
       });
     },
     exit: function exit() {
+      var SP = wx.getStorageSync("search_page");
+      console.log(SP);
+      if (SP) {
+        wx.setStorageSync("search_page", false);
+        return;
+      }
+
       this.leftNone = false;
       this.listShow = true;
       this.listHide = false;
@@ -237,10 +243,10 @@ if (false) {(function () {
     this.getList();
   },
   onHide: function onHide() {
-    // this.exit();
+    this.exit();
   },
   onUnload: function onUnload() {
-    // this.exit();
+    this.exit();
   }
 });
 

@@ -7051,24 +7051,20 @@ module.exports = function stringify(it) { // eslint-disable-line no-unused-vars
   computed: {},
   methods: {
     toIndex: function toIndex() {
-      // if (this.thisPage == "index") {
-      //   return;
-      // }
+      if (this.thisPage == "index") {
+        this.$emit("hideSearchBox");
+        return;
+      }
       var arr = wx.getStorageSync("data_box");
       var index_box = wx.getStorageSync("index_box");
-      arr.push({ pre_page: this.thisPage, pre_data: index_box, page: 'index' });
+      arr.push({ pre_page: this.thisPage, pre_data: index_box, page: "index" });
       wx.setStorageSync("data_box", arr);
       wx.setStorageSync("pre_page", this.thisPage);
       var url = "../index/main";
       wx.navigateTo({ url: url });
     },
     toSearch: function toSearch() {
-      // var arr = wx.getStorageSync("data_box");
-      // arr.push({ pre_page: this.thisPage, pre_data: undefined });
-      // wx.setStorageSync("data_box", arr);
-      // wx.setStorageSync("pre_page", this.thisPage);
-      // const url = "../search/main";
-      // wx.navigateTo({ url });
+
       this.$emit("toSearch");
     }
   }

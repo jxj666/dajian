@@ -1,6 +1,6 @@
 <template>
   <scroll-view class="max_width">
-    <main-title :thisPage=thisPage @toSearch='toSearch' :hideSearch=hideSearch></main-title>
+    <main-title :thisPage=thisPage @hideSearchBox='hideSearchBox' @toSearch='toSearch' :hideSearch=hideSearch></main-title>
     <div class="contentBox">
       <div class="listBox" v-if="listShow" :class="{listHide:listHide}">
         <div :key=key v-for="(x,key) in dataList">
@@ -39,6 +39,14 @@ export default {
     searchBox
   },
   methods: {
+    hideSearchBox() {
+      console.log(123);
+      wx.setStorageSync("search_page", false);
+
+      this.hideSearch = false;
+      this.listHide = false;
+      this.listShow = true;
+    },
     showIndex() {
       var data = wx.getStorageSync("index");
       console.log(data);
@@ -160,7 +168,6 @@ export default {
 
             url = "../explain/main";
           }
-          this.exit();
           wx.navigateTo({ url });
         })
         .catch(err => {
@@ -174,6 +181,12 @@ export default {
       }, 200);
     },
     exit() {
+      var SP = wx.getStorageSync("search_page");
+      console.log(SP);
+      if (SP) {
+        wx.setStorageSync("search_page", false);
+        return;
+      }
       this.leftNone = false;
       this.listShow = true;
       this.listHide = false;
@@ -187,7 +200,6 @@ export default {
     this.prePage = wx.getStorageSync("pre_page");
     if (this.prePage == "none") {
       this.animation = false;
-
     }
 
     if (this.prePage == "none") {
@@ -200,10 +212,10 @@ export default {
   },
   onLoad() {},
   onHide() {
-      // this.exit();
+    this.exit();
   },
   onUnload() {
-      // this.exit();
+    this.exit();
   }
 };
 </script>

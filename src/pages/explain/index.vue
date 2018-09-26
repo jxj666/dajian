@@ -54,6 +54,7 @@ export default {
   },
 
   methods: {
+
     escape2Html(str) {
       var arrEntities = { lt: "<", gt: ">", nbsp: " ", amp: "&", quot: '"' };
       return str.replace(/&(lt|gt|nbsp|amp|quot);/gi, function(all, t) {
@@ -79,7 +80,6 @@ export default {
         data: this.dataList,
         video: x
       });
-      this.exit();
       const url = "../player/main";
       wx.navigateTo({
         url
@@ -92,6 +92,12 @@ export default {
       }, 200);
     },
     exit() {
+      var SP = wx.getStorageSync("search_page");
+      console.log(SP)
+      if (SP) {
+        wx.setStorageSync("search_page",false);
+        return;
+      }
       this.leftNone = false;
       this.listShow = true;
       this.listHide = false;
@@ -104,12 +110,10 @@ export default {
   onShow() {
     this.searchText = wx.getStorageSync("searchText");
     this.prePage = wx.getStorageSync("pre_page");
-    
+
     if (this.prePage == "none") {
       this.animation = false;
-
     }
-
 
     var data = wx.getStorageSync("explain");
     console.log("explain", data);
@@ -123,10 +127,10 @@ export default {
     this.getList();
   },
   onHide() {
-      // this.exit();
+    this.exit();
   },
   onUnload() {
-      // this.exit();
+    this.exit();
   }
 };
 </script>
