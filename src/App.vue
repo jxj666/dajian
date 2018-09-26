@@ -33,4 +33,10 @@ backface-visibility:hidden;
 -ms-perspective:1000;
 perspective:1000;
 }
+.max_width{
+  max-width: 100vw;
+  overflow-x: hidden;
+  min-height: 100vh;
+  overflow-y: auto;
+}
 </style>

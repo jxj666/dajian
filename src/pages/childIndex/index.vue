@@ -1,11 +1,13 @@
 <template>
-  <div>
+  <div class="max_width">
     <main-title :thisPage=thisPage @toSearch='toSearch' :hideSearch=hideSearch></main-title>
     <div class="contentBox">
       <div class="listBox" v-if="listShow" :class="{listHide:listHide}">
         <div :key=key v-for="(x,key) in dataList">
           <index-card :animation='animation' :goods=x @toDetail='toDetail' :index='key' :leftNone='leftNone'></index-card>
         </div>
+        <station v-if="dataList.length==0"></station>
+
       </div>
       <div class="searchBox" v-if="listHide">
         <search-box :searchNew=searchNew></search-box>
@@ -19,6 +21,7 @@
 import mainTitle from "@/components/mainTitle";
 import indexCard from "@/components/indexCard";
 import searchBox from "@/components/searchBox";
+import station from "@/components/station";
 
 export default {
   data() {
@@ -39,10 +42,17 @@ export default {
   components: {
     mainTitle,
     indexCard,
-    searchBox
+    searchBox,
+    station
   },
 
   methods: {
+        escape2Html(str) {
+      var arrEntities = { lt: "<", gt: ">", nbsp: " ", amp: "&", quot: '"' };
+      return str.replace(/&(lt|gt|nbsp|amp|quot);/gi, function(all, t) {
+        return arrEntities[t];
+      });
+    },
     toSearch() {
       this.hideSearch = true;
       this.listHide = true;
@@ -74,19 +84,29 @@ export default {
             key: "goods",
             data: JSON.stringify(x)
           });
-          var arr = wx.getStorageSync("data_box");
-          arr.push({
-            pre_page: this.thisPage,
-            pre_data: d.data,
-            page: "explain"
-          });
-          wx.setStorageSync("data_box", arr);
+          // var arr = wx.getStorageSync("data_box");
+          // arr.push({
+          //   pre_page: this.thisPage,
+          //   pre_data: d.data,
+          //   page: "explain"
+          // });
+          // wx.setStorageSync("data_box", arr);
           wx.setStorageSync("pre_page", this.thisPage);
           var url;
-          if ((d.data.data.type == "series")) {
-             url = "../childIndex2/main";
+          if (d.data.data.type == "series") {
+            wx.setStorageSync("childIndex2", {
+              title: x.title,
+              data: d.data
+            });
+
+            url = "../childIndex2/main";
           } else {
-             url = "../explain/main";
+            wx.setStorageSync("explain", {
+              title: x.title,
+              data: d.data
+            });
+
+            url = "../explain/main";
           }
           wx.navigateTo({ url });
         })
@@ -106,36 +126,43 @@ export default {
   created() {},
   onShow() {
     this.prePage = wx.getStorageSync("pre_page");
-    var arr = wx.getStorageSync("data_box");
+    // var arr = wx.getStorageSync("data_box");
+
+    // if (this.prePage == "none") {
+    //   this.animation = false;
+    //   var kelement = arr.pop();
+    //   wx.setStorageSync("data_box", arr);
+    //   var obj = arr[arr.length - 1];
+    //   var page = obj.page;
+    //   if (page != "childIndex") {
+    //     arr.push(kelement);
+    //     wx.setStorageSync("data_box", arr);
+    //     // this.exit();
+    //     // wx.setStorageSync("pre_page", "begin");
+    //     // const url = "../loading/main";
+    //     // wx.redirectTo({ url });
+    //   }
+    //   obj = arr[arr.length - 1];
+    //   page = obj.page;
+    //   this.prePage = obj.pre_page;
+    //   this.dataList = obj.pre_data.data.list;
+    // } else {
+    //   var obj = arr[arr.length - 1];
+    //   this.prePage = obj.pre_page;
+    //   this.dataList = obj.pre_data.data.list;
+    // }
+    var data = wx.getStorageSync("childIndex");
+    console.log(data);
+    this.dataList = data.data.data.list;
+
 
     if (this.prePage == "none") {
       this.animation = false;
-      var kelement = arr.pop();
-      wx.setStorageSync("data_box", arr);
-      var obj = arr[arr.length - 1];
-      var page = obj.page;
-      if (page != "childIndex") {
-        arr.push(kelement);
-        wx.setStorageSync("data_box", arr);
-        // this.exit();
-        // wx.setStorageSync("pre_page", "begin");
-        // const url = "../loading/main";
-        // wx.redirectTo({ url });
-      }
-      obj = arr[arr.length - 1];
-      page = obj.page;
-      this.prePage = obj.pre_page;
-      this.dataList = obj.pre_data.data.list;
-    } else {
-      var obj = arr[arr.length - 1];
-      this.prePage = obj.pre_page;
-      this.dataList = obj.pre_data.data.list;
     }
-
     wx.setStorageSync("pre_page", "none");
 
     wx.setNavigationBarTitle({
-      title: "系列产品说明" //页面标题为路由参数
+      title: this.escape2Html(data.title) //页面标题为路由参数
     });
     this.getList();
   },

@@ -1,13 +1,13 @@
-global.webpackJsonp([7],{
+global.webpackJsonp([8],{
 
-/***/ 42:
+/***/ 47:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__index__ = __webpack_require__(43);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__index__ = __webpack_require__(48);
 
 
 
@@ -16,16 +16,16 @@ app.$mount();
 
 /***/ }),
 
-/***/ 43:
+/***/ 48:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_mpvue_loader_1_0_13_mpvue_loader_lib_selector_type_script_index_0_index_vue__ = __webpack_require__(45);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_mpvue_loader_1_0_13_mpvue_loader_lib_template_compiler_index_id_data_v_2c653951_hasScoped_true_transformToRequire_video_src_source_src_img_src_image_xlink_href_node_modules_mpvue_loader_1_0_13_mpvue_loader_lib_selector_type_template_index_0_index_vue__ = __webpack_require__(46);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_mpvue_loader_1_0_13_mpvue_loader_lib_selector_type_script_index_0_index_vue__ = __webpack_require__(50);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_mpvue_loader_1_0_13_mpvue_loader_lib_template_compiler_index_id_data_v_2c653951_hasScoped_true_transformToRequire_video_src_source_src_img_src_image_xlink_href_node_modules_mpvue_loader_1_0_13_mpvue_loader_lib_selector_type_template_index_0_index_vue__ = __webpack_require__(51);
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(44)
+  __webpack_require__(49)
 }
 var normalizeComponent = __webpack_require__(0)
 /* script */
@@ -70,22 +70,23 @@ if (false) {(function () {
 
 /***/ }),
 
-/***/ 44:
+/***/ 49:
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
 
 /***/ }),
 
-/***/ 45:
+/***/ 50:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_json_stringify__ = __webpack_require__(3);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_json_stringify___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_json_stringify__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_mainTitle__ = __webpack_require__(4);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_indexCard__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_indexCard__ = __webpack_require__(9);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_searchBox__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__components_station__ = __webpack_require__(6);
 
 //
 //
@@ -104,6 +105,8 @@ if (false) {(function () {
 //
 //
 //
+//
+
 
 
 
@@ -129,10 +132,17 @@ if (false) {(function () {
   components: {
     mainTitle: __WEBPACK_IMPORTED_MODULE_1__components_mainTitle__["a" /* default */],
     indexCard: __WEBPACK_IMPORTED_MODULE_2__components_indexCard__["a" /* default */],
-    searchBox: __WEBPACK_IMPORTED_MODULE_3__components_searchBox__["a" /* default */]
+    searchBox: __WEBPACK_IMPORTED_MODULE_3__components_searchBox__["a" /* default */],
+    station: __WEBPACK_IMPORTED_MODULE_4__components_station__["a" /* default */]
   },
 
   methods: {
+    escape2Html: function escape2Html(str) {
+      var arrEntities = { lt: "<", gt: ">", nbsp: " ", amp: "&", quot: '"' };
+      return str.replace(/&(lt|gt|nbsp|amp|quot);/gi, function (all, t) {
+        return arrEntities[t];
+      });
+    },
     toSearch: function toSearch() {
       var _this = this;
 
@@ -168,14 +178,23 @@ if (false) {(function () {
           key: "goods",
           data: __WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_json_stringify___default()(x)
         });
-        var arr = wx.getStorageSync("data_box");
-        arr.push({
-          pre_page: _this3.thisPage,
-          pre_data: d.data,
-          page: "explain"
-        });
-        wx.setStorageSync("data_box", arr);
+        // var arr = wx.getStorageSync("data_box");
+        // arr.push({
+        //   pre_page: this.thisPage,
+        //   pre_data: d.data,
+        //   page: "explain"
+        // });
+        // wx.setStorageSync("data_box", arr);
+        if (_this3.prePage == "none") {
+          _this3.animation = false;
+        }
         wx.setStorageSync("pre_page", _this3.thisPage);
+
+        wx.setStorageSync("explain", {
+          data: d.data,
+          title: x.title
+        });
+
         var url = "../explain/main";
         wx.navigateTo({ url: url });
       }).catch(function (err) {
@@ -194,36 +213,40 @@ if (false) {(function () {
   created: function created() {},
   onShow: function onShow() {
     this.prePage = wx.getStorageSync("pre_page");
-    var arr = wx.getStorageSync("data_box");
+    // var arr = wx.getStorageSync("data_box");
 
-    if (this.prePage == "none") {
-      this.animation = false;
-      var kelement = arr.pop();
-      wx.setStorageSync("data_box", arr);
-      var obj = arr[arr.length - 1];
-      var page = obj.page;
-      if (page != "childIndex") {
-        arr.push(kelement);
-        wx.setStorageSync("data_box", arr);
-        // this.exit();
-        // wx.setStorageSync("pre_page", "begin");
-        // const url = "../loading/main";
-        // wx.redirectTo({ url });
-      }
-      obj = arr[arr.length - 1];
-      page = obj.page;
-      this.prePage = obj.pre_page;
-      this.dataList = obj.pre_data.data.list;
-    } else {
-      var obj = arr[arr.length - 1];
-      this.prePage = obj.pre_page;
-      this.dataList = obj.pre_data.data.list;
-    }
+    // if (this.prePage == "none") {
+    //   this.animation = false;
+    //   var kelement = arr.pop();
+    //   wx.setStorageSync("data_box", arr);
+    //   var obj = arr[arr.length - 1];
+    //   var page = obj.page;
+    //   if (page != "childIndex") {
+    //     arr.push(kelement);
+    //     wx.setStorageSync("data_box", arr);
+    //     // this.exit();
+    //     // wx.setStorageSync("pre_page", "begin");
+    //     // const url = "../loading/main";
+    //     // wx.redirectTo({ url });
+    //   }
+    //   obj = arr[arr.length - 1];
+    //   page = obj.page;
+    //   this.prePage = obj.pre_page;
+    //   this.dataList = obj.pre_data.data.list;
+    // } else {
+    //   var obj = arr[arr.length - 1];
+    //   this.prePage = obj.pre_page;
+    //   this.dataList = obj.pre_data.data.list;
+    // }
+
+    var data = wx.getStorageSync("childIndex2");
+    console.log(data);
+    this.dataList = data.data.data.list;
 
     wx.setStorageSync("pre_page", "none");
 
     wx.setNavigationBarTitle({
-      title: "系列产品说明" //页面标题为路由参数
+      title: this.escape2Html(data.title) //页面标题为路由参数
     });
     this.getList();
   },
@@ -237,12 +260,14 @@ if (false) {(function () {
 
 /***/ }),
 
-/***/ 46:
+/***/ 51:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('div', [_c('main-title', {
+  return _c('div', {
+    staticClass: "max_width"
+  }, [_c('main-title', {
     attrs: {
       "thisPage": _vm.thisPage,
       "hideSearch": _vm.hideSearch,
@@ -259,7 +284,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     class: {
       listHide: _vm.listHide
     }
-  }, _vm._l((_vm.dataList), function(x, key) {
+  }, [_vm._l((_vm.dataList), function(x, key) {
     return _c('div', {
       key: key
     }, [_c('index-card', {
@@ -275,12 +300,16 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
         "toDetail": _vm.toDetail
       }
     })], 1)
-  })) : _vm._e(), _vm._v(" "), (_vm.listHide) ? _c('div', {
+  }), _vm._v(" "), (_vm.dataList.length == 0) ? _c('station', {
+    attrs: {
+      "mpcomid": '2'
+    }
+  }) : _vm._e()], 2) : _vm._e(), _vm._v(" "), (_vm.listHide) ? _c('div', {
     staticClass: "searchBox"
   }, [_c('search-box', {
     attrs: {
       "searchNew": _vm.searchNew,
-      "mpcomid": '2'
+      "mpcomid": '3'
     }
   })], 1) : _vm._e()])], 1)
 }
@@ -297,5 +326,5 @@ if (false) {
 
 /***/ })
 
-},[42]);
+},[47]);
 //# sourceMappingURL=main.js.map

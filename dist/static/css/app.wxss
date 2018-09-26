@@ -8,3 +8,9 @@
   padding: 200rpx 0;
   box-sizing: border-box;
 }
+.max_width {
+  max-width: 100vw;
+  overflow-x: hidden;
+  min-height: 100vh;
+  overflow-y: auto;
+}

@@ -3,7 +3,8 @@
     <!-- <image src='../../static/img/dajian9.png'></image> -->
         <div class="no">404</div>
 
-    <h3>页面飞丢了</h3>
+    <!-- <h3>页面飞丢了</h3> -->
+    <h3>没有相关信息!</h3>
   </div>
 </template>
 

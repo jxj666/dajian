@@ -3,7 +3,7 @@
 <import src="videoCard$30bba1a0" />
 <import src="searchBox$4acf9408" />
 <template name="index$ff8da98c">
-  <view class="_div data-v-2e73f5bc grid-box">
+  <view class="_div data-v-2e73f5bc grid-box max_width">
     <template bindtoSearch="handleProxy" data-eventid="{{'0'}}" data-comkey="{{$k}}" data="{{...$root[$kk+'0'], $root}}" is="mainTitle$71a29f24"></template>
     <view class="_div data-v-2e73f5bc contentBox">
       <view class="_div data-v-2e73f5bc listBoxTotal {{[listHide ? 'listHide' : '']}}" wx:if="{{listShow}}">

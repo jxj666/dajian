@@ -1,11 +1,23 @@
 <import src="mainTitle$71a29f24" />
-<import src="searchInput$4cf2a147" />
+<import src="searchBox$4acf9408" />
+<import src="videoCard$30bba1a0" />
+<import src="station$f5cf660e" />
 <template name="index$4a076941">
   <view class="_div data-v-9ad779ae">
-    <template data="{{...$root[$kk+'0'], $root}}" is="mainTitle$71a29f24"></template>
-    <template bindsearchText="handleProxy" data-eventid="{{'0'}}" data-comkey="{{$k}}" data="{{...$root[$kk+'1'], $root}}" is="searchInput$4cf2a147"></template>
-    <view class="_div data-v-9ad779ae listBox">
-      <view class="_div data-v-9ad779ae searchText" wx:key="index" key="{{index}}" bindtap="handleProxy" data-eventid="{{'1-'+index}}" data-comkey="{{$k}}" wx:for="{{dataList}}" wx:for-index="index" wx:for-item="x"> {{x.text}} </view>
+    <template bindtoSearch="handleProxy" data-eventid="{{'0'}}" data-comkey="{{$k}}" data="{{...$root[$kk+'0'], $root}}" is="mainTitle$71a29f24"></template>
+    <view class="_div data-v-9ad779ae contentBox">
+      <view class="_div data-v-9ad779ae searchBox" wx:if="{{listHide}}">
+        <template data="{{...$root[$kk+'1'], $root}}" is="searchBox$4acf9408"></template>
+      </view>
+      <view class="_div data-v-9ad779ae listBox {{[listHide ? 'listHide' : '']}}" wx:if="{{listShow}}">
+        <view class="_div data-v-9ad779ae search" wx:if="{{prePage=='search'}}"> “{{searchText}}”搜索到 {{dataList.length}} 条结果 </view>
+        <view class="_div data-v-9ad779ae">
+          <view wx:key="key" key="{{key}}" wx:for="{{dataList}}" wx:for-index="key" wx:for-item="x" class="_div data-v-9ad779ae">
+            <template bindtoVideo="handleProxy" data-eventid="{{'1-'+key}}" data-comkey="{{$k}}" data="{{...$root[$kk+'2-'+key], $root}}" is="videoCard$30bba1a0"></template>
+          </view>
+        </view>
+        <template wx:if="{{dataList.length==0}}" data="{{...$root[$kk+'3'], $root}}" is="station$f5cf660e"></template>
+      </view>
     </view>
   </view>
 </template>

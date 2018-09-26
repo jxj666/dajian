@@ -16,7 +16,7 @@ export default {
   props: ["videos", "index", "leftNone",'animation'],
   computed: {
     imgBackground() {
-      return `#eee url('https://dj.majiangyun.com/image/${this.videos.image_url}') no-repeat center`;
+      return `#eee url('https://bj-crm-wechat-mini-program-test.s3.cn-north-1.amazonaws.com.cn/${this.videos.image_url}') no-repeat center`;
     },
     leftClass() {
       if (this.leftNone || this.index == -1 || !this.animation) {

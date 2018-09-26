@@ -3,8 +3,8 @@
     <div class="search" :style='{transform:transform2}'>
       <search-input @searchText='searchText'></search-input>
     </div>
-    <div v-if="searchRes" class="listBox">
-      <div class="searchText" :style={transform:transform1} style='transition:transform 600ms;' v-if='index<12' :key="index" v-for="(x,index) in dataList" @click="detailSearch(x)">
+    <div v-if="searchRes" class="listBox" :style={transform:transform1} style='transition:transform 600ms;'>
+      <div class="searchText" v-if='index<12' :key="index" v-for="(x,index) in dataList" @click="detailSearch(x)">
         {{x}}
       </div>
     </div>
@@ -125,14 +125,19 @@ export default {
               key: "goods",
               data: JSON.stringify(x)
             });
-            var arr = wx.getStorageSync("data_box");
-            arr.push({
-              pre_page: this.thisPage,
-              pre_data: d.data,
-              page: "explain"
-            });
-            wx.setStorageSync("data_box", arr);
+            // var arr = wx.getStorageSync("data_box");
+            // arr.push({
+            //   pre_page: this.thisPage,
+            //   pre_data: d.data,
+            //   page: "explain"
+            // });
+            // wx.setStorageSync("data_box", arr);
+            console.log(d)
             wx.setStorageSync("pre_page", this.thisPage);
+            wx.setStorageSync("explain", {
+              data:d.data,
+              title: x
+            });
             const url = "../explain/main";
             wx.navigateTo({ url });
           } else {
@@ -178,7 +183,8 @@ export default {
     font-weight: 100;
     transition-timing-function: ease-out;
     -webkit-transform: translate3d(0, 0, 0);
-    transform: translateY(3000%);
+    z-index: 100;
+    // transform: translateY(3000%);
   }
 }
 .search {
@@ -187,5 +193,6 @@ export default {
   transform: translateY(-300%);
   // transform: rotateX(90deg);
   transition: transform 300ms;
+  z-index: 1000;
 }
 </style>

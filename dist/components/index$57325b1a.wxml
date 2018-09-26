@@ -1,8 +1,9 @@
 <import src="mainTitle$71a29f24" />
 <import src="searchBox$4acf9408" />
 <import src="videoCard$30bba1a0" />
+<import src="station$f5cf660e" />
 <template name="index$57325b1a">
-  <view class="_div data-v-3b8b47ac">
+  <view class="_div data-v-3b8b47ac max_width">
     <template bindtoSearch="handleProxy" data-eventid="{{'0'}}" data-comkey="{{$k}}" data="{{...$root[$kk+'0'], $root}}" is="mainTitle$71a29f24"></template>
     <view class="_div data-v-3b8b47ac contentBox">
       <view class="_div data-v-3b8b47ac searchBox" wx:if="{{listHide}}">
@@ -15,6 +16,7 @@
             <template bindtoVideo="handleProxy" data-eventid="{{'1-'+key}}" data-comkey="{{$k}}" data="{{...$root[$kk+'2-'+key], $root}}" is="videoCard$30bba1a0"></template>
           </view>
         </view>
+        <template wx:if="{{dataList.length==0}}" data="{{...$root[$kk+'3'], $root}}" is="station$f5cf660e"></template>
       </view>
     </view>
   </view>

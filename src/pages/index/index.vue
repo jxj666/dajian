@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="max_width">
     <main-title :thisPage=thisPage @toSearch='toSearch' :hideSearch=hideSearch></main-title>
     <div class="contentBox">
       <div class="listBox" v-if="listShow" :class="{listHide:listHide}">
@@ -64,19 +64,30 @@ export default {
             key: "goods",
             data: JSON.stringify(x)
           });
-          var arr = wx.getStorageSync("data_box");
-          arr.push({
-            pre_page: this.thisPage,
-            pre_data: d.data,
-            page: "childIndex"
-          });
-          wx.setStorageSync("data_box", arr);
+          // var arr = wx.getStorageSync("data_box");
+          // arr.push({
+          //   pre_page: this.thisPage,
+          //   pre_data: d.data,
+          //   page: "childIndex"
+          // });
+          // wx.setStorageSync("data_box", arr);
           wx.setStorageSync("pre_page", this.thisPage);
-          var url
-          if ((d.data.data.type == "series")) {
-             url = "../childIndex/main";
+
+          var url;
+          if (d.data.data.type == "series") {
+            wx.setStorageSync("childIndex", {
+              title: x.title,
+              data: d.data
+            });
+
+            url = "../childIndex/main";
           } else {
-             url = "../explain/main";
+            wx.setStorageSync("explain", {
+              title: x.title,
+              data: d.data
+            });
+
+            url = "../explain/main";
           }
           wx.navigateTo({ url });
         })
@@ -101,35 +112,37 @@ export default {
   },
   onShow() {
     this.prePage = wx.getStorageSync("pre_page");
-    var arr = wx.getStorageSync("data_box");
+    // var arr = wx.getStorageSync("data_box");
+
+    // if (this.prePage == "none") {
+    //   this.animation = false;
+    //   var kelement = arr.pop();
+    //   wx.setStorageSync("data_box", arr);
+    //   var obj = arr[arr.length - 1];
+    //   var page = obj.page;
+    //   if (page != "index") {
+    //     arr.push(kelement);
+    //     wx.setStorageSync("data_box", arr);
+    //   }
+    //   obj = arr[arr.length - 1];
+    //   page = obj.page;
+    //   this.prePage = obj.pre_page;
+    //   this.dataList = obj.pre_data.data;
+    // } else {
+    //   var obj = arr[arr.length - 1];
+    //   this.prePage = obj.pre_page;
+    //   this.dataList = obj.pre_data.data;
+    // }
+    var data = wx.getStorageSync("index");
+    console.log(data);
+    this.dataList = data.data.data;
 
     if (this.prePage == "none") {
       this.animation = false;
-      var kelement = arr.pop();
-      wx.setStorageSync("data_box", arr);
-      var obj = arr[arr.length - 1];
-      var page = obj.page;
-      if (page != "index") {
-        arr.push(kelement);
-        wx.setStorageSync("data_box", arr);
-        // this.exit();
-        // wx.setStorageSync("pre_page", "begin");
-        // const url = "../loading/main";
-        // wx.redirectTo({ url });
-      }
-      obj = arr[arr.length - 1];
-      page = obj.page;
-      this.prePage = obj.pre_page;
-      this.dataList = obj.pre_data.data;
-    } else {
-      var obj = arr[arr.length - 1];
-      this.prePage = obj.pre_page;
-      this.dataList = obj.pre_data.data;
     }
-
     wx.setStorageSync("pre_page", "none");
     wx.setNavigationBarTitle({
-      title: "系列产品说明" //页面标题为路由参数
+      title: "大疆飞手百科" //页面标题为路由参数
     });
     this.getList();
   },

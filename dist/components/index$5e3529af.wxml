@@ -1,17 +1,19 @@
 <import src="mainTitle$71a29f24" />
 <import src="indexCard$27dafc87" />
+<import src="station$f5cf660e" />
 <import src="searchBox$4acf9408" />
 <template name="index$5e3529af">
-  <view class="_div data-v-62865e17">
+  <view class="_div data-v-62865e17 max_width">
     <template bindtoSearch="handleProxy" data-eventid="{{'0'}}" data-comkey="{{$k}}" data="{{...$root[$kk+'0'], $root}}" is="mainTitle$71a29f24"></template>
     <view class="_div data-v-62865e17 contentBox">
       <view class="_div data-v-62865e17 listBox {{[listHide ? 'listHide' : '']}}" wx:if="{{listShow}}">
         <view wx:key="key" key="{{key}}" wx:for="{{dataList}}" wx:for-index="key" wx:for-item="x" class="_div data-v-62865e17">
           <template bindtoDetail="handleProxy" data-eventid="{{'1-'+key}}" data-comkey="{{$k}}" data="{{...$root[$kk+'1-'+key], $root}}" is="indexCard$27dafc87"></template>
         </view>
+        <template wx:if="{{dataList.length==0}}" data="{{...$root[$kk+'2'], $root}}" is="station$f5cf660e"></template>
       </view>
       <view class="_div data-v-62865e17 searchBox" wx:if="{{listHide}}">
-        <template data="{{...$root[$kk+'2'], $root}}" is="searchBox$4acf9408"></template>
+        <template data="{{...$root[$kk+'3'], $root}}" is="searchBox$4acf9408"></template>
       </view>
     </view>
   </view>

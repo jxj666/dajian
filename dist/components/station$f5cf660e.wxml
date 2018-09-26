@@ -1,6 +1,6 @@
 <template name="station$f5cf660e">
   <view class="_div data-v-9ba00464 box">
     <view class="_div data-v-9ba00464 no">404</view>
-    <view class="_h3 data-v-9ba00464">页面飞丢了</view>
+    <view class="_h3 data-v-9ba00464">没有相关信息!</view>
   </view>
 </template>

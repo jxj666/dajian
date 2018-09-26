@@ -1,0 +1,11 @@
+<import src="mainTitle$71a29f24" />
+<import src="searchInput$4cf2a147" />
+<template name="index$6fbdc001">
+  <view class="_div data-v-30dda213">
+    <template data="{{...$root[$kk+'0'], $root}}" is="mainTitle$71a29f24"></template>
+    <template bindsearchText="handleProxy" data-eventid="{{'0'}}" data-comkey="{{$k}}" data="{{...$root[$kk+'1'], $root}}" is="searchInput$4cf2a147"></template>
+    <view class="_div data-v-30dda213 listBox">
+      <view class="_div data-v-30dda213 searchText" wx:key="index" key="{{index}}" bindtap="handleProxy" data-eventid="{{'1-'+index}}" data-comkey="{{$k}}" wx:for="{{dataList}}" wx:for-index="index" wx:for-item="x"> {{x.text}} </view>
+    </view>
+  </view>
+</template>

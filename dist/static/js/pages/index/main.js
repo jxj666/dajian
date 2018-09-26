@@ -1,13 +1,13 @@
-global.webpackJsonp([4],{
+global.webpackJsonp([5],{
 
-/***/ 69:
+/***/ 73:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__index__ = __webpack_require__(70);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__index__ = __webpack_require__(74);
 
 
 
@@ -16,16 +16,16 @@ app.$mount();
 
 /***/ }),
 
-/***/ 70:
+/***/ 74:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_mpvue_loader_1_0_13_mpvue_loader_lib_selector_type_script_index_0_index_vue__ = __webpack_require__(72);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_mpvue_loader_1_0_13_mpvue_loader_lib_template_compiler_index_id_data_v_0ce52447_hasScoped_true_transformToRequire_video_src_source_src_img_src_image_xlink_href_node_modules_mpvue_loader_1_0_13_mpvue_loader_lib_selector_type_template_index_0_index_vue__ = __webpack_require__(73);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_mpvue_loader_1_0_13_mpvue_loader_lib_selector_type_script_index_0_index_vue__ = __webpack_require__(76);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_mpvue_loader_1_0_13_mpvue_loader_lib_template_compiler_index_id_data_v_0ce52447_hasScoped_true_transformToRequire_video_src_source_src_img_src_image_xlink_href_node_modules_mpvue_loader_1_0_13_mpvue_loader_lib_selector_type_template_index_0_index_vue__ = __webpack_require__(77);
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(71)
+  __webpack_require__(75)
 }
 var normalizeComponent = __webpack_require__(0)
 /* script */
@@ -70,21 +70,21 @@ if (false) {(function () {
 
 /***/ }),
 
-/***/ 71:
+/***/ 75:
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
 
 /***/ }),
 
-/***/ 72:
+/***/ 76:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_json_stringify__ = __webpack_require__(3);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_json_stringify___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_json_stringify__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_mainTitle__ = __webpack_require__(4);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_indexCard__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_indexCard__ = __webpack_require__(9);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_searchBox__ = __webpack_require__(5);
 
 //
@@ -156,18 +156,29 @@ if (false) {(function () {
           key: "goods",
           data: __WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_json_stringify___default()(x)
         });
-        var arr = wx.getStorageSync("data_box");
-        arr.push({
-          pre_page: _this2.thisPage,
-          pre_data: d.data,
-          page: "childIndex"
-        });
-        wx.setStorageSync("data_box", arr);
+        // var arr = wx.getStorageSync("data_box");
+        // arr.push({
+        //   pre_page: this.thisPage,
+        //   pre_data: d.data,
+        //   page: "childIndex"
+        // });
+        // wx.setStorageSync("data_box", arr);
         wx.setStorageSync("pre_page", _this2.thisPage);
+
         var url;
         if (d.data.data.type == "series") {
+          wx.setStorageSync("childIndex", {
+            title: x.title,
+            data: d.data
+          });
+
           url = "../childIndex/main";
         } else {
+          wx.setStorageSync("explain", {
+            title: x.title,
+            data: d.data
+          });
+
           url = "../explain/main";
         }
         wx.navigateTo({ url: url });
@@ -194,35 +205,37 @@ if (false) {(function () {
   },
   onShow: function onShow() {
     this.prePage = wx.getStorageSync("pre_page");
-    var arr = wx.getStorageSync("data_box");
+    // var arr = wx.getStorageSync("data_box");
+
+    // if (this.prePage == "none") {
+    //   this.animation = false;
+    //   var kelement = arr.pop();
+    //   wx.setStorageSync("data_box", arr);
+    //   var obj = arr[arr.length - 1];
+    //   var page = obj.page;
+    //   if (page != "index") {
+    //     arr.push(kelement);
+    //     wx.setStorageSync("data_box", arr);
+    //   }
+    //   obj = arr[arr.length - 1];
+    //   page = obj.page;
+    //   this.prePage = obj.pre_page;
+    //   this.dataList = obj.pre_data.data;
+    // } else {
+    //   var obj = arr[arr.length - 1];
+    //   this.prePage = obj.pre_page;
+    //   this.dataList = obj.pre_data.data;
+    // }
+    var data = wx.getStorageSync("index");
+    console.log(data);
+    this.dataList = data.data.data;
 
     if (this.prePage == "none") {
       this.animation = false;
-      var kelement = arr.pop();
-      wx.setStorageSync("data_box", arr);
-      var obj = arr[arr.length - 1];
-      var page = obj.page;
-      if (page != "index") {
-        arr.push(kelement);
-        wx.setStorageSync("data_box", arr);
-        // this.exit();
-        // wx.setStorageSync("pre_page", "begin");
-        // const url = "../loading/main";
-        // wx.redirectTo({ url });
-      }
-      obj = arr[arr.length - 1];
-      page = obj.page;
-      this.prePage = obj.pre_page;
-      this.dataList = obj.pre_data.data;
-    } else {
-      var obj = arr[arr.length - 1];
-      this.prePage = obj.pre_page;
-      this.dataList = obj.pre_data.data;
     }
-
     wx.setStorageSync("pre_page", "none");
     wx.setNavigationBarTitle({
-      title: "系列产品说明" //页面标题为路由参数
+      title: "大疆飞手百科" //页面标题为路由参数
     });
     this.getList();
   },
@@ -236,12 +249,14 @@ if (false) {(function () {
 
 /***/ }),
 
-/***/ 73:
+/***/ 77:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('div', [_c('main-title', {
+  return _c('div', {
+    staticClass: "max_width"
+  }, [_c('main-title', {
     attrs: {
       "thisPage": _vm.thisPage,
       "hideSearch": _vm.hideSearch,
@@ -296,5 +311,5 @@ if (false) {
 
 /***/ })
 
-},[69]);
+},[73]);
 //# sourceMappingURL=main.js.map

@@ -1,5 +1,5 @@
 <template>
-  <div class="grid-box">
+  <div class="grid-box max_width" >
     <main-title :thisPage=thisPage @toSearch='toSearch' :hideSearch=hideSearch></main-title>
     <div class="contentBox">
       <div class="listBoxTotal" v-if="listShow" :class="{listHide:listHide}">
@@ -50,7 +50,7 @@ export default {
       dataList: [],
       // src: "http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4",
       // src: "http://static.video.qq.com/TPout.swf?vid=w0766f4ngw3&auto=1",
-      src:'',
+      src: "",
       listShow: true,
       listHide: false,
       hideSearch: false,
@@ -58,7 +58,7 @@ export default {
       videoContext: {},
       vid: "w0766f4ngw3",
       playerObj: {},
-      autoplay:false,
+      autoplay: false
     };
   },
 
@@ -71,7 +71,9 @@ export default {
   computed: {
     src_fix() {
       if (this.playerObj.class == 2) {
-        return `https://dj.majiangyun.com/video/${this.playerObj.video_url}`;
+        return `https://bj-crm-wechat-mini-program-test.s3.cn-north-1.amazonaws.com.cn/${
+          this.playerObj.video_url
+        }`;
       } else {
         return ``;
       }
@@ -103,7 +105,7 @@ export default {
               const TxvContext = requirePlugin("myPlugin");
               let txvContext = TxvContext.getTxvContext("showVideoBox1");
               txvContext.play();
-              that.autoplay=true;
+              that.autoplay = true;
             } else if (that.playerObj.class == 2) {
               that.videoContext = wx.createVideoContext("showVideoBox2");
               that.videoContext.play();
@@ -120,15 +122,19 @@ export default {
         key: "video",
         data: JSON.stringify(x)
       });
-      var arr = wx.getStorageSync("data_box");
-      arr.push({
-        pre_page: this.thisPage,
-        pre_data: this.dataList,
-        video: x,
-        page: "player"
-      });
-      wx.setStorageSync("data_box", arr);
+      // var arr = wx.getStorageSync("data_box");
+      // arr.push({
+      //   pre_page: this.thisPage,
+      //   pre_data: this.dataList,
+      //   video: x,
+      //   page: "player"
+      // });
+      // wx.setStorageSync("data_box", arr);
       wx.setStorageSync("pre_page", this.thisPage);
+      wx.setStorageSync("player", {
+        data: this.dataList,
+        video: x
+      });
       const url = "../player/main";
       wx.navigateTo({
         url
@@ -146,35 +152,43 @@ export default {
   created() {},
   onShow() {
     this.prePage = wx.getStorageSync("pre_page");
-    var arr = wx.getStorageSync("data_box");
+    // var arr = wx.getStorageSync("data_box");
 
+    // if (this.prePage == "none") {
+    //   this.animation = false;
+    //   var kelement = arr.pop();
+    //   wx.setStorageSync("data_box", arr);
+    //   var obj = arr[arr.length - 1];
+    //   var page = obj.page;
+    //   console.log(page);
+    //   if (page != "player") {
+    //     arr.push(kelement);
+    //     wx.setStorageSync("data_box", arr);
+    //     // this.exit();
+    //     // wx.setStorageSync("pre_page", "begin");
+    //     // const url = "../loading/main";
+    //     // wx.redirectTo({ url });
+    //   }
+    //   obj = arr[arr.length - 1];
+    //   page = obj.page;
+    //   this.prePage = obj.pre_page;
+    //   this.dataList = obj.pre_data;
+    //   this.playerObj = obj.video;
+    // } else {
+    //   var obj = arr[arr.length - 1];
+    //   this.prePage = obj.pre_page;
+    //   this.dataList = obj.pre_data;
+    //   this.playerObj = obj.video;
+    // }
+    // console.log(this.playerObj);
+
+    var data = wx.getStorageSync("player");
+
+    this.dataList = data.data;
+    this.playerObj = data.video;
     if (this.prePage == "none") {
       this.animation = false;
-      var kelement = arr.pop();
-      wx.setStorageSync("data_box", arr);
-      var obj = arr[arr.length - 1];
-      var page = obj.page;
-      console.log(page);
-      if (page != "player") {
-        arr.push(kelement);
-        wx.setStorageSync("data_box", arr);
-        // this.exit();
-        // wx.setStorageSync("pre_page", "begin");
-        // const url = "../loading/main";
-        // wx.redirectTo({ url });
-      }
-      obj = arr[arr.length - 1];
-      page = obj.page;
-      this.prePage = obj.pre_page;
-      this.dataList = obj.pre_data;
-      this.playerObj = obj.video;
-    } else {
-      var obj = arr[arr.length - 1];
-      this.prePage = obj.pre_page;
-      this.dataList = obj.pre_data;
-      this.playerObj = obj.video;
     }
-    console.log(this.playerObj);
     wx.setStorageSync("pre_page", "none");
 
     wx.setNavigationBarTitle({

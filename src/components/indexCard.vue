@@ -17,7 +17,7 @@ export default {
   computed: {
     imgBackground() {
       // return `#f5f9fc`;
-      return `#f5f9fc url('https://dj.majiangyun.com/image/${this.goods.image_url}') no-repeat center right`;
+      return `#f5f9fc url('https://bj-crm-wechat-mini-program-test.s3.cn-north-1.amazonaws.com.cn/${this.goods.image_url}') no-repeat center right`;
     },
     leftClass() {
       if (this.leftNone || this.index == -1 || !this.animation) {

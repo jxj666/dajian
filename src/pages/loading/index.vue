@@ -39,7 +39,7 @@ export default {
               .post("https://dj.majiangyun.com/wechatLogin", {
                 code: res.code
               })
-              
+
               .then(d => {
                 //输出请求数据
                 console.log("req", d.data);
@@ -71,14 +71,11 @@ export default {
         .then(d => {
           //输出请求数据
           console.log("req", d.data);
-          wx.setStorageSync("index_box", d.data);
-          var arr = wx.getStorageSync("data_box");
-          arr.push({
+          wx.setStorageSync("index", {
             pre_page: this.thisPage,
-            pre_data: d.data,
+            data: d.data,
             page: "index"
           });
-          wx.setStorageSync("data_box", arr);
           wx.setStorageSync("pre_page", this.thisPage);
           const url = "../index/main";
           wx.navigateTo({ url });

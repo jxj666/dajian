@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="max_width">
     <main-title :thisPage=thisPage @toSearch='toSearch' :hideSearch=hideSearch></main-title>
     <div class="contentBox">
       <div class="searchBox" v-if="listHide">
@@ -14,6 +14,8 @@
             <video-card :animation='animation' :videos=x @toVideo='toVideo' :index='key' :leftNone=leftNone></video-card>
           </div>
         </div>
+        <station v-if="dataList.length==0"></station>
+
       </div>
 
     </div>
@@ -25,6 +27,7 @@
 import mainTitle from "@/components/mainTitle";
 import videoCard from "@/components/videoCard";
 import searchBox from "@/components/searchBox";
+import station from "@/components/station";
 
 export default {
   data() {
@@ -46,10 +49,17 @@ export default {
   components: {
     mainTitle,
     videoCard,
-    searchBox
+    searchBox,
+    station
   },
 
   methods: {
+    escape2Html(str) {
+      var arrEntities = { lt: "<", gt: ">", nbsp: " ", amp: "&", quot: '"' };
+      return str.replace(/&(lt|gt|nbsp|amp|quot);/gi, function(all, t) {
+        return arrEntities[t];
+      });
+    },
     toSearch() {
       this.hideSearch = true;
       this.listHide = true;
@@ -63,16 +73,19 @@ export default {
         key: "video",
         data: JSON.stringify(x)
       });
-      var arr = wx.getStorageSync("data_box");
-      arr.push({
-        pre_page: this.thisPage,
-        pre_data: this.dataList,
-        video: x,
-        page: "player"
-      });
-      wx.setStorageSync("data_box", arr);
+      // var arr = wx.getStorageSync("data_box");
+      // arr.push({
+      // pre_page: this.thisPage,
+      // pre_data: this.dataList,
+      // video: x,
+      // page: "player"
+      // });
+      // wx.setStorageSync("data_box", arr);
       wx.setStorageSync("pre_page", this.thisPage);
-
+      wx.setStorageSync("player", {
+        data: this.dataList,
+        video: x
+      });
       const url = "../player/main";
       wx.navigateTo({
         url
@@ -97,37 +110,39 @@ export default {
   onShow() {
     this.searchText = wx.getStorageSync("searchText");
     this.prePage = wx.getStorageSync("pre_page");
+    // var arr = wx.getStorageSync("data_box");
+    // console.log(this.prePage, arr);
+    // if (this.prePage == "none") {
+    //   this.animation = false;
+    //   var kelement = arr.pop();
+    //   wx.setStorageSync("data_box", arr);
+    //   var obj = arr[arr.length - 1];
+    //   var page = obj.page;
+    //   // if (page != "explain") {
+    //   //   arr.push(kelement);
+    //   //   wx.setStorageSync("data_box", arr);
+    //   // }
+    //   obj = arr[arr.length - 1];
+    //   page = obj.page;
+    // } else {
+    //   var obj = arr[arr.length - 1];
+    // }
+    // console.log(JSON.stringify(obj));
+    // this.prePage = obj.pre_page;
+    // this.dataList = obj.pre_data.data.list;
 
-    var arr = wx.getStorageSync("data_box");
-
+    var data = wx.getStorageSync("explain");
+    console.log("explain", data);
+    this.dataList = data.data.data.list;
     if (this.prePage == "none") {
       this.animation = false;
-      var kelement = arr.pop();
-      wx.setStorageSync("data_box", arr);
-      var obj = arr[arr.length - 1];
-
-      var page = obj.page;
-      if (page != "explain") {
-        arr.push(kelement);
-        wx.setStorageSync("data_box", arr);
-        // this.exit();
-        // wx.setStorageSync("pre_page", "begin");
-        // const url = "../loading/main";
-        // wx.redirectTo({ url });
-      }
-      obj = arr[arr.length - 1];
-      page = obj.page;
-      this.prePage = obj.pre_page;
-      this.dataList = obj.pre_data.data.list;
-    } else {
-      var obj = arr[arr.length - 1];
-      this.prePage = obj.pre_page;
-      this.dataList = obj.pre_data.data.list;
     }
-
     wx.setStorageSync("pre_page", "none");
+    // var title = wx.getStorageSync("explain");
+    // wx.setStorageSync("explain", "");
+    var title = this.escape2Html(data.title);
     wx.setNavigationBarTitle({
-      title: "系列产品说明" //页面标题为路由参数
+      title: title || "视频列表" //页面标题为路由参数
     });
     this.getList();
   },
